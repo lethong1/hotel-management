@@ -26,7 +26,7 @@ class InvoiceSerializer(serializers.ModelSerializer):
         read_only_fields = ['invoice_number', 'issue_date', 'created_by', 'total_amount']
 
     def validate_booking_id(self,booking):
-        if Invoice.objects.filter(booking=value).exists():
+        if Invoice.objects.filter(booking=booking).exists():
             if not self.instance or self.instance.booking != booking:
                 raise serializers.ValidationError("Đã tồn tại hóa đơn cho đơn đặt phòng này.")
         return booking

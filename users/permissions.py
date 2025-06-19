@@ -15,4 +15,3 @@ class IsOwnerOrManagerOrAdmin(permissions.BasePermission):
         if request.user.role and request.user.role.role in ['manager', 'admin']:
             return True
         return obj.id == request.user.id
-        

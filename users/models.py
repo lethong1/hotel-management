@@ -17,7 +17,7 @@ class Role(models.Model):
         return self.role
     
 class User(AbstractUser):
-    role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=True)
+    role = models.ForeignKey(Role, on_delete=models.SET_NULL, null=True, blank=True, unique=False)
     full_name = models.CharField(max_length=100, verbose_name="Họ và tên")
     phone_number = models.CharField(max_length=15, blank=True, verbose_name="Số điện thoại")
     address = models.TextField(blank=True, verbose_name="Địa chỉ")
