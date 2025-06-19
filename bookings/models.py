@@ -17,7 +17,7 @@ class Booking(models.Model):
     check_in_date = models.DateTimeField()
     check_out_date = models.DateTimeField()
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
-    total_price = models.DecimalField(max_digits=10, decimal_places=2)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, editable = False, default= 0)
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     notes = models.TextField(blank=True)

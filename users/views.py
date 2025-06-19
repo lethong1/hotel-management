@@ -45,4 +45,5 @@ class UserViewSet(viewsets.ModelViewSet):
                 serializer.save(role=default_role) 
             except Role.DoesNotExist:
                 serializer.save()
+
          
