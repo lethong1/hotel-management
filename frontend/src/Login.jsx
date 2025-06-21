@@ -30,7 +30,7 @@ function Login() {
             localStorage.setItem('refreshToken', response.data.refresh);
             
             // TODO: Chuyển hướng người dùng đến trang dashboard sau khi đăng nhập thành công
-            // window.location.href = '/dashboard';
+            window.location.href = '/test';
 
         } catch (err) {
             console.error("Lỗi đăng nhập:", err.response);
@@ -63,7 +63,7 @@ function Login() {
                     />
                 </div>
                 {successMessage && <p style={{color: 'green'}}>{successMessage}</p>}
-                <button type="submit" style={{ width: '100%', padding: '10px', backgroundColor: 'green', color: 'white', border: 'none', cursor: 'pointer' }}>
+                <button type="button" onClick={handleSubmit} style={{ width: '100%', padding: '10px', backgroundColor: 'green', color: 'white', border: 'none', cursor: 'pointer' }}>
                     Đăng nhập
                 </button>
             </form>
