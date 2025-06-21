@@ -1,10 +1,22 @@
 from rest_framework import serializers
 from .models import RoomType, Room
-
+from amenities.serializers import AmenitySerializer
+from amenities.models import Amenity
 class RoomTypeSerializer(serializers.ModelSerializer):
+    amenities = AmenitySerializer(many=True, read_only=True)
+    amenities_id = serializers.PrimaryKeyRelatedField(queryset=Amenity.objects.all(), source='amenities', write_only=True)
+
     class Meta:
         model = RoomType
-        fields = '__all__'
+        fields = [
+            'id',
+            'name',
+            'description',
+            'price_per_night',
+            'amenities',
+            'amenities_id',
+            'capacity',
+        ]
 
 class RoomSerializer(serializers.ModelSerializer):
     room_type = RoomTypeSerializer(read_only=True)

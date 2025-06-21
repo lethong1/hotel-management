@@ -43,8 +43,10 @@ INSTALLED_APPS = [
     'bookings',
     'users',
     'invoices',
+    'amenities',
     'rest_framework',
     'rest_framework_simplejwt',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -55,6 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'hotel_management.urls'
@@ -72,6 +75,12 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+# CORS
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
 ]
 
 WSGI_APPLICATION = 'hotel_management.wsgi.application'
