@@ -1,0 +1,117 @@
+:root {
+  --text-color: #777d71;
+  --primary-color: #bbd38b;
+  --page-background: #f7f6e7;
+  --border-color: #dfddc5;
+  --form-background: #ffffff;
+}
+
+.add-room-page {
+  background-color: var(--page-background);
+  min-height: 100vh;
+  padding: 20px 40px;
+  font-family: 'Inter', sans-serif;
+}
+
+.add-room-page .top-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.add-room-page .primary-action-btn {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.add-room-page .primary-action-btn:hover,
+.add-room-page .primary-action-btn:focus {
+  background-color: #a8c07a;
+  border-color: #a8c07a;
+  color: #fff;
+}
+
+
+.add-room-page .form-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: var(--form-background);
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 10px 30px -10px var(--border-color);
+}
+
+.add-room-page .page-title {
+  text-align: center;
+  margin-bottom: 40px;
+  color: var(--text-color);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.form-item-label {
+  color: var(--text-color);
+  font-weight: 600;
+}
+
+.custom-input,
+.custom-textarea,
+.custom-select .ant-select-selector {
+  border-color: var(--border-color) !important;
+  border-radius: 8px !important;
+}
+
+.custom-textarea {
+  resize: none;
+}
+
+.price-display {
+  display: block;
+  padding-top: 8px;
+  color: var(--text-color);
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.capacity-container {
+  margin-bottom: 24px;
+}
+
+.capacity-details {
+  padding-top: 8px;
+  color: var(--text-color);
+}
+
+.amenities-group {
+  width: 100%;
+  color: var(--text-color);
+}
+
+.amenities-group .ant-checkbox-wrapper {
+    color: inherit;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.cancel-btn {
+  border-radius: 8px;
+  font-weight: 600;
+  border-color: var(--border-color);
+  color: var(--text-color);
+}
+
+.cancel-btn:hover,
+.cancel-btn:focus {
+    border-color: var(--text-color);
+    color: var(--text-color);
+} 

@@ -9,6 +9,8 @@ import Test from './pages/Test'
 import { BrowserRouter } from 'react-router-dom'  
 import { LoginProvider } from './contexts/LoginConText'
 import ProtectedRoute from './components/Routing/ProtectedRoute'
+import AddRoomPage  from './pages/AddRoomPage';
+import { AddRoomProvider } from './contexts/AddRoomContext';
 const App = () => {
 
   return (
@@ -18,6 +20,7 @@ const App = () => {
         <Route path="/login" element={<LoginForm />} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
         <Route path="/test" element={<Test />} />
+        <Route path="/add-room" element={<AddRoomProvider><AddRoomPage /></AddRoomProvider>} />
       </Routes>
     </LoginProvider>
   );
