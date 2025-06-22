@@ -1,10 +1,10 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Row, Col, Input, Button, Typography, Form } from 'antd';
-import { MailOutlined, EyeInvisibleOutlined, UserOutlined } from '@ant-design/icons';
+import { MailOutlined, EyeInvisibleOutlined, UserOutlined, LoadingOutlined } from '@ant-design/icons';
 import logo from '../../assets/logo.png' // Lưu ý: Bạn cần tạo file logo.svg riêng
 import { LoginContext } from '../../contexts/LoginConText'  
 import { useNavigate } from 'react-router-dom';
-import { message } from 'antd';
+import { message, Spin} from 'antd';
 const { Title } = Typography;
 
 
@@ -12,11 +12,33 @@ const { Title } = Typography;
 const LoginForm = () => {
   const { loginUser, authState } = useContext(LoginContext)
   const navigate = useNavigate();
+  const customIndicator = (
+    <LoadingOutlined 
+      style={{ 
+        fontSize: 48, // Chỉnh kích thước
+        color: '#B5C99A' // Chỉnh màu sắc cho hợp với theme của bạn
+      }} 
+      spin 
+    />
+  );
+  useEffect(() => {
+    // Nếu đã xác thực thành công, chuyển ngay đến dashboard
+    if (authState.isAuthenticated) {
+      console.log('User is already authenticated. Redirecting to dashboard...');
+      navigate('/dashboard');
+    }
+  }, [authState.isAuthenticated, navigate]);
+  if (authState.isLoading) {
+    return (
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <Spin indicator={customIndicator} />
+      </div>
+    );
+  }
   const onFinish = async (values) => {
     try {
       await loginUser(values.username, values.password)
       message.success('Đăng nhập thành công')
-      navigate('/dashboard')
     } catch (error) {
       console.log('Login Failed:', error)
       message.error('Đăng nhập thất bại')
@@ -32,11 +54,9 @@ const LoginForm = () => {
   return (
     <div style={{
       backgroundColor: '#F5F5DC', // Màu nền kem nhạt
-      display: 'flex',
       justifyContent: 'center',
       alignItems: 'center',
-      width: '1200',
-      height: '100vh',
+      width: '100%',
       fontFamily: "'Montserrat', sans-serif" // Font chữ tương tự
     }}>
       <Row style={{
@@ -48,32 +68,15 @@ const LoginForm = () => {
       }}>
         {/* Cột bên trái (Logo) */}
         <Col span={10} style={{
-          backgroundColor: '#B5C99A', // Màu xanh lá cây nhạt
+          backgroundImage: `url(${logo})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
           display: 'flex',
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'center',
           padding: '40px'
         }}>
-          <img src={logo} alt="logo" style={{ width: '100px', height: 'auto', marginBottom: '20px' }} />
-          <Title level={1} style={{
-            color: 'white',
-            margin: 0,
-            letterSpacing: '0.5em', // Giãn cách chữ
-            fontWeight: 400,
-            fontSize: '48px'
-          }}>
-            XANH
-          </Title>
-          <p style={{
-            color: 'white',
-            margin: 0,
-            marginTop: '8px',
-            letterSpacing: '0.3em', // Giãn cách chữ
-            fontSize: '14px'
-          }}>
-            KHÁCH SẠN
-          </p>
         </Col>
 
         {/* Cột bên phải (Form) */}
