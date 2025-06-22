@@ -1,26 +1,24 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react'; 
 import { Row, Col, Input, Button, Typography, Form } from 'antd';
-import { MailOutlined, EyeInvisibleOutlined, UserOutlined, LoadingOutlined } from '@ant-design/icons';
+import { EyeOutlined, EyeInvisibleOutlined, UserOutlined, LoadingOutlined } from '@ant-design/icons';
 import logo from '../../assets/logo.png' // Lưu ý: Bạn cần tạo file logo.svg riêng
-import { LoginContext } from '../../contexts/LoginConText'  
+import { LoginContext } from '../../contexts/LoginConText'
 import { useNavigate } from 'react-router-dom';
-import { message, Spin} from 'antd';
+import { message, Spin } from 'antd';
+import '../../css/LoginForm.css';
 const { Title } = Typography;
-
-
 
 const LoginForm = () => {
   const { loginUser, authState } = useContext(LoginContext)
   const navigate = useNavigate();
+
   const customIndicator = (
-    <LoadingOutlined 
-      style={{ 
-        fontSize: 48, // Chỉnh kích thước
-        color: '#B5C99A' // Chỉnh màu sắc cho hợp với theme của bạn
-      }} 
-      spin 
+    <LoadingOutlined
+      className="custom-spinner"
+      spin
     />
   );
+  
   useEffect(() => {
     // Nếu đã xác thực thành công, chuyển ngay đến dashboard
     if (authState.isAuthenticated) {
@@ -28,13 +26,15 @@ const LoginForm = () => {
       navigate('/dashboard');
     }
   }, [authState.isAuthenticated, navigate]);
+
   if (authState.isLoading) {
     return (
-      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+      <div className="loading-container">
         <Spin indicator={customIndicator} />
       </div>
     );
   }
+
   const onFinish = async (values) => {
     try {
       await loginUser(values.username, values.password)
@@ -48,50 +48,23 @@ const LoginForm = () => {
   const onFinishFailed = (errorInfo) => {
     console.log('Failed:', errorInfo);
     console.log(errorInfo)
-    // setIsLoading({...isLoading, authLoading: false})
   };
 
   return (
-    <div style={{
-      backgroundColor: '#F5F5DC', // Màu nền kem nhạt
-      justifyContent: 'center',
-      alignItems: 'center',
-      fontFamily: "'Montserrat', sans-serif",
-      borderRadius: '20px', // Font chữ tương tự
-    }}>
-      <Row style={{
-        width: 800,
-        boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
-        borderRadius: '20px',
-        overflow: 'hidden',
-        backgroundColor: 'white'
-      }}>
+    <div className="login-container">
+      <Row className="login-row">
         {/* Cột bên trái (Logo) */}
-        <Col span={10} style={{
-          backgroundImage: `url(${logo})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          padding: '40px'
-        }}>
+        <Col span={10} 
+          className="login-logo-column"
+          style={{
+            backgroundImage: `url(${logo})`
+          }}
+        >
         </Col>
 
         {/* Cột bên phải (Form) */}
-        <Col span={14} style={{
-          padding: '60px 80px',
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center'
-        }}>
-          <Title level={2} style={{
-            textAlign: 'center',
-            marginBottom: '40px',
-            fontWeight: 'bold',
-            color: '#333'
-          }}>
+        <Col span={14} className="login-form-column">
+          <Title level={2} className="login-title">
             ĐĂNG NHẬP
           </Title>
           <Form
@@ -107,15 +80,9 @@ const LoginForm = () => {
             >
               <Input
                 prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.45)' }} />}
-                placeholder=""
+                placeholder="Tên đăng nhập"
                 size="large"
-                style={{
-                  borderRadius: '25px',
-                  backgroundColor: '#fff',
-                  borderColor: '#000',
-                  height: '50px',
-                  paddingLeft: '20px'
-                }}
+                className="login-input"
               />
             </Form.Item>
 
@@ -124,17 +91,11 @@ const LoginForm = () => {
               rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
             >
               <Input.Password
-                prefix={<EyeInvisibleOutlined style={{ color: 'rgba(0,0,0,.45)' }} />}
-                placeholder=""
+                prefix={<EyeOutlined style={{ color: 'rgba(0,0,0,.45)' }} />}
+                placeholder="Mật khẩu"
                 size="large"
-                style={{
-                  borderRadius: '25px',
-                  backgroundColor: '#fff',
-                  borderColor: '#000',
-                  height: '50px',
-                  paddingLeft: '20px'
-                }}
-                iconRender={visible => (visible ? <EyeInvisibleOutlined /> : <EyeInvisibleOutlined />)}
+                className="login-input"
+                iconRender={visible => (visible ? <EyeOutlined /> : <EyeInvisibleOutlined />)}
               />
             </Form.Item>
 
@@ -143,16 +104,7 @@ const LoginForm = () => {
                 type="primary"
                 htmlType="submit"
                 size="large"
-                style={{
-                  width: '100%',
-                  borderRadius: '25px',
-                  backgroundColor: '#B5C99A',
-                  borderColor: '#B5C99A',
-                  height: '50px',
-                  fontSize: '16px',
-                  fontWeight: 'bold',
-                  color: '#333'
-                }}
+                className="login-button"
               >
                 Đăng nhập
               </Button>
