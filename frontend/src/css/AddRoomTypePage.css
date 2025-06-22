@@ -1,0 +1,109 @@
+/* frontend/src/css/AddRoomTypePage.css */
+:root {
+  --add-room-type-text: #777d71;
+  --add-room-type-primary: #bbd38b;
+  --add-room-type-primary-hover: #a8c076;
+  --add-room-type-page-background: #f7f6e7;
+  --add-room-type-border: #dfddc5;
+  --add-room-type-form-background: #ffffff;
+}
+
+.add-room-type-page {
+  background-color: var(--add-room-type-page-background);
+  min-height: 100vh;
+  padding: 20px 40px;
+  font-family: 'Inter', sans-serif;
+}
+
+.add-room-type-page .top-button-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.add-room-type-page .primary-button {
+  background-color: var(--add-room-type-primary);
+  border-color: var(--add-room-type-primary);
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  min-width: 120px;
+  transition: all 0.2s ease-in-out;
+}
+
+.add-room-type-page .primary-button:hover,
+.add-room-type-page .primary-button:focus {
+  background-color: var(--add-room-type-primary-hover) !important;
+  border-color: var(--add-room-type-primary-hover) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1) !important;
+}
+
+.add-room-type-page .secondary-button {
+  border-radius: 8px;
+  font-weight: 600;
+  border-color: var(--add-room-type-border);
+  color: var(--add-room-type-text);
+  min-width: 120px;
+  transition: all 0.2s ease-in-out;
+}
+
+.add-room-type-page .secondary-button:hover,
+.add-room-type-page .secondary-button:focus {
+  border-color: var(--add-room-type-primary) !important;
+  color: var(--add-room-type-primary) !important;
+  transform: translateY(-2px);
+}
+
+.add-room-type-page .form-container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px;
+  background-color: var(--add-room-type-form-background);
+  border-radius: 12px;
+  border: 1px solid var(--add-room-type-border);
+  box-shadow: 0 10px 30px -10px var(--add-room-type-border);
+}
+
+.add-room-type-page .page-title {
+  text-align: center;
+  margin-bottom: 40px;
+  color: var(--add-room-type-text);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.add-room-type-page .form-item-label {
+  color: var(--add-room-type-text);
+  font-weight: 600;
+}
+
+.add-room-type-page .custom-input,
+.add-room-type-page .ant-input-number {
+  border-color: var(--add-room-type-border);
+  border-radius: 8px;
+  width: 100%;
+}
+
+.add-room-type-page .custom-textarea {
+  border-color: var(--add-room-type-border);
+  border-radius: 8px;
+  resize: none;
+}
+
+.add-room-type-page .amenities-group {
+  width: 100%;
+  color: var(--add-room-type-text);
+}
+
+.add-room-type-page .amenities-group .ant-checkbox-wrapper {
+    color: inherit;
+}
+
+.add-room-type-page .form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 30px;
+} 
