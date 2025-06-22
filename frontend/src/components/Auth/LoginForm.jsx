@@ -56,8 +56,8 @@ const LoginForm = () => {
       backgroundColor: '#F5F5DC', // Màu nền kem nhạt
       justifyContent: 'center',
       alignItems: 'center',
-      width: '100%',
-      fontFamily: "'Montserrat', sans-serif" // Font chữ tương tự
+      fontFamily: "'Montserrat', sans-serif",
+      borderRadius: '20px', // Font chữ tương tự
     }}>
       <Row style={{
         width: 800,
