@@ -10,9 +10,10 @@ import AddRoomPage from "./pages/AddRoomPage";
 import { AddRoomProvider } from "./contexts/AddRoomContext";
 import { AddRoomTypeProvider } from "./contexts/AddRoomTypeContext";
 import AddRoomTypePage from "./pages/AddRoomTypePage";
-import RoomListPage from "./pages/RoomListPage";
+
 import RoomTypeListPage from "./pages/RoomTypeListPage";
 import { RoomTypeListProvider } from "./contexts/RoomTypeListContext";
+import RoomListPage from './pages/RoomListPage';
 import { RoomListProvider } from "./contexts/RoomListContext";
 import UserInfoPage from "./pages/UserInfoPage";
 const App = () => {
@@ -20,58 +21,14 @@ const App = () => {
     <LoginProvider>
       <Routes>
         <Route path="/login" element={<LoginForm />} />
-        <Route
-          path="/dashboard"
-          element={
-            <ProtectedRoute>
-              <Dashboard />
-            </ProtectedRoute>
-          }
-        >
-          <Route index element={<RoomListPage />} />
-          <Route path="room-list" element={<RoomListPage />} />
-          <Route
-            path="add-room"
-            element={
-              <AddRoomProvider>
-                <AddRoomPage />
-              </AddRoomProvider>
-            }
-          />
+        <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>}>
+          <Route index element = {<UserInfoPage />} />
+          <Route path="room-list" element={<RoomListProvider><RoomListPage /></RoomListProvider>} />
+          <Route path="add-room" element={<AddRoomProvider><AddRoomPage /></AddRoomProvider>} />
+          <Route path="room-type-list" element={<RoomTypeListProvider><RoomTypeListPage /></RoomTypeListProvider>} />
         </Route>
-        <Route path="/test" element={<Test />} />
-        <Route
-          path="/add-room-type"
-          element={
-            <AddRoomTypeProvider>
-              <AddRoomTypePage />
-            </AddRoomTypeProvider>
-          }
-        />
-        <Route
-          path="/room-list"
-          element={
-            <RoomListProvider>
-              <RoomListPage />
-            </RoomListProvider>
-          }
-        />
-        <Route
-          path="/room-type-list"
-          element={
-            <RoomTypeListProvider>
-              <RoomTypeListPage />
-            </RoomTypeListProvider>
-          }
-        />
-        <Route
-          path="/user-info"
-          element={
-            <ProtectedRoute>
-              <UserInfoPage />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/add-room-type" element={<AddRoomTypeProvider><AddRoomTypePage /></AddRoomTypeProvider>}/>
+        <Route path="/user-info" element={<UserInfoPage />} />
       </Routes>
     </LoginProvider>
   );

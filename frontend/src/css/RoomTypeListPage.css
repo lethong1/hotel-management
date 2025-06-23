@@ -1,0 +1,9 @@
+.room-type-list-page {
+    background-color: var(--page-background);
+    font-family: 'Inter', sans-serif;
+    padding: 40px 20px 20px 20px;
+    height: 92%;
+    width: 130%;
+    box-sizing: border-box;
+    justify-content: center;
+}

@@ -4,7 +4,7 @@ from amenities.serializers import AmenitySerializer
 from amenities.models import Amenity
 class RoomTypeSerializer(serializers.ModelSerializer):
     amenities = AmenitySerializer(many=True, read_only=True)
-    amenities_id = serializers.PrimaryKeyRelatedField(queryset=Amenity.objects.all(), source='amenities', write_only=True)
+    amenities_id = serializers.PrimaryKeyRelatedField(many = True, queryset=Amenity.objects.all(), source='amenities', write_only=True)
 
     class Meta:
         model = RoomType

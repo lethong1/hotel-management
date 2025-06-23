@@ -9,10 +9,13 @@
 }
 
 .add-room-type-page {
-  background-color: var(--add-room-type-page-background);
-  min-height: 100vh;
-  padding: 20px 40px;
+  background-color: var(--page-background);
   font-family: 'Inter', sans-serif;
+  padding: 40px 20px 20px 20px;
+  height: 92%;
+  width: 130%;
+  box-sizing: border-box;
+  justify-content: center;
 }
 
 .add-room-type-page .top-button-container {

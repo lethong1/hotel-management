@@ -21,7 +21,8 @@ const UserInfoPage = () => {
     : "Chưa cập nhật";
 
   return (
-    <div className="user-info-container">
+    <div className="user-info-page">
+      <div className="user-info-container">
       <h1 className="user-info-title">
         Hồ sơ cá nhân
         <span className="user-info-title-underline"></span>
@@ -64,6 +65,7 @@ const UserInfoPage = () => {
           </div>
         </div>
       </div>
+    </div>
     </div>
   );
 };

@@ -19,7 +19,7 @@ const Sidebar = () => {
             backgroundColor: 'white', padding: '5px', borderRadius: '10%'}}/>
           <span>Danh sách phòng</span>
         </Link>
-        <Link to="/dashboard/room-type" className="menu-item">
+        <Link to="/dashboard/room-type-list" className="menu-item">
           <img src={room} alt="room_icon"  
             style={{width: '40px', height: '40px', marginRight: '10px',
             backgroundColor: 'white', padding: '5px', borderRadius: '10%'}}/>

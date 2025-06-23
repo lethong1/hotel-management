@@ -17,7 +17,7 @@ import {
 import { PlusOutlined } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import { useRoomTypeList } from "../contexts/RoomTypeListContext";
-
+import "../css/RoomTypeListPage.css";
 const { Title, Text } = Typography;
 
 // Hàm định dạng tiền tệ
@@ -96,7 +96,7 @@ const RoomTypeListPage = () => {
   ];
 
   return (
-    <>
+    <div className="room-type-list-page">
       <style>{tableStyles}</style>
       <div
         style={{
@@ -181,29 +181,29 @@ const RoomTypeListPage = () => {
             <Checkbox.Group style={{ width: "100%" }}>
               <Row>
                 <Col span={8}>
-                  <Checkbox value="wifi">Wifi</Checkbox>
+                  <Checkbox value={8}>Wifi</Checkbox>
                 </Col>
                 <Col span={8}>
-                  <Checkbox value="air_conditioner">Điều hòa</Checkbox>
+                  <Checkbox value={4}>Điều hòa</Checkbox>
                 </Col>
                 <Col span={8}>
-                  <Checkbox value="tv">Tivi</Checkbox>
+                  <Checkbox value={5}>Tivi</Checkbox>
                 </Col>
                 <Col span={8}>
-                  <Checkbox value="pool">Bể bơi</Checkbox>
+                  <Checkbox value={2}>Bể bơi</Checkbox>
                 </Col>
                 <Col span={8}>
-                  <Checkbox value="gym">Gym</Checkbox>
+                  <Checkbox value={3}>Gym</Checkbox>
                 </Col>
                 <Col span={8}>
-                  <Checkbox value="bathtub">Bồn tắm</Checkbox>
+                  <Checkbox value={6}>Bồn tắm</Checkbox>
                 </Col>
               </Row>
             </Checkbox.Group>
           </Form.Item>
         </Form>
       </Modal>
-    </>
+    </div>
   );
 };
 

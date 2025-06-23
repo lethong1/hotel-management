@@ -68,7 +68,13 @@ export const RoomTypeListProvider = ({ children }) => {
   // Logic Sửa
   const showEditModal = (record) => {
     setEditingRecord(record);
-    form.setFieldsValue(record);
+    form.setFieldsValue({
+      name: record.name,
+      capacity: record.capacity,
+      description: record.description,
+      price: record.price,
+      amenities: [record.raw.amenities?.map(a => a.id)],
+    });
     setIsModalVisible(true);
   };
 
@@ -85,13 +91,15 @@ export const RoomTypeListProvider = ({ children }) => {
         capacity: values.capacity,
         description: values.description,
         price_per_night: values.price,
-        // amenities: ... (nếu có sửa tiện nghi)
+        amenities: values.amenities,
+        amenities_id: values.amenities,
       });
       message.success("Cập nhật thành công!");
       handleCancelModal();
       fetchRoomTypes();
-    } catch {
+    } catch (err) {
       message.error("Cập nhật thất bại!");
+      console.error(err.response?.data || err);
     }
   };
 

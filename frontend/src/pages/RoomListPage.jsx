@@ -1,4 +1,3 @@
-
 // File: src/pages/RoomListPage.jsx
 import React from "react";
 import {
@@ -117,7 +116,7 @@ const RoomListPage = () => {
   ];
 
   return (
-    <>
+    <div className="room-list-page">
       <div
         style={{
           backgroundColor: palette.pageBackground,
@@ -189,10 +188,16 @@ const RoomListPage = () => {
               <Option value="cleaning">Đang chờ dọn</Option>
             </Select>
           </Form.Item>
+          <Form.Item name="roomTypeId" hidden>
+            <Input type="hidden" />
+          </Form.Item>
+          <Form.Item name="floor" hidden>
+            <Input type="hidden" />
+          </Form.Item>
           {/* Bạn có thể thêm các trường khác để sửa ở đây nếu cần */}
         </Form>
       </Modal>
-    </>
+    </div>
   );
 };
 

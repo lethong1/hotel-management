@@ -29,11 +29,13 @@ export const RoomListProvider = ({ children }) => {
         ? res.data.map((room) => ({
             key: room.id,
             roomNumber: room.room_number,
+            roomTypeId: room.room_type?.id,
             roomType: room.room_type?.name || "",
             floor: room.floor,
             capacity: room.room_type?.capacity || "",
             status: room.status,
             price: parseFloat(room.room_type?.price_per_night) || 0,
+            amenities: room.room_type?.amenities || [],
             raw: room, // lưu lại object gốc nếu cần
           }))
         : [];
@@ -69,7 +71,8 @@ export const RoomListProvider = ({ children }) => {
     form.setFieldsValue({
       roomNumber: room.roomNumber,
       status: room.status,
-      // Thêm các trường khác nếu cần
+      roomTypeId: room.roomTypeId,
+      floor: room.floor,
     });
     setIsEditModalVisible(true);
   };
@@ -85,13 +88,15 @@ export const RoomListProvider = ({ children }) => {
       await apiClient.put(`/rooms/${editingRoom.key}/`, {
         room_number: values.roomNumber,
         status: values.status,
-        // Thêm các trường khác nếu cần
+        room_type_id: values.roomTypeId,
+        floor: values.floor, 
       });
       message.success("Cập nhật thành công!");
       handleCancelModal();
       fetchRooms();
-    } catch {
+    } catch (err) {
       message.error("Cập nhật thất bại!");
+      console.error(err.response?.data || err);
     }
   };
 
