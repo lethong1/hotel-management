@@ -1,14 +1,17 @@
 .user-panel-container {
   display: flex;
   gap: 10px;
-  background-color: var(--background-color);
+  background-color: #fff;
   width: 82%;
-  height: 9%;
+  height: 8%;
   position: absolute;
   top: 0;
   right: 0;
-  padding: 10px;
-  justify-content: flex-end;
+  padding: 20px 32px 20px 32px;
+  align-items: center;
+  box-sizing: border-box;
+  border-bottom: 1px solid var(--border-color);
+  z-index: 10;
 }
 
 .user-profile {
@@ -56,8 +59,6 @@
   margin: 5px;
   border: 1px solid var(--border-color);
 }
-
- 
 
 .dropdown-item:hover {
   background: #f0f0f0;

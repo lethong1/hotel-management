@@ -224,6 +224,9 @@ const AddRoomPageStyled = () => {
                     <Col span={12}>
                       <Checkbox value="parking">Bãi đậu xe</Checkbox>
                     </Col>
+                    <Col span={12}>
+                      <Checkbox value="buffet">Buffet</Checkbox>
+                    </Col>
                   </Row>
                 </Checkbox.Group>
               </Form.Item>
