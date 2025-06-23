@@ -8,9 +8,12 @@
 
 .add-room-page {
   background-color: var(--page-background);
-  min-height: 100vh;
-  padding: 20px 40px;
   font-family: 'Inter', sans-serif;
+  padding: 40px 20px 20px 20px;
+  height: 92%;
+  width: 130%;
+  box-sizing: border-box;
+  justify-content: center;
 }
 
 .add-room-page .top-button-container {

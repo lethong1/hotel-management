@@ -56,10 +56,10 @@ const Panel = () => {
             {/* Chỉ hiện dropdown menu khi isDropdownOpen là true */}
             {isDropdownOpen && (
                 <div className="dropdown-menu">
+                    <button className="dropdown-item">Cài đặt</button>
                     <button onClick={handleLogout} className="dropdown-item">
                         Đăng xuất
                     </button>
-                    <button className="dropdown-item">Cài đặt</button>
                 </div>
             )}
         </div>

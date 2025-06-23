@@ -1,4 +1,3 @@
-
 import "./App.css";
 import LoginForm from "./components/Auth/LoginForm";
 import Dashboard from "./pages/Dashboard";
@@ -11,6 +10,8 @@ import AddRoomPage from "./pages/AddRoomPage";
 import { AddRoomProvider } from "./contexts/AddRoomContext";
 import { AddRoomTypeProvider } from "./contexts/AddRoomTypeContext";
 import AddRoomTypePage from "./pages/AddRoomTypePage";
+import RoomListPage from './pages/RoomListPage';
+
 const App = () => {
   return (
     <LoginProvider>
@@ -23,16 +24,12 @@ const App = () => {
               <Dashboard />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route index element={<RoomListPage />} />
+          <Route path="room-list" element={<RoomListPage />} />
+          <Route path="add-room" element={<AddRoomProvider><AddRoomPage /></AddRoomProvider>} />
+        </Route>
         <Route path="/test" element={<Test />} />
-        <Route
-          path="/add-room"
-          element={
-            <AddRoomProvider>
-              <AddRoomPage />
-            </AddRoomProvider>
-          }
-        />
         <Route
           path="/add-room-type"
           element={

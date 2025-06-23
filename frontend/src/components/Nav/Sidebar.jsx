@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import '../../css/Nav/Sidebar.css';
 import logo from '../../assets/logo.png';
 import room from '../../assets/room.png';
@@ -12,22 +13,22 @@ const Sidebar = () => {
       </div>
       <div className="sidebar-menu">
         <p className="menu-title">QUẢN LÝ PHÒNG</p>
-        <a href="#" className="menu-item">
-        <img src={list_icon} alt="list_icon"  
-          style={{width: '40px', height: '40px', marginRight: '10px',
-          backgroundColor: 'white', padding: '5px', borderRadius: '10%'}}/>
+        <Link to="/dashboard/room-list" className="menu-item">
+          <img src={list_icon} alt="list_icon"  
+            style={{width: '40px', height: '40px', marginRight: '10px',
+            backgroundColor: 'white', padding: '5px', borderRadius: '10%'}}/>
           <span>Danh sách phòng</span>
-        </a>
-        <a href="#" className="menu-item">
+        </Link>
+        <Link to="/dashboard/room-type" className="menu-item">
           <img src={room} alt="room_icon"  
-          style={{width: '40px', height: '40px', marginRight: '10px',
-          backgroundColor: 'white', padding: '5px', borderRadius: '10%'}}/>
-          <span>Loại Phòng</span>
-        </a>
-        <a href="#" className="menu-item">
+            style={{width: '40px', height: '40px', marginRight: '10px',
+            backgroundColor: 'white', padding: '5px', borderRadius: '10%'}}/>
+          <span>Loại phòng</span>
+        </Link>
+        <a href="/dashboard/amenities" className="menu-item">
           <img src={amenities} alt="amenities_icon"  
-          style={{width: '40px', height: '40px', marginRight: '10px',
-          backgroundColor: 'white', padding: '5px', borderRadius: '10%'}}/>
+            style={{width: '40px', height: '40px', marginRight: '10px',
+            backgroundColor: 'white', padding: '5px', borderRadius: '10%'}}/>
           <span>Tiện Nghi</span>
         </a>
       </div>
