@@ -1,0 +1,29 @@
+.room-management-table .ant-table {
+    border: 1px solid #DFDDC5;
+    border-radius: 0;
+}
+.room-management-table .ant-table-thead > tr > th {
+    background-color: #E9E8DA !important;
+    color: #333;
+    font-weight: 600;
+    border-bottom: 1px solid #DFDDC5;
+    border-right: 1px solid #DFDDC5;
+}
+.room-management-table .ant-table-thead > tr > th:last-child {
+    border-right: none;
+}
+.room-management-table .ant-table-tbody > tr > td {
+    border-bottom: 1px solid #DFDDC5;
+    border-right: 1px solid #DFDDC5;
+}
+.room-management-table .ant-table-tbody > tr > td:last-child {
+    border-right: none;
+}
+.action-link-delete {
+    color: #2563EB;
+    font-weight: 500;
+}
+.action-link-edit {
+    color: #333;
+    font-weight: 500;
+} 
