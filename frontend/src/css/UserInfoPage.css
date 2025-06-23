@@ -1,0 +1,98 @@
+/* UserInfoPage.css */
+
+.user-info-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 60px auto;
+  padding: 80px 64px;
+  border-radius: 20px;
+  box-shadow: 0 6px 30px rgba(0,0,0,0.08);
+  background: #fff;
+  text-align: center;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.user-info-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  color: #2c3e50;
+  position: relative;
+  display: inline-block;
+}
+.user-info-title-underline {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background: linear-gradient(90deg, #3498db, #9b59b6);
+  border-radius: 3px;
+}
+
+.user-info-flex {
+  display: flex;
+  align-items: flex-start;
+  gap: 60px;
+  justify-content: center;
+}
+
+.user-info-avatar-section {
+  flex: 0 0 260px;
+  text-align: center;
+}
+.user-info-avatar {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  border: 4px solid #f8f9fa;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+.user-info-fullname {
+  margin: 12px 0 4px;
+  color: #2c3e50;
+  font-size: 1.4em;
+}
+.user-info-role {
+  color: #7f8c8d;
+  margin-bottom: 8px;
+  font-size: 1em;
+}
+.user-info-created {
+  color: #95a5a6;
+  font-size: 0.9em;
+  margin-top: 16px;
+}
+
+.user-info-details {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 30px 40px;
+  text-align: left;
+  background: #f9fafb;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: inset 0 1px 4px rgba(0,0,0,0.03);
+}
+.user-info-label {
+  font-weight: 600;
+  color: #555;
+  font-size: 0.9em;
+  margin-bottom: 4px;
+}
+.user-info-value {
+  color: #222;
+  font-weight: 500;
+  font-size: 1em;
+}
+
+.user-info-login-message {
+  padding: 40px;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #666;
+} 

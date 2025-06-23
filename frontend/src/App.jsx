@@ -10,12 +10,11 @@ import AddRoomPage from "./pages/AddRoomPage";
 import { AddRoomProvider } from "./contexts/AddRoomContext";
 import { AddRoomTypeProvider } from "./contexts/AddRoomTypeContext";
 import AddRoomTypePage from "./pages/AddRoomTypePage";
-
+import RoomListPage from "./pages/RoomListPage";
 import RoomTypeListPage from "./pages/RoomTypeListPage";
 import { RoomTypeListProvider } from "./contexts/RoomTypeListContext";
-import RoomListPage from './pages/RoomListPage';
-
-
+import { RoomListProvider } from "./contexts/RoomListContext";
+import UserInfoPage from "./pages/UserInfoPage";
 const App = () => {
   return (
     <LoginProvider>
@@ -31,7 +30,14 @@ const App = () => {
         >
           <Route index element={<RoomListPage />} />
           <Route path="room-list" element={<RoomListPage />} />
-          <Route path="add-room" element={<AddRoomProvider><AddRoomPage /></AddRoomProvider>} />
+          <Route
+            path="add-room"
+            element={
+              <AddRoomProvider>
+                <AddRoomPage />
+              </AddRoomProvider>
+            }
+          />
         </Route>
         <Route path="/test" element={<Test />} />
         <Route
@@ -56,6 +62,14 @@ const App = () => {
             <RoomTypeListProvider>
               <RoomTypeListPage />
             </RoomTypeListProvider>
+          }
+        />
+        <Route
+          path="/user-info"
+          element={
+            <ProtectedRoute>
+              <UserInfoPage />
+            </ProtectedRoute>
           }
         />
       </Routes>
