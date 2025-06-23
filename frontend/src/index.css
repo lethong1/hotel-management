@@ -66,3 +66,33 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+/* ---- Cài đặt chung và font chữ ---- */
+
+:root {
+    --primary-light: #e9f5f6;
+    --border-color: #e0e0e0;
+    --text-color: #ffffff;
+    --text-secondary: #000000;
+    --background-color: #f7f6e7;
+    --sidebar-bg: #777d71;
+    
+    --green-status: #d4edda;
+    --green-text: #3fc15e;
+    --red-status: #f8d7da;
+    --red-text: #721c24;
+    --blue-status: #cce5ff;
+    --blue-text: #004085;
+    --orange-status: #fff3cd;
+    --orange-text: #856404;
+    --pink-status: #f8d7da;
+    --pink-text: #721c24;
+}
+
+body {
+  margin: 0;
+  font-family: 'Be Vietnam Pro', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}

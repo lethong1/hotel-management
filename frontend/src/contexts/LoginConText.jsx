@@ -1,6 +1,6 @@
 import React, { useReducer, useEffect } from 'react'
 import { createContext } from 'react'
-import axios from 'axios'
+import apiClient from '../api/apiClient'
 import { LoginReducer } from '../reducers/LoginReducer'
 export const LoginContext = createContext();
 export const LoginProvider = ({ children }) => {
@@ -22,15 +22,13 @@ export const LoginProvider = ({ children }) => {
       return;
     }
 
-    dispatch({type: 'AUTH_LOADING'})
     try {
-      await axios.post('http://localhost:8000/api/token/verify/', {
-        token: token
-      })
-      dispatch({type: 'AUTH_SUCCESS', payload: {user: null}})
+      const response = await apiClient.get('/users/me/')
+      dispatch({type: 'AUTH_SUCCESS', payload: {user: response.data}})
 
     } catch (error) {      
-      console.log(error)
+      localStorage.removeItem('accessToken')
+      localStorage.removeItem('refreshToken')
       dispatch({type: 'AUTH_ERROR'})
     }
   }
@@ -38,23 +36,16 @@ export const LoginProvider = ({ children }) => {
   const loginUser = async (username, password) => {
     dispatch({type: 'AUTH_LOADING'})
     try {
-      const response = await axios.post('http://localhost:8000/api/token/', { username, password })
+      const response = await apiClient.post('/token/', { username, password })
       
       // Kiểm tra response có access và refresh token không
       if (response.data.access && response.data.refresh) {
         localStorage.setItem('accessToken', response.data.access)
         localStorage.setItem('refreshToken', response.data.refresh)
-        
-        // Log để debug
-        console.log('Access Token:', response.data.access)
-        console.log('Refresh Token:', response.data.refresh)
-        console.log('Tokens saved to localStorage')
-        
-        // Gọi loadUser sau khi lưu token
-        dispatch({type: 'AUTH_SUCCESS', payload: {user: null}})
+        await loadUser(); 
+      
         return response.data
       } else {
-        console.error('No tokens received from server')
         throw new Error('Authentication failed - no tokens received')
       }
     } catch (error) {
@@ -64,7 +55,9 @@ export const LoginProvider = ({ children }) => {
     }
   }
   const logoutUser = () => {
-    dispatch({ type: 'AUTH_ERROR' });
+    localStorage.removeItem('accessToken')
+    localStorage.removeItem('refreshToken')
+    dispatch({ type: 'LOGOUT' });
   }
   const authContextData = {
     loginUser,

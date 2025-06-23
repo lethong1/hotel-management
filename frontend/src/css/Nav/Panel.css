@@ -1,0 +1,64 @@
+.user-panel-container {
+  display: flex;
+  gap: 10px;
+  background-color: var(--background-color);
+  width: 82%;
+  height: 9%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 10px;
+  justify-content: flex-end;
+}
+
+.user-profile {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-left: auto;
+  cursor: pointer;
+}
+.user-profile span {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-color);
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+.user-profile img {
+  width: 40px;
+  height: 40px;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 10px;
+  background: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+  border-radius: 8px;
+  min-width: 140px;
+  z-index: 100;
+  margin-top: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-item {
+  background: none;
+  text-align: left;
+  font-size: 15px;
+  color: #333;
+  cursor: pointer;
+  transition: background 0.2s;
+  border-radius: 5px;
+  margin: 5px;
+  border: 1px solid var(--border-color);
+}
+
+ 
+
+.dropdown-item:hover {
+  background: #f0f0f0;
+}

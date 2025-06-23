@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'; 
 import { Row, Col, Input, Button, Typography, Form } from 'antd';
 import { EyeOutlined, EyeInvisibleOutlined, UserOutlined, LoadingOutlined } from '@ant-design/icons';
-import logo from '../../assets/logo.png' // Lưu ý: Bạn cần tạo file logo.svg riêng
+import logo from '../../assets/logo.png'
 import { LoginContext } from '../../contexts/LoginConText'
 import { useNavigate } from 'react-router-dom';
 import { message, Spin } from 'antd';

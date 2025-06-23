@@ -4,6 +4,8 @@ from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework import generics, viewsets
 from django.contrib.auth import get_user_model
 from .permissions import IsManagerOrAdmin, IsOwnerOrManagerOrAdmin
+from rest_framework.decorators import action
+from rest_framework.response import Response
 
 User = get_user_model()
 
@@ -25,6 +27,13 @@ class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated, IsOwnerOrManagerOrAdmin]
+
+    #Show only user info   
+    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
+    def me(self, request):
+        user = request.user
+        serializer = self.get_serializer(user)
+        return Response(serializer.data)
 
     def get_permissions(self):
         if self.action in ['list','create', 'destroy']:

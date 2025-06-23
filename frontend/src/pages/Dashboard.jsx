@@ -52,10 +52,17 @@
 
 
 import React from 'react'
-
+import Sidebar from '../components/Nav/Sidebar'
+import Panel from '../components/Nav/Panel'
 const Dashboard = () => {
   return (
-    <div>Dashboard</div>
+    <div>
+        <Sidebar />
+        <Panel />
+        <div className="dashboard-content">
+          <h1>Trang chủ</h1>
+        </div>
+      </div>
   )
 }
 
