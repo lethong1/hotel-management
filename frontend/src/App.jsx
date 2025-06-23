@@ -15,6 +15,8 @@ import RoomTypeListPage from "./pages/RoomTypeListPage";
 import { RoomTypeListProvider } from "./contexts/RoomTypeListContext";
 import { RoomListProvider } from "./contexts/RoomListContext";
 import UserInfoPage from "./pages/UserInfoPage";
+import AmenityManagementPage from "./pages/AmenityManagementPage";
+import { AmenityProvider } from "./contexts/AmenityContext";
 const App = () => {
   return (
     <LoginProvider>
@@ -70,6 +72,14 @@ const App = () => {
             <ProtectedRoute>
               <UserInfoPage />
             </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/amenity-management"
+          element={
+            <AmenityProvider>
+              <AmenityManagementPage />
+            </AmenityProvider>
           }
         />
       </Routes>
