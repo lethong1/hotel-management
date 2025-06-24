@@ -129,7 +129,7 @@ const BookingPage = () => {
         title={
           <Title level={4}>Chi tiết phòng {selectedRoom?.roomNumber}</Title>
         }
-        open={isDetailModalVisible}
+        visible={isDetailModalVisible}
         onCancel={handleCancelDetailModal}
         footer={[
           <Button key="back" onClick={handleCancelDetailModal}>

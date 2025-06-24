@@ -65,47 +65,22 @@ export const BookingProvider = ({ children }) => {
     setSelectedRoom(null);
   };
 
-  // Hàm xác nhận đặt phòng (tạo booking)
-  const handleConfirmBooking = async (roomToBook, bookingRange) => {
-    if (!roomToBook || !bookingRange || !bookingRange[0] || !bookingRange[1])
-      return;
+  // Hàm xác nhận đặt phòng (thay thế hàm update cũ)
+  const handleConfirmBooking = async (roomToBook) => {
+    if (!roomToBook) return;
 
     try {
-      // Giả sử customer_id là 1 (cần lấy động trong thực tế)
-      const payload = {
-        room_id: roomToBook.key,
-        customer_id: 1, // TODO: lấy từ user hoặc chọn khách hàng
-        check_in_date: bookingRange[0].toISOString(),
-        check_out_date: bookingRange[1].toISOString(),
-        status: "confirmed",
-      };
-      await apiClient.post("/bookings/", payload);
+      // Tự động cập nhật trạng thái thành 'occupied'
+      await apiClient.patch(`/rooms/${roomToBook.key}/`, {
+        status: "occupied",
+      });
       message.success(`Phòng ${roomToBook.roomNumber} đã được đặt thành công!`);
+
+      // Đóng modal và tải lại dữ liệu
       handleCancelDetailModal();
       fetchRooms();
     } catch (err) {
-      if (err.response && err.response.data) {
-        // Kiểm tra lỗi phòng đã được đặt trong khoảng thời gian này
-        if (
-          err.response.data.non_field_errors &&
-          Array.isArray(err.response.data.non_field_errors) &&
-          err.response.data.non_field_errors.some((msg) =>
-            msg.includes("được đặt trong khoảng thời gian")
-          )
-        ) {
-          message.error(
-            "Phòng này đã có người đặt trong khoảng thời gian bạn chọn. Vui lòng chọn phòng khác hoặc đổi ngày."
-          );
-        } else {
-          const detail =
-            typeof err.response.data === "string"
-              ? err.response.data
-              : JSON.stringify(err.response.data);
-          message.error(`Đặt phòng thất bại: ${detail}`);
-        }
-      } else {
-        message.error("Thao tác đặt phòng thất bại!");
-      }
+      message.error("Thao tác đặt phòng thất bại!");
     }
   };
 
@@ -113,19 +88,6 @@ export const BookingProvider = ({ children }) => {
   const handleCheckoutRoom = async (roomToCheckout) => {
     if (!roomToCheckout) return;
     try {
-      // 1. Lấy booking active của phòng này
-      const res = await apiClient.get(
-        `/bookings/?room_id=${roomToCheckout.key}&status=confirmed`
-      );
-      const activeBookings = Array.isArray(res.data) ? res.data : [];
-      if (activeBookings.length > 0) {
-        // Giả sử chỉ có 1 booking active tại 1 thời điểm
-        const bookingId = activeBookings[0].id;
-        await apiClient.patch(`/bookings/${bookingId}/`, {
-          status: "checked_out", // hoặc "cancel" nếu muốn huỷ
-        });
-      }
-      // 2. Cập nhật trạng thái phòng
       await apiClient.patch(`/rooms/${roomToCheckout.key}/`, {
         status: "available",
       });

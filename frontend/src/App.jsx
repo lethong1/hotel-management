@@ -15,10 +15,8 @@ import { RoomListProvider } from "./contexts/RoomListContext";
 import UserInfoPage from "./pages/UserInfoPage";
 import AmenityManagementPage from "./pages/AmenityManagementPage";
 import { AmenityProvider } from "./contexts/AmenityContext";
-import BookingPage from "./pages/BookingPage";
 import { BookingProvider } from "./contexts/BookingContext";
-import { UserManagementProvider } from "./contexts/UserManagementContext";
-import UserManagementPage from "./pages/UserManagementPage";
+import BookingPage from "./pages/BookingPage";
 const App = () => {
   return (
     <LoginProvider>
@@ -83,15 +81,19 @@ const App = () => {
               </BookingProvider>
             }
           />
-          <Route
-            path="user-management"
-            element={
-              <UserManagementProvider>
-                <UserManagementPage />
-              </UserManagementProvider>
-            }
-          />
         </Route>
+        <Route
+          path="/add-room-type"
+          element={
+            <RoomTypeListProvider>
+              <AddRoomTypeProvider>
+                <AmenityProvider>
+                  <AddRoomTypePage />
+                </AmenityProvider>
+              </AddRoomTypeProvider>
+            </RoomTypeListProvider>
+          }
+        />
       </Routes>
     </LoginProvider>
   );
