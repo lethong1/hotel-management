@@ -13,6 +13,7 @@ import {
 import { PlusOutlined } from "@ant-design/icons";
 // Chú ý đường dẫn import này! Nó đi ra khỏi thư mục 'pages' rồi vào thư mục 'contexts'
 import { useRoomTypeList } from "../contexts/RoomTypeListContext";
+import { useAmenity } from "../contexts/AmenityContext";
 import "../css/AddRoomTypePage.css"; // Import file CSS
 
 const { Title, Text } = Typography;
@@ -20,6 +21,7 @@ const { Title, Text } = Typography;
 const AddRoomTypePage = () => {
   const [form] = Form.useForm();
   const { handleAdd } = useRoomTypeList();
+  const { amenities, loading: loadingAmenities } = useAmenity();
 
   const handleSubmit = (values) => {
     handleAdd({
@@ -122,27 +124,15 @@ const AddRoomTypePage = () => {
           >
             <Checkbox.Group className="amenities-group">
               <Row gutter={[8, 12]}>
-                <Col span={8}>
-                  <Checkbox value="wifi">Wifi miễn phí</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="ac">Điều hòa</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="tv">Tivi LCD</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="pool">Bể bơi</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="gym">Gym</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="bathtub">Bồn tắm</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value="parking">Bãi đậu xe</Checkbox>
-                </Col>
+                {loadingAmenities ? (
+                  <Col span={24}>Đang tải tiện nghi...</Col>
+                ) : (
+                  amenities.map((amenity) => (
+                    <Col span={8} key={amenity.id}>
+                      <Checkbox value={amenity.id}>{amenity.name}</Checkbox>
+                    </Col>
+                  ))
+                )}
               </Row>
             </Checkbox.Group>
           </Form.Item>

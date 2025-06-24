@@ -12,7 +12,11 @@ import {
   notification,
   Spin,
 } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
+import {
+  PlusOutlined,
+  CheckCircleFilled,
+  CheckOutlined,
+} from "@ant-design/icons";
 import { useAddRoom } from "../contexts/AddRoomContext"; // Import hook
 import "../css/AddRoomPage.css";
 
@@ -30,7 +34,7 @@ const formatCurrency = (amount) => {
 
 const AddRoomPageStyled = () => {
   const [form] = Form.useForm();
- 
+
   // Lấy state và functions từ Context
   const {
     roomTypeId,
@@ -43,6 +47,10 @@ const AddRoomPageStyled = () => {
     roomTypes, // Lấy danh sách loại phòng
     loadingInitialData, // Lấy trạng thái loading ban đầu
   } = useAddRoom();
+
+  // Lấy danh sách tiện nghi của loại phòng đã chọn
+  const selectedRoomType = roomTypes.find((rt) => rt.id === roomTypeId);
+  const amenities = selectedRoomType?.amenities || [];
 
   const onFinish = async (values) => {
     try {
@@ -197,38 +205,37 @@ const AddRoomPageStyled = () => {
                   <Text className="form-item-label">Danh sách tiện nghi:</Text>
                 }
               >
-                <Checkbox.Group
-                  className="amenities-group"
-                  onChange={handleAmenitiesChange} // GỌI HÀM TỪ CONTEXT
-                  value={selectedAmenities}
-                >
-                  <Row gutter={[8, 12]}>
-                    <Col span={12}>
-                      <Checkbox value="wifi">Wifi miễn phí</Checkbox>
-                    </Col>
-                    <Col span={12}>
-                      <Checkbox value="ac">Điều hòa</Checkbox>
-                    </Col>
-                    <Col span={12}>
-                      <Checkbox value="pool">Bể bơi</Checkbox>
-                    </Col>
-                    <Col span={12}>
-                      <Checkbox value="tv">Tivi LCD</Checkbox>
-                    </Col>
-                    <Col span={12}>
-                      <Checkbox value="gym">Gym</Checkbox>
-                    </Col>
-                    <Col span={12}>
-                      <Checkbox value="bathtub">Bồn tắm</Checkbox>
-                    </Col>
-                    <Col span={12}>
-                      <Checkbox value="parking">Bãi đậu xe</Checkbox>
-                    </Col>
-                    <Col span={12}>
-                      <Checkbox value="buffet">Buffet</Checkbox>
-                    </Col>
-                  </Row>
-                </Checkbox.Group>
+                <div style={{ minHeight: 40 }}>
+                  {roomTypeId && amenities.length > 0 ? (
+                    <ul style={{ paddingLeft: 20, margin: 0 }}>
+                      {amenities.map((amenity) => (
+                        <li
+                          key={amenity.id}
+                          style={{
+                            display: "flex",
+                            alignItems: "center",
+                            marginBottom: 6,
+                          }}
+                        >
+                          <span style={{ color: "#52c41a", marginRight: 8 }}>
+                            <CheckOutlined
+                              style={{ fontSize: 18, color: "#52c41a" }}
+                            />
+                          </span>
+                          <span>{amenity.name}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  ) : roomTypeId && amenities.length === 0 ? (
+                    <span style={{ color: "#888" }}>
+                      Loại phòng này chưa có tiện nghi nào.
+                    </span>
+                  ) : (
+                    <span style={{ color: "#888" }}>
+                      Vui lòng chọn loại phòng để xem tiện nghi.
+                    </span>
+                  )}
+                </div>
               </Form.Item>
             </Col>
           </Row>

@@ -7,6 +7,7 @@ import {
   SaveOutlined,
 } from "@ant-design/icons";
 import { useAmenity } from "../contexts/AmenityContext";
+import "../css/AmenityManagementPage.css";
 
 const { Title, Text } = Typography;
 
@@ -40,92 +41,6 @@ const AmenityManagementPage = () => {
     info: "#bbd38b", // Màu thông tin (xanh dương đậm)
   };
 
-  const styles = `
-  .amenity-grid {
-    border: 1px solid var(--border-color);
-    border-radius: 0;
-    font-family: 'Inter', sans-serif;
-    background: var(--form-background);
-  }
-
-  .amenity-row {
-    display: flex;
-    border-bottom: 1px solid var(--border-color);
-    transition: background-color 0.2s ease;
-  }
-
-  .amenity-row:hover {
-    background-color: #f3f4ef;
-  }
-
-  .amenity-row:last-child {
-    border-bottom: none;
-  }
-
-  .amenity-header {
-    background-color: #e9e8da;
-    font-weight: 600;
-  }
-
-  .amenity-cell {
-    padding: 14px 18px;
-    color: var(--text-color);
-    display: flex;
-    align-items: center;
-    font-size: 15px;
-    background-color: var(--form-background);
-  }
-
-  .amenity-cell-name {
-    flex: 1;
-    border-right: 1px solid var(--border-color);
-    font-weight: 500;
-  }
-
-  .amenity-cell-desc {
-    flex: 2;
-    border-right: 1px solid var(--border-color);
-    font-style: italic;
-    color: var(--text-color);
-  }
-
-  .amenity-cell-actions {
-    width: 150px;
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-  }
-
-  .amenity-cell-actions:last-child {
-    border-right: none;
-  }
-
-  .inline-input {
-    border: 1px solid var(--border-color);
-    border-radius: 6px;
-    padding: 8px 12px;
-    font-size: 14px;
-    color: var(--text-color);
-    background-color: #f9fafb;
-    transition: border 0.2s ease;
-  }
-
-  .inline-input:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(187, 211, 139, 0.2);
-  }
-
-  .action-link-edit {
-    color: #333;
-    font-weight: 500;
-  }
-
-  .action-link-delete {
-    color: #2563eb;
-    font-weight: 500;
-  }
-`;
-
   useEffect(() => {
     document.body.style.setProperty("--primary-color", palette.primary);
     document.body.style.setProperty(
@@ -141,7 +56,6 @@ const AmenityManagementPage = () => {
 
   return (
     <>
-      <style>{styles}</style>
       <div
         style={{
           backgroundColor: palette.pageBackground,
@@ -156,25 +70,7 @@ const AmenityManagementPage = () => {
             alignItems: "center",
             marginBottom: "24px",
           }}
-        >
-          <Title level={3} style={{ margin: 0, color: "#2c3e50" }}>
-            Quản lý Tiện Nghi
-          </Title>
-          <Button
-            icon={<PlusOutlined />}
-            size="large"
-            style={{
-              backgroundColor: palette.primary,
-              color: "#fff",
-              borderRadius: "8px",
-              fontWeight: "600",
-              boxShadow: "0 2px 6px rgba(52, 152, 219, 0.2)",
-            }}
-            onClick={handleInlineAdd}
-          >
-            THÊM TIỆN NGHI
-          </Button>
-        </div>
+        ></div>
 
         <div className="amenity-grid">
           {/* Header */}
