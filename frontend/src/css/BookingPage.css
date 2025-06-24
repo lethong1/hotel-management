@@ -1,0 +1,43 @@
+/* BookingPage.css */
+
+.booking-page-container {
+  background-color: #F7F6E7;
+  min-height: 100vh;
+  padding: 20px 40px;
+  font-family: 'Inter', sans-serif;
+}
+
+.booking-page-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #595959;
+}
+
+.room-booking-table .ant-table {
+  background: #fff;
+  border-radius: 8px;
+}
+
+.booking-primary-btn {
+  background-color: #BBD38B !important;
+  border-color: #BBD38B !important;
+  color: white !important;
+  font-weight: 500;
+}
+
+.booking-modal-amenities {
+  margin-top: 16px;
+}
+
+.booking-modal-amenities ul {
+  padding-left: 20px;
+  margin: 0;
+}
+
+.booking-modal-amenities li {
+  margin-bottom: 4px;
+}
+
+.booking-modal-amenities .no-amenity {
+  color: #888;
+} 

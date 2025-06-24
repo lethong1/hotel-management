@@ -43,7 +43,7 @@
   max-width: 900px;
   margin: 0 auto;
   padding: 40px;
-  background-color: var(--form-background);
+  background-color: var(--page-background);
   border-radius: 12px;
   border: 1px solid var(--border-color);
   box-shadow: 0 10px 30px -10px var(--border-color);
