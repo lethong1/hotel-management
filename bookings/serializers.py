@@ -39,9 +39,11 @@ class BookingSerializer(serializers.ModelSerializer):
         check_out_date = data.get('check_out_date')
         room = data.get('room')
         if check_in_date and check_out_date:
-            if check_in_date > check_out_date:
+            if check_in_date >= check_out_date:
                 raise serializers.ValidationError("Ngày check-in phải trước ngày check-out.")
-            if check_in_date < timezone.now():
+            today = timezone.now().date()
+            check_in_day = check_in_date.date()
+            if not self.instance and check_in_day < today:
                 raise serializers.ValidationError("Ngày check-in không thể trước ngày hiện tại.")
             if room:
                 conflicts = Booking.objects.filter(
