@@ -12,17 +12,15 @@ import {
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 // Chú ý đường dẫn import này! Nó đi ra khỏi thư mục 'pages' rồi vào thư mục 'contexts'
-import { useRoomTypeList } from "../contexts/RoomTypeListContext";
-import { useAmenity } from "../contexts/AmenityContext";
+import { useAddRoomType } from "../contexts/AddRoomTypeContext";
 import "../css/AddRoomTypePage.css"; // Import file CSS
-
+import { useAmenity } from "../contexts/AmenityContext";
 const { Title, Text } = Typography;
 
 const AddRoomTypePage = () => {
   const [form] = Form.useForm();
-  const { handleAdd } = useRoomTypeList();
-  const { amenities, loading: loadingAmenities } = useAmenity();
-
+  const { handleAdd } = useAddRoomType();
+  const { amenities, loadingAmenities } = useAmenity();
   const handleSubmit = (values) => {
     handleAdd({
       ...values,

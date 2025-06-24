@@ -1,7 +1,10 @@
 import React, { useState, useContext, useRef, useEffect } from 'react';
 import { LoginContext } from '../../contexts/LoginConText';
-import avatar from '../../assets/avatar.png'; 
+import manager_avt from '../../assets/manager_avt.png'; 
+import admin_avt from '../../assets/admin_avt.png';
+import user_avt from '../../assets/user_avt.png';
 import '../../css/Nav/Panel.css'; // File CSS đi kèm
+import { useNavigate } from 'react-router-dom';
 
 const Panel = () => {
     // LẤY DỮ LIỆU TỪ CONTEXT MỘT CÁCH CHÍNH XÁC
@@ -20,6 +23,7 @@ const Panel = () => {
         logoutUser();
         // Việc chuyển hướng sẽ do ProtectedRoute xử lý
     };
+    const navigate = useNavigate();
 
     // Effect để xử lý việc bấm ra ngoài component
     useEffect(() => {
@@ -47,16 +51,16 @@ const Panel = () => {
                 {/* HIỂN THỊ TÊN NGƯỜI DÙNG TỪ AUTHSTATE */}
                 <span>{authState.isAuthenticated ? authState.user?.full_name : 'Loading...'}</span>
                 <img
-                    src={authState.isAuthenticated ? authState.user?.role === 'manager' ? avatar : (authState.user?.role === 'admin' ? avatar: avatar): avatar}
+                    src={authState.isAuthenticated ? authState.user?.role.id === 1 ? admin_avt : (authState.user?.role.id === 3 ? manager_avt: user_avt): user_avt}
                     alt="User Avatar"
-                    className="user-avatar"
+                    className="user-avatar" 
                 />
             </div>
 
             {/* Chỉ hiện dropdown menu khi isDropdownOpen là true */}
             {isDropdownOpen && (
                 <div className="dropdown-menu">
-                    <button className="dropdown-item">Cài đặt</button>
+                    <button onClick={() => navigate('/dashboard')} className="dropdown-item">Thông tin cá nhân</button>
                     <button onClick={handleLogout} className="dropdown-item">
                         Đăng xuất
                     </button>

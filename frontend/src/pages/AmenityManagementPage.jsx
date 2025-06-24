@@ -55,14 +55,8 @@ const AmenityManagementPage = () => {
   }, [palette]);
 
   return (
-    <>
-      <div
-        style={{
-          backgroundColor: palette.pageBackground,
-          minHeight: "100vh",
-          padding: "24px 48px",
-        }}
-      >
+    <div className="amenity-management-page">
+  
         <div
           style={{
             display: "flex",
@@ -165,9 +159,8 @@ const AmenityManagementPage = () => {
                 Lưu
               </Button>
             </div>
-          </div>
+            </div>
         </div>
-      </div>
 
       <Modal
         title="Chỉnh sửa tiện nghi"
@@ -197,7 +190,7 @@ const AmenityManagementPage = () => {
           </Form.Item>
         </Form>
       </Modal>
-    </>
+    </div>
   );
 };
 

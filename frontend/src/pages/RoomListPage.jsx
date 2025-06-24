@@ -142,7 +142,7 @@ const RoomListPage = () => {
               borderRadius: "8px",
               fontWeight: "600",
             }}
-            onClick={() => navigate("/add-room")}
+            onClick={() => navigate("/dashboard/add-room")}
           >
             THÊM PHÒNG
           </Button>

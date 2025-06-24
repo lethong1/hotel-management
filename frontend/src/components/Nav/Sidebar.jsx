@@ -9,7 +9,9 @@ const Sidebar = () => {
   return (
     <nav className="sidebar">
       <div className="sidebar-header">
-        <img src={logo} alt="logo" />
+        <Link to="/dashboard">
+          <img src={logo} alt="logo" />
+        </Link>
       </div>
       <div className="sidebar-menu">
         <p className="menu-title">QUẢN LÝ PHÒNG</p>

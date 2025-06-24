@@ -122,7 +122,7 @@ const RoomTypeListPage = () => {
               borderRadius: "8px",
               fontWeight: "600",
             }}
-            onClick={() => navigate("/add-room-type")}
+            onClick={() => navigate("/dashboard/add-room-type")}
           >
             THÊM LOẠI PHÒNG
           </Button>

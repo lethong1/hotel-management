@@ -1,6 +1,8 @@
 import React, { useContext } from "react";
 import { LoginContext } from "../contexts/LoginConText";
-import avatar from "../assets/avatar.png";
+import manager_avt from "../assets/manager_avt.png";
+import admin_avt from "../assets/admin_avt.png";
+import user_avt from "../assets/user_avt.png";  
 import "../css/UserInfoPage.css";
 
 const UserInfoPage = () => {
@@ -29,8 +31,8 @@ const UserInfoPage = () => {
       </h1>
       <div className="user-info-flex">
         {/* Avatar Section */}
-        <div className="user-info-avatar-section">
-          <img src={avatar} alt="User Avatar" className="user-info-avatar" />
+        <div className="user-info-avatar-section">    
+          <img src={authState.isAuthenticated ? authState.user?.role.id === 1 ? admin_avt : (authState.user?.role.id === 3 ? manager_avt: user_avt): user_avt} alt="User Avatar" className="user-info-avatar" />
           <h3 className="user-info-fullname">
             {user.full_name || "Chưa cập nhật"}
           </h3>
