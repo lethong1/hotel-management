@@ -1,16 +1,49 @@
 // File path: src/contexts/AddRoomTypeContext.jsx
-import React, { createContext, useContext } from "react";
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { Form, message } from "antd";
+import apiClient from "../api/apiClient";
 
 const AddRoomTypeContext = createContext();
 
 export const AddRoomTypeProvider = ({ children }) => {
   const [form] = Form.useForm();
+  const [amenities, setAmenities] = useState([]);
+  const [loadingAmenities, setLoadingAmenities] = useState(true);
 
-  const handleSubmit = (values) => {
-    console.log("Submitting new room type:", values);
-    message.success("Thêm loại phòng thành công!");
-    form.resetFields();
+  // Fetch amenities từ API khi mount
+  useEffect(() => {
+    const fetchAmenities = async () => {
+      setLoadingAmenities(true);
+      try {
+        const res = await apiClient.get("/amenities/");
+        setAmenities(res.data); // [{id, name}, ...]
+      } catch (err) {
+        setAmenities([]);
+      }
+      setLoadingAmenities(false);
+    };
+    fetchAmenities();
+  }, []);
+
+  const handleSubmit = async (values) => {
+    try {
+      // Đảm bảo amenities là mảng, price là số
+      const payload = {
+        name: values.name,
+        capacity: values.capacity,
+        description: values.description,
+        price_per_night: Number(values.price),
+        amenities: Array.isArray(values.amenities) ? values.amenities : [],
+        amenities_id: Array.isArray(values.amenities) ? values.amenities : [],
+      };
+      console.log("Payload gửi lên:", payload);
+      await apiClient.post("/room-types/", payload);
+      message.success("Thêm loại phòng thành công!");
+      form.resetFields();
+    } catch (err) {
+      console.log(err.response?.data || err);
+      message.error("Thêm loại phòng thất bại!");
+    }
   };
 
   const handleReset = () => {
@@ -22,6 +55,8 @@ export const AddRoomTypeProvider = ({ children }) => {
     form,
     handleSubmit,
     handleReset,
+    amenities,
+    loadingAmenities,
   };
 
   return (
