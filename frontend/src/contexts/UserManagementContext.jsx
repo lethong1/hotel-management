@@ -14,6 +14,17 @@ export const UserManagementProvider = ({ children }) => {
   const [editingUser, setEditingUser] = useState(null);
   const [form] = Form.useForm();
 
+  // Reset form when modal opens/closes
+  useEffect(() => {
+    if (isModalVisible) {
+      if (editingUser) {
+        form.setFieldsValue(editingUser);
+      } else {
+        form.resetFields();
+      }
+    }
+  }, [isModalVisible, editingUser, form]);
+
   // Tải dữ liệu
   useEffect(() => {
     setLoading(true);
@@ -73,11 +84,6 @@ export const UserManagementProvider = ({ children }) => {
   // Mở modal
   const showModal = (user = null) => {
     setEditingUser(user);
-    if (user) {
-      form.setFieldsValue(user);
-    } else {
-      form.resetFields();
-    }
     setIsModalVisible(true);
   };
 
@@ -90,20 +96,41 @@ export const UserManagementProvider = ({ children }) => {
   const handleSave = async () => {
     try {
       const values = await form.validateFields();
-      // Chuyển fullName -> full_name cho backend
-      if (values.fullName) {
-        values.full_name = values.fullName;
-        delete values.fullName;
+
+      // Chuẩn bị dữ liệu cho backend
+      const backendData = {
+        username: values.username,
+        email: values.email,
+        full_name: values.fullName,
+        phone_number: values.phone_number || "", // Thêm trường bắt buộc
+        address: values.address || "", // Thêm trường bắt buộc
+      };
+
+      // Xử lý password
+      if (values.password) {
+        backendData.password = values.password;
       }
-      // Chuyển isActive -> is_active cho backend
-      if (typeof values.isActive !== "undefined") {
-        values.is_active = values.isActive;
-        delete values.isActive;
+
+      // Xử lý role - cần gửi ID của role thay vì string
+      if (values.role) {
+        // Tìm role ID dựa trên role name - theo database thực tế
+        const roleMap = {
+          admin: 1,
+          user: 2,
+          manager: 3,
+        };
+        backendData.role = roleMap[values.role] || 2; // Mặc định là user (ID: 2)
       }
+
+      // Xử lý status -> is_active
+      if (values.status) {
+        backendData.is_active = values.status === "active";
+      }
+
       if (editingUser) {
         // Chế độ Sửa
         apiClient
-          .put(`/users/${editingUser.key}/`, values)
+          .put(`/users/${editingUser.key}/`, backendData)
           .then((res) => {
             setUsers((prev) =>
               prev.map((item) =>
@@ -122,7 +149,7 @@ export const UserManagementProvider = ({ children }) => {
       } else {
         // Chế độ Thêm mới
         apiClient
-          .post("/users/", values)
+          .post("/users/", backendData)
           .then((res) => {
             const user = res.data;
             setUsers((prev) => [
@@ -148,8 +175,26 @@ export const UserManagementProvider = ({ children }) => {
             message.success("Thêm người dùng mới thành công!");
             handleCancelModal();
           })
-          .catch(() => {
+          .catch((err) => {
             message.error("Thêm người dùng mới thất bại!");
+            console.log("Error details:", err.response?.data);
+            // Hiển thị chi tiết lỗi từ backend
+            if (err.response?.data) {
+              const errorData = err.response.data;
+              if (typeof errorData === "object") {
+                Object.keys(errorData).forEach((key) => {
+                  if (Array.isArray(errorData[key])) {
+                    errorData[key].forEach((errorMsg) => {
+                      message.error(`${key}: ${errorMsg}`);
+                    });
+                  } else {
+                    message.error(`${key}: ${errorData[key]}`);
+                  }
+                });
+              } else {
+                message.error(`Lỗi: ${errorData}`);
+              }
+            }
           });
       }
     } catch (error) {

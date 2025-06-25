@@ -17,6 +17,8 @@ import AmenityManagementPage from "./pages/AmenityManagementPage";
 import { AmenityProvider } from "./contexts/AmenityContext";
 import { BookingProvider } from "./contexts/BookingContext";
 import BookingPage from "./pages/BookingPage";
+import UserManagementPage from "./pages/UserManagementPage";
+import { UserManagementProvider } from "./contexts/UserManagementContext";
 const App = () => {
   return (
     <LoginProvider>
@@ -79,6 +81,14 @@ const App = () => {
               <BookingProvider>
                 <BookingPage />
               </BookingProvider>
+            }
+          />
+          <Route
+            path="user-management"
+            element={
+              <UserManagementProvider>
+                <UserManagementPage />
+              </UserManagementProvider>
             }
           />
         </Route>

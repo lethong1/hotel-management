@@ -20,10 +20,17 @@ class UserSerializer(serializers.ModelSerializer):
 
 class UserCreateSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True)
+    role = serializers.PrimaryKeyRelatedField(queryset=Role.objects.all(), required=False)
     
     class Meta:
         model = User
         fields = ['username', 'password', 'full_name', 'phone_number', 'address', 'email', 'role']
+
+    def validate_role(self, value):
+        """Validate that the role exists"""
+        if value and not Role.objects.filter(id=value.id).exists():
+            raise serializers.ValidationError("Role không tồn tại")
+        return value
 
     def create(self, validated_data):
         password = validated_data.pop('password')

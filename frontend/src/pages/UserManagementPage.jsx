@@ -150,6 +150,7 @@ const UserManagementPage = () => {
           <Table
             columns={columns}
             dataSource={users}
+            rowKey="key"
             loading={loading}
             pagination={{ pageSize: 10 }}
             bordered
@@ -164,7 +165,7 @@ const UserManagementPage = () => {
         onCancel={handleCancelModal}
         okText="Lưu"
         cancelText="Hủy"
-        destroyOnClose
+        destroyOnHidden
       >
         <Form form={form} layout="vertical" name="user_form">
           <Form.Item
@@ -193,6 +194,22 @@ const UserManagementPage = () => {
             <Input />
           </Form.Item>
           <Form.Item
+            name="phone_number"
+            label="Số điện thoại"
+            rules={[
+              { required: false, message: "Vui lòng nhập số điện thoại!" },
+            ]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            name="address"
+            label="Địa chỉ"
+            rules={[{ required: false, message: "Vui lòng nhập địa chỉ!" }]}
+          >
+            <Input.TextArea rows={3} />
+          </Form.Item>
+          <Form.Item
             name="password"
             label="Mật khẩu"
             rules={[
@@ -212,7 +229,7 @@ const UserManagementPage = () => {
             <Select>
               <Option value="admin">Admin</Option>
               <Option value="manager">Quản lý</Option>
-              <Option value="receptionist">Lễ tân</Option>
+              <Option value="user">Người dùng</Option>
             </Select>
           </Form.Item>
           <Form.Item

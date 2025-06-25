@@ -46,13 +46,13 @@ class UserViewSet(viewsets.ModelViewSet):
         return UserSerializer
 
     def perform_create(self, serializer):
-        if 'role' in self.request.data:
+        try:
+            # Nếu có role trong validated_data, sử dụng role đó
+            # Nếu không có, serializer sẽ tự động gán None (do role field có blank=True)
             serializer.save()
-        else:
-            try:
-                default_role = Role.objects.get(role='user')
-                serializer.save(role=default_role) 
-            except Role.DoesNotExist:
-                serializer.save()
+        except Exception as e:
+            # Log lỗi để debug
+            print(f"Error creating user: {e}")
+            raise
 
          
