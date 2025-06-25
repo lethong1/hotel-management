@@ -24,6 +24,8 @@ class InvoiceViewSet(viewsets.ModelViewSet):
             if new_status == 'paid':
                 booking.status = 'confirmed'
                 booking.save(update_fields=['status'])
+                booking.room.status = 'occupied'
+                booking.room.save(update_fields=['status'])
             elif new_status == 'cancelled':
                 booking.status = 'cancelled'
                 booking.save(update_fields=['status'])

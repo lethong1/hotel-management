@@ -5,7 +5,39 @@ from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 from users.permissions import IsManagerOrAdmin
 from .permissions import IsBookingOwnerOrManagerOrAdmin
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from django.shortcuts import get_object_or_404
 
+@api_view(['GET'])
+def vnpay_return_view(request):
+    params = request.query_params
+    print("[VNPAY VERIFY RETURN] Params nhận được:", dict(params))
+    txn_ref = params.get('vnp_TxnRef')  # Booking ID
+    response_code = params.get('vnp_ResponseCode')
+    transaction_status = params.get('vnp_TransactionStatus')
+
+    if not txn_ref or response_code != '00' or transaction_status != '00':
+        return Response({"detail": "Giao dịch không thành công."}, status=400)
+
+    booking = get_object_or_404(Booking, pk=txn_ref)
+
+    if booking.status == 'confirmed':
+        return Response({"detail": "Booking đã xác nhận trước đó."})
+
+    # Cập nhật trạng thái booking và phòng
+    booking.status = 'confirmed'
+    booking.save()
+
+    room = booking.room
+    room.status = 'occupied'
+    room.save()
+
+    return Response({
+        "message": "Thanh toán thành công",
+        "booking_id": booking.id,
+        "room_id": room.id
+    })
 class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all().order_by('-created_at')
     serializer_class = BookingSerializer

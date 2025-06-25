@@ -19,6 +19,7 @@ import { BookingProvider } from "./contexts/BookingContext";
 import BookingPage from "./pages/BookingPage";
 import UserManagementPage from "./pages/UserManagementPage";
 import { UserManagementProvider } from "./contexts/UserManagementContext";
+import VnpayReturn from './pages/VnPayReturn';
 const App = () => {
   return (
     <LoginProvider>
@@ -97,7 +98,7 @@ const App = () => {
           />
           
         </Route>
-        
+        <Route path="/vnpay-return" element={<VnpayReturn />} />
       </Routes>
     </LoginProvider>
   );
