@@ -63,3 +63,37 @@
 .dropdown-item:hover {
   background: #f0f0f0;
 }
+
+/* Responsive Design */
+@media (min-width: 1025px) {
+  .user-panel-container {
+    margin-left: 18%;
+    width: 82%;
+    left: unset;
+  }
+}
+@media (max-width: 1024px) and (min-width: 769px) {
+  .user-panel-container {
+    margin-left: 60px;
+    width: calc(100% - 60px);
+    left: unset;
+  }
+}
+@media (max-width: 768px) {
+  .user-panel-container {
+    margin-left: 0;
+    width: 100%;
+    left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-panel-container {
+    height: 48px;
+    padding: 6px 4px;
+  }
+  .user-profile img {
+    width: 28px;
+    height: 28px;
+  }
+}

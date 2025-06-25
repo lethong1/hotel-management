@@ -63,12 +63,12 @@ const App = () => {
             path="add-room-type"
             element={
               <RoomTypeListProvider>
-              <AddRoomTypeProvider>
-                <AmenityProvider>
-                  <AddRoomTypePage />
-                </AmenityProvider>
-              </AddRoomTypeProvider>
-            </RoomTypeListProvider>
+                <AddRoomTypeProvider>
+                  <AmenityProvider>
+                    <AddRoomTypePage />
+                  </AmenityProvider>
+                </AddRoomTypeProvider>
+              </RoomTypeListProvider>
             }
           />
           <Route
@@ -95,9 +95,7 @@ const App = () => {
               </UserManagementProvider>
             }
           />
-          
         </Route>
-        
       </Routes>
     </LoginProvider>
   );

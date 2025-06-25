@@ -1,0 +1,48 @@
+.user-management-container {
+    width: 100%;
+    min-height: 100%;
+  }
+  
+  .user-management-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+  }
+  
+  .add-user-btn {
+    background-color: #BBD38B !important;
+    border-color: #BBD38B !important;
+    color: #fff !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+  }
+  
+  .custom-table .ant-table-thead > tr > th {
+    background-color: #E9E8DA !important;
+    font-weight: 600;
+  }
+  
+  .custom-table .ant-btn {
+    border-radius: 4px;
+    font-weight: 600;
+    padding: 4px 10px;
+  }
+  
+  .custom-table .ant-btn-primary {
+    background-color: #2563EB !important;
+    border-color: #2563EB !important;
+  }
+  
+  .custom-table .ant-btn-danger {
+    background-color: #f44336 !important;
+    border-color: #f44336 !important;
+  }
+  
+  .custom-table .ant-btn:hover {
+    opacity: 0.8;
+  }
+  
+  .delete-link {
+    color: #2563EB;
+    font-weight: 500;
+  }

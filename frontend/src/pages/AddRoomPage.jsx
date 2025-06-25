@@ -242,7 +242,11 @@ const AddRoomPageStyled = () => {
 
           {/* Nút hành động */}
           <div className="action-buttons">
-            <Button onClick={() => navigate('/dashboard/room-list')} size="large" className="cancel-btn">
+            <Button
+              onClick={() => navigate("/dashboard/room-list")}
+              size="large"
+              className="cancel-btn"
+            >
               HỦY
             </Button>
             <Button

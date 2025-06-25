@@ -65,3 +65,33 @@
     height: 40px;
     border-radius: 50%;
   }
+
+/* Responsive Design */
+@media (min-width: 1025px) {
+  .top-panel {
+    margin-left: 18%;
+    width: 82%;
+  }
+}
+@media (max-width: 1024px) and (min-width: 769px) {
+  .top-panel {
+    margin-left: 60px;
+    width: calc(100% - 60px);
+  }
+}
+@media (max-width: 768px) {
+  .top-panel {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .top-panel {
+    padding: 4px 2px;
+  }
+  .user-profile img {
+    width: 24px;
+    height: 24px;
+  }
+}
