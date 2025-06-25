@@ -12,23 +12,13 @@ import {
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
 // Chú ý đường dẫn import này! Nó đi ra khỏi thư mục 'pages' rồi vào thư mục 'contexts'
-import { useAddRoomType } from "../contexts/AddRoomTypeContext";
 import "../css/AddRoomTypePage.css"; // Import file CSS
-import { useAmenity } from "../contexts/AmenityContext";
+import { useAddRoomType } from "../contexts/AddRoomTypeContext";
 const { Title, Text } = Typography;
-
+import { useRoomTypeList } from "../contexts/RoomTypeListContext";
 const AddRoomTypePage = () => {
-  const [form] = Form.useForm();
-  const { handleAdd } = useAddRoomType();
-  const { amenities, loadingAmenities } = useAmenity();
-  const handleSubmit = (values) => {
-    handleAdd({
-      ...values,
-      price: values.price_per_night,
-      // amenities_id: ... nếu cần
-    });
-    form.resetFields();
-  };
+  const { handleAdd } = useRoomTypeList();
+  const { form, handleSubmit, amenities, loadingAmenities } = useAddRoomType();
 
   const handleReset = () => {
     form.resetFields();
@@ -96,7 +86,7 @@ const AddRoomTypePage = () => {
             </Col>
             <Col span={8}>
               <Form.Item
-                name="price_per_night"
+                name="price"
                 label={
                   <Text className="form-item-label">Giá cơ bản (VNĐ):</Text>
                 }
@@ -120,17 +110,13 @@ const AddRoomTypePage = () => {
             name="amenities"
             label={<Text className="form-item-label">Các tiện nghi:</Text>}
           >
-            <Checkbox.Group className="amenities-group">
-              <Row gutter={[8, 12]}>
-                {loadingAmenities ? (
-                  <Col span={24}>Đang tải tiện nghi...</Col>
-                ) : (
-                  amenities.map((amenity) => (
-                    <Col span={8} key={amenity.id}>
-                      <Checkbox value={amenity.id}>{amenity.name}</Checkbox>
-                    </Col>
-                  ))
-                )}
+            <Checkbox.Group>
+              <Row>
+                {amenities.map(a => (
+                  <Col span={8} key={a.id}>
+                    <Checkbox value={a.id}>{a.name}</Checkbox>
+                  </Col>
+                ))}
               </Row>
             </Checkbox.Group>
           </Form.Item>
