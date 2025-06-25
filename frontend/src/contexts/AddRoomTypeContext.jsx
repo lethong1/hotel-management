@@ -36,12 +36,10 @@ export const AddRoomTypeProvider = ({ children }) => {
         amenities: Array.isArray(values.amenities) ? values.amenities : [],
         amenities_id: Array.isArray(values.amenities) ? values.amenities : [],
       };
-      console.log("Payload gửi lên:", payload);
       await apiClient.post("/room-types/", payload);
       message.success("Thêm loại phòng thành công!");
       form.resetFields();
     } catch (err) {
-      console.log(err.response?.data || err);
       message.error("Thêm loại phòng thất bại!");
     }
   };

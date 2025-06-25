@@ -113,14 +113,12 @@ export const AddRoomProvider = ({ children }) => {
       const response = await apiClient.post("/rooms/", payload);
 
       setLoading(false);
-      console.log("API Response:", response.data);
       return response.data;
     } catch (err) {
       setLoading(false);
       setError(
         err.response ? err.response.data : "An unexpected error occurred."
       );
-      console.error("API Error:", err.response || err);
       throw err;
     }
   };

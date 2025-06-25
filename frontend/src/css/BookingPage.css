@@ -1,10 +1,14 @@
 /* BookingPage.css */
 
 .booking-page-container {
-  background-color: #F7F6E7;
-  min-height: 100vh;
-  padding: 20px 40px;
+  background-color: var(--background-color);
   font-family: 'Inter', sans-serif;
+  padding: 40px 20px 20px 20px;
+  height: 92%;
+  width: 130%;
+  box-sizing: border-box;
+  justify-content: center;
+  margin-left: 30px;
 }
 
 .booking-page-title {

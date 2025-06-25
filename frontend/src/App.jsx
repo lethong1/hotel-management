@@ -37,7 +37,9 @@ const App = () => {
             path="room-list"
             element={
               <RoomListProvider>
-                <RoomListPage />
+                <BookingProvider>
+                  <RoomListPage />
+                </BookingProvider>
               </RoomListProvider>
             }
           />
@@ -60,11 +62,13 @@ const App = () => {
           <Route
             path="add-room-type"
             element={
+              <RoomTypeListProvider>
               <AddRoomTypeProvider>
                 <AmenityProvider>
                   <AddRoomTypePage />
                 </AmenityProvider>
               </AddRoomTypeProvider>
+            </RoomTypeListProvider>
             }
           />
           <Route
@@ -91,19 +95,9 @@ const App = () => {
               </UserManagementProvider>
             }
           />
+          
         </Route>
-        <Route
-          path="/add-room-type"
-          element={
-            <RoomTypeListProvider>
-              <AddRoomTypeProvider>
-                <AmenityProvider>
-                  <AddRoomTypePage />
-                </AmenityProvider>
-              </AddRoomTypeProvider>
-            </RoomTypeListProvider>
-          }
-        />
+        
       </Routes>
     </LoginProvider>
   );
