@@ -33,6 +33,7 @@ const RoomTypeListPage = () => {
   const navigate = useNavigate();
   const {
     roomTypes,
+    amenities,
     loading,
     handleDelete,
     showEditModal,
@@ -76,7 +77,10 @@ const RoomTypeListPage = () => {
       title: "Tiện nghi",
       dataIndex: "amenities",
       key: "amenities",
-      render: (amenities) => amenities.join(", "),
+      render: (amenities) => {
+        if (!Array.isArray(amenities)) return "";
+        return amenities.join(", ");
+      },
     },
     {
       title: "Hành động",
@@ -132,6 +136,7 @@ const RoomTypeListPage = () => {
           <Table
             columns={columns}
             dataSource={roomTypes}
+            rowKey="key"
             loading={loading}
             pagination={{ pageSize: 5 }}
             bordered
@@ -141,12 +146,12 @@ const RoomTypeListPage = () => {
 
       <Modal
         title="Chỉnh sửa loại phòng"
-        visible={isModalVisible}
+        open={isModalVisible}
         onOk={handleUpdate}
         onCancel={handleCancelModal}
         okText="Cập nhật"
         cancelText="Hủy"
-        destroyOnClose
+        destroyOnHidden
       >
         <Form form={form} layout="vertical">
           <Form.Item
@@ -180,24 +185,11 @@ const RoomTypeListPage = () => {
           <Form.Item name="amenities" label="Các tiện nghi">
             <Checkbox.Group style={{ width: "100%" }}>
               <Row>
-                <Col span={8}>
-                  <Checkbox value={8}>Wifi</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value={4}>Điều hòa</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value={5}>Tivi</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value={2}>Bể bơi</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value={3}>Gym</Checkbox>
-                </Col>
-                <Col span={8}>
-                  <Checkbox value={6}>Bồn tắm</Checkbox>
-                </Col>
+                {amenities.map((amenity) => (
+                  <Col span={8} key={amenity.id}>
+                    <Checkbox value={amenity.id}>{amenity.name}</Checkbox>
+                  </Col>
+                ))}
               </Row>
             </Checkbox.Group>
           </Form.Item>

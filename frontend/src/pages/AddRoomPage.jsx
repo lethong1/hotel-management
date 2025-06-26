@@ -17,6 +17,7 @@ import {
   CheckCircleFilled,
   CheckOutlined,
 } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
 import { useAddRoom } from "../contexts/AddRoomContext"; // Import hook
 import "../css/AddRoomPage.css";
 
@@ -34,6 +35,7 @@ const formatCurrency = (amount) => {
 
 const AddRoomPageStyled = () => {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
   // Lấy state và functions từ Context
   const {

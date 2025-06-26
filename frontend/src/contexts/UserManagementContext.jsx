@@ -14,17 +14,6 @@ export const UserManagementProvider = ({ children }) => {
   const [editingUser, setEditingUser] = useState(null);
   const [form] = Form.useForm();
 
-  // Reset form when modal opens/closes
-  useEffect(() => {
-    if (isModalVisible) {
-      if (editingUser) {
-        form.setFieldsValue(editingUser);
-      } else {
-        form.resetFields();
-      }
-    }
-  }, [isModalVisible, editingUser, form]);
-
   // Tải dữ liệu
   useEffect(() => {
     setLoading(true);
@@ -84,6 +73,11 @@ export const UserManagementProvider = ({ children }) => {
   // Mở modal
   const showModal = (user = null) => {
     setEditingUser(user);
+    if (user) {
+      form.setFieldsValue(user);
+    } else {
+      form.resetFields();
+    }
     setIsModalVisible(true);
   };
 
@@ -178,23 +172,6 @@ export const UserManagementProvider = ({ children }) => {
           .catch((err) => {
             message.error("Thêm người dùng mới thất bại!");
             console.log("Error details:", err.response?.data);
-            // Hiển thị chi tiết lỗi từ backend
-            if (err.response?.data) {
-              const errorData = err.response.data;
-              if (typeof errorData === "object") {
-                Object.keys(errorData).forEach((key) => {
-                  if (Array.isArray(errorData[key])) {
-                    errorData[key].forEach((errorMsg) => {
-                      message.error(`${key}: ${errorMsg}`);
-                    });
-                  } else {
-                    message.error(`${key}: ${errorData[key]}`);
-                  }
-                });
-              } else {
-                message.error(`Lỗi: ${errorData}`);
-              }
-            }
           });
       }
     } catch (error) {

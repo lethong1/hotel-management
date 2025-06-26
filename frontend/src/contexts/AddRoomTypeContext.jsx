@@ -33,7 +33,6 @@ export const AddRoomTypeProvider = ({ children }) => {
         capacity: values.capacity,
         description: values.description,
         price_per_night: Number(values.price),
-        amenities: Array.isArray(values.amenities) ? values.amenities : [],
         amenities_id: Array.isArray(values.amenities) ? values.amenities : [],
       };
       await apiClient.post("/room-types/", payload);

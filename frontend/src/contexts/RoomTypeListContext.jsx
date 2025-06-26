@@ -11,6 +11,7 @@ const RoomTypeListContext = createContext();
 
 export const RoomTypeListProvider = ({ children }) => {
   const [roomTypes, setRoomTypes] = useState([]);
+  const [amenities, setAmenities] = useState([]);
   const [loading, setLoading] = useState(true);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [editingRecord, setEditingRecord] = useState(null);
@@ -19,7 +20,26 @@ export const RoomTypeListProvider = ({ children }) => {
   // Logic tải dữ liệu
   useEffect(() => {
     fetchRoomTypes();
+    fetchAmenities();
   }, []);
+
+  // Tải danh sách amenities
+  const fetchAmenities = async () => {
+    try {
+      const res = await apiClient.get("/amenities/");
+      const amenitiesData = Array.isArray(res.data)
+        ? res.data.map((amenity) => ({
+            id: amenity.id,
+            name: amenity.name,
+            description: amenity.description,
+            icon_class: amenity.icon_class,
+          }))
+        : [];
+      setAmenities(amenitiesData);
+    } catch (err) {
+      message.error("Không thể tải danh sách tiện nghi!");
+    }
+  };
 
   const fetchRoomTypes = async () => {
     setLoading(true);
@@ -68,6 +88,12 @@ export const RoomTypeListProvider = ({ children }) => {
   // Logic Sửa
   const showEditModal = (record) => {
     setEditingRecord(record);
+
+    // Xử lý amenities để hiển thị đúng trong form
+    const selectedAmenityIds = record.raw.amenities
+      ? record.raw.amenities.map((amenity) => amenity.id)
+      : [];
+
     form.setFieldsValue({
       name: record.name,
       capacity: record.capacity,
@@ -86,14 +112,16 @@ export const RoomTypeListProvider = ({ children }) => {
   const handleUpdate = async () => {
     try {
       const values = await form.validateFields();
-      await apiClient.put(`/room-types/${editingRecord.key}/`, {
+      const payload = {
         name: values.name,
         capacity: values.capacity,
         description: values.description,
         price_per_night: values.price,
-        amenities: values.amenities,
-        amenities_id: values.amenities,
-      });
+        amenities_id: Array.isArray(values.amenities) ? values.amenities : [],
+      };
+
+      console.log("Update payload:", payload);
+      await apiClient.put(`/room-types/${editingRecord.key}/`, payload);
       message.success("Cập nhật thành công!");
       handleCancelModal();
       fetchRoomTypes();
@@ -106,22 +134,27 @@ export const RoomTypeListProvider = ({ children }) => {
   // Thêm loại phòng mới
   const handleAdd = async (values) => {
     try {
-      await apiClient.post("/room-types/", {
+      const payload = {
         name: values.name,
         capacity: values.capacity,
         description: values.description,
         price_per_night: values.price,
-        // amenities_id: values.amenities_id (nếu có chọn tiện nghi)
-      });
+        amenities_id: Array.isArray(values.amenities) ? values.amenities : [],
+      };
+
+      console.log("Add payload:", payload);
+      await apiClient.post("/room-types/", payload);
       message.success("Thêm loại phòng thành công!");
       fetchRoomTypes();
-    } catch {
+    } catch (err) {
+      console.error(err.response?.data || err);
       message.error("Thêm loại phòng thất bại!");
     }
   };
 
   const value = {
     roomTypes,
+    amenities,
     loading,
     handleDelete,
     showEditModal,

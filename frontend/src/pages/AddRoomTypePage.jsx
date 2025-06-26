@@ -1,4 +1,3 @@
-// File path: src/pages/AddRoomTypePage.jsx
 import React from "react";
 import {
   Form,
@@ -11,13 +10,13 @@ import {
   Col,
 } from "antd";
 import { PlusOutlined } from "@ant-design/icons";
-// Chú ý đường dẫn import này! Nó đi ra khỏi thư mục 'pages' rồi vào thư mục 'contexts'
-import "../css/AddRoomTypePage.css"; // Import file CSS
+import { useNavigate } from "react-router-dom";
+import "../css/AddRoomTypePage.css";
 import { useAddRoomType } from "../contexts/AddRoomTypeContext";
 const { Title, Text } = Typography;
-import { useRoomTypeList } from "../contexts/RoomTypeListContext";
+
 const AddRoomTypePage = () => {
-  const { handleAdd } = useRoomTypeList();
+  const navigate = useNavigate();
   const { form, handleSubmit, amenities, loadingAmenities } = useAddRoomType();
 
   const handleReset = () => {
@@ -125,7 +124,7 @@ const AddRoomTypePage = () => {
             <Button
               className="secondary-button"
               size="large"
-              onClick={handleReset}
+              onClick={() => navigate("/dashboard/room-type-list")}
             >
               HỦY
             </Button>

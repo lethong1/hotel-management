@@ -1,7 +1,7 @@
 import "./App.css";
 import LoginForm from "./components/Auth/LoginForm";
 import Dashboard from "./pages/Dashboard";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { LoginProvider } from "./contexts/LoginConText";
 import ProtectedRoute from "./components/Routing/ProtectedRoute";
 import AddRoomPage from "./pages/AddRoomPage";
@@ -19,10 +19,15 @@ import { BookingProvider } from "./contexts/BookingContext";
 import BookingPage from "./pages/BookingPage";
 import UserManagementPage from "./pages/UserManagementPage";
 import { UserManagementProvider } from "./contexts/UserManagementContext";
+import RevenueReportPage from "./pages/RevenueReportPage";
+import CheckoutPage from "./pages/CheckoutPage";
+import { CheckoutProvider } from "./contexts/CheckoutContext";
+
 const App = () => {
   return (
     <LoginProvider>
       <Routes>
+        <Route path="/" element={<Navigate to="/dashboard" replace />} />
         <Route path="/login" element={<LoginForm />} />
         <Route
           path="/dashboard"
@@ -69,6 +74,9 @@ const App = () => {
                   </AmenityProvider>
                 </AddRoomTypeProvider>
               </RoomTypeListProvider>
+              <AddRoomTypeProvider>
+                <AddRoomTypePage />
+              </AddRoomTypeProvider>
             }
           />
           <Route
@@ -96,8 +104,19 @@ const App = () => {
             }
           />
         </Route>
+          <Route path="revenue-report" element={<RevenueReportPage />} />
+          <Route
+            path="checkout"
+            element={
+              <CheckoutProvider>
+                <CheckoutPage />
+              </CheckoutProvider>
+            }
+          />
+        </Route>
       </Routes>
     </LoginProvider>
   );
 };
+
 export default App;
