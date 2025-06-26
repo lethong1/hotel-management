@@ -58,7 +58,11 @@ const RoomListContent = () => {
     { title: "Số Phòng", dataIndex: "room_number", key: "room_number" },
     { title: "Loại Phòng", dataIndex: ["room_type", "name"], key: "roomType" },
     { title: "Tầng", dataIndex: "floor", key: "floor" },
-    { title: "Sức chứa", dataIndex: "capacity", key: "capacity" },
+    { 
+      title: "Sức chứa", 
+      key: "capacity",
+      render: (_, record) => record.capacity ?? record.room_type?.capacity ?? "N/A"
+    },
     {
       title: "Trạng thái",
       dataIndex: "status",
@@ -92,68 +96,70 @@ const RoomListContent = () => {
 
   return (
     <div className="room-list-page">
-      {/* Gọi showModal không có tham số để thêm mới */}
-      <Button
-        type="primary"
-        icon={<PlusOutlined />}
-        onClick={() => showModal()}
-        style={{ marginBottom: 16 }}
-      >
-        THÊM PHÒNG
-      </Button>
-      <Table columns={columns} dataSource={rooms} loading={loading} bordered />
-      <Modal
-        title={editingRoom ? "Chỉnh sửa phòng" : "Thêm phòng mới"}
-        open={isModalVisible}
-        onOk={handleFormSubmit}
-        onCancel={handleCancelModal}
-        okText={editingRoom ? "Cập nhật" : "Tạo"}
-        cancelText="Hủy"
-      >
-        <Form form={form} layout="vertical">
-          {/* Các trường trong form để thêm/sửa */}
-          <Form.Item
-            name="room_number"
-            label="Số phòng"
-            rules={[{ required: true }]}
-          >
-            <Input />
-          </Form.Item>
-          <Form.Item name="floor" label="Tầng" rules={[{ required: true }]}>
-            <Input type="number" />
-          </Form.Item>
-          <Form.Item
-            name="room_type_id"
-            label="Loại phòng"
-            rules={[{ required: true }]}
-          >
-            <Select placeholder="Chọn loại phòng">
-              {roomTypes.map((roomType) => (
-                <Option key={roomType.id} value={roomType.id}>
-                  {roomType.name}
-                </Option>
-              ))}
-            </Select>
-          </Form.Item>
-          <Form.Item
-            name="status"
-            label="Trạng thái"
-            rules={[{ required: true }]}
-          >
-            <Select>
-              <Option value="available">Phòng trống</Option>
-              <Option value="maintenance">Đang sửa chữa</Option>
-            </Select>
-          </Form.Item>
-        </Form>
-      </Modal>
+      <div className="form-container">
+        <Button
+          type="primary"
+          icon={<PlusOutlined />}
+          onClick={() => showModal()}
+          style={{ marginBottom: 16, background: "#BBD38B" }}
+        >
+          THÊM PHÒNG
+        </Button>
+        <div className="room-management-table">
+          <Table columns={columns} dataSource={rooms} loading={loading} bordered />
+        </div>
+        <Modal
+          title={editingRoom ? "Chỉnh sửa phòng" : "Thêm phòng mới"}
+          open={isModalVisible}
+          onOk={handleFormSubmit}
+          onCancel={handleCancelModal}
+          okText={editingRoom ? "Cập nhật" : "Tạo"}
+          cancelText="Hủy"
+        >
+          <Form form={form} layout="vertical">
+            {/* Các trường trong form để thêm/sửa */}
+            <Form.Item
+              name="room_number"
+              label="Số phòng"
+              rules={[{ required: true }]}
+            >
+              <Input />
+            </Form.Item>
+            <Form.Item name="floor" label="Tầng" rules={[{ required: true }]}>
+              <Input type="number" />
+            </Form.Item>
+            <Form.Item
+              name="room_type_id"
+              label="Loại phòng"
+              rules={[{ required: true }]}
+            >
+              <Select placeholder="Chọn loại phòng">
+                {roomTypes.map((roomType) => (
+                  <Option key={roomType.id} value={roomType.id}>
+                    {roomType.name}
+                  </Option>
+                ))}
+              </Select>
+            </Form.Item>
+            <Form.Item
+              name="status"
+              label="Trạng thái"
+              rules={[{ required: true }]}
+            >
+              <Select>
+                <Option value="available">Phòng trống</Option>
+                <Option value="maintenance">Đang sửa chữa</Option>
+              </Select>
+            </Form.Item>
+          </Form>
+        </Modal>
+      </div>
     </div>
   );
 };
 
 const RoomListPage = () => (
   <RoomListProvider>
-    <Title level={2}>Danh sách phòng</Title>
     <RoomListContent />
   </RoomListProvider>
 );

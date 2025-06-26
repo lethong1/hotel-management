@@ -100,7 +100,11 @@ DATABASES = {
         'PORT': config('DB_PORT',default=5432),
     }
 }
-
+# VNPAY CONFIG
+VNPAY_TMN_CODE = config('VNPAY_TMN_CODE', default='')
+VNPAY_HASH_SECRET = config('VNPAY_HASH_SECRET', default='')
+VNPAY_API_URL = config('VNPAY_API_URL', default='')
+VNPAY_RETURN_URL = config('VNPAY_RETURN_URL', default='')
 
 #REST Framework
 REST_FRAMEWORK = {

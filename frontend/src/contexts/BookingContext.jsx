@@ -2,10 +2,12 @@ import React, { createContext, useState, useContext, useEffect } from "react";
 import { Form, Modal, message } from "antd";
 import apiClient from "../api/apiClient";
 import dayjs from "dayjs";
-
+import { useNavigate } from "react-router-dom";
 const BookingContext = createContext();
 
 export const BookingProvider = ({ children }) => {
+  
+  const navigate = useNavigate()
   // STATE CHÍNH
   const [bookings, setBookings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -102,7 +104,7 @@ export const BookingProvider = ({ children }) => {
         room_id: values.room_id,
         check_in_date: values.booking_dates[0].toISOString(),
         check_out_date: values.booking_dates[1].toISOString(),
-        status: values.status || "confirmed",
+        status: values.status || "pending",
         notes: values.notes || "",
       };
 
@@ -113,8 +115,9 @@ export const BookingProvider = ({ children }) => {
         );
         message.success("Cập nhật thành công!");
       } else {
-        await apiClient.post("/bookings/", bookingPayload);
+        const res = await apiClient.post("/bookings/", bookingPayload);
         message.success("Tạo booking thành công!");
+        navigate(`/checkout?booking_id=${res.data.id}`);
       }
 
       handleCancelModal();

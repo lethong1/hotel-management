@@ -2,7 +2,7 @@
 
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { Form, message } from "antd";
-import { useParams } from "react-router-dom"; // Hook để lấy ID từ URL
+import { useSearchParams } from "react-router-dom"; // Hook để lấy ID từ URL
 import dayjs from "dayjs";
 import apiClient from "../api/apiClient";
 
@@ -27,7 +27,8 @@ export const CheckoutProvider = ({ children }) => {
   const [isInvoiceVisible, setIsInvoiceVisible] = useState(false);
   const [invoiceData, setInvoiceData] = useState(null);
   const [form] = Form.useForm();
-  const { bookingId } = useParams(); // Lấy ID từ URL, ví dụ: /checkout/booking123
+  const [searchParams] = useSearchParams();
+  const bookingId = searchParams.get("booking_id");
 
   // Tính toán chi phí
   const calculateCost = (details) => {
@@ -43,39 +44,36 @@ export const CheckoutProvider = ({ children }) => {
 
   // Tải thông tin booking
   useEffect(() => {
-    const fetchBookingDetails = () => {
+    const fetchBooking = async (id) => {
       setLoading(true);
-      // Giả lập gọi API: apiClient.get(`/bookings/${bookingId}`)
-      setTimeout(() => {
-        const costs = calculateCost(mockBookingDetails);
-        setBookingDetails({ ...mockBookingDetails, ...costs });
+      try {
+        const res = await apiClient.get(`/bookings/${id}/`);
+        const details = res.data;
+        const costs = calculateCost(details);
+        setBookingDetails({ ...details, ...costs });
+      } catch (err) {
+        setBookingDetails(null);
+        // Có thể hiện message lỗi ở đây nếu muốn
+      } finally {
         setLoading(false);
-      }, 500);
+      }
     };
-    fetchBookingDetails();
+
+    if (bookingId) {
+      fetchBooking(bookingId);
+    }
   }, [bookingId]);
 
   // Xử lý thanh toán và xuất hóa đơn
   const handlePayment = async () => {
     try {
-      const guestInfo = await form.validateFields();
-      // 1. Giả lập gửi thông tin thanh toán lên server
-      // await apiClient.post('/payments', { booking_id: bookingId, ... });
-
-      // 2. Chuẩn bị dữ liệu cho hóa đơn
-      const finalInvoiceData = {
-        ...guestInfo,
-        ...bookingDetails,
-        invoiceNumber: `HD-${Date.now()}`,
-        issueDate: dayjs().format("DD/MM/YYYY"),
-      };
-      setInvoiceData(finalInvoiceData);
-
-      // 3. Hiển thị modal hóa đơn
-      setIsInvoiceVisible(true);
-      message.success("Thanh toán thành công!");
+      const res = await apiClient.post('/bookings/vnpay/create-payment/', {
+        booking_id: bookingDetails.id,
+      });
+      window.location.href = res.data.vnpay_url;  // chuyển thẳng đến VNPAY
     } catch (error) {
-      message.error("Vui lòng điền đầy đủ thông tin khách hàng!");
+      message.error("Lỗi tạo URL thanh toán.");
+      console.error(error);
     }
   };
 

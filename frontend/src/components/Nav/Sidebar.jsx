@@ -5,14 +5,8 @@ import logo from "../../assets/logo.png";
 import room from "../../assets/room.png";
 import list_icon from "../../assets/list_icon.png";
 import amenities from "../../assets/amenities.png";
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { useContext } from "react";
 import { LoginContext } from "../../contexts/LoginConText";
-import "../../css/Nav/Sidebar.css";
-import logo from "../../assets/logo.png";
-import room from "../../assets/room.png";
-import list_icon from "../../assets/list_icon.png";
-import amenities from "../../assets/amenities.png";
 import booking from "../../assets/booking.png";
 import employee from "../../assets/employee.png";
 const Sidebar = () => {
@@ -58,18 +52,7 @@ const Sidebar = () => {
               borderRadius: "10%",
             }}
           />
-          <img
-            src={list_icon}
-            alt="list_icon"
-            style={{
-              width: "40px",
-              height: "40px",
-              marginRight: "10px",
-              backgroundColor: "white",
-              padding: "5px",
-              borderRadius: "10%",
-            }}
-          />
+
           <span>Danh sách phòng</span>
         </Link>
         <Link to="/dashboard/room-type-list" className="menu-item">
@@ -85,33 +68,9 @@ const Sidebar = () => {
               borderRadius: "10%",
             }}
           />
-          <img
-            src={room}
-            alt="room_icon"
-            style={{
-              width: "40px",
-              height: "40px",
-              marginRight: "10px",
-              backgroundColor: "white",
-              padding: "5px",
-              borderRadius: "10%",
-            }}
-          />
           <span>Loại phòng</span>
         </Link>
-        <a href="/dashboard/amenities" className="menu-item">
-          <img
-            src={amenities}
-            alt="amenities_icon"
-            style={{
-              width: "40px",
-              height: "40px",
-              marginRight: "10px",
-              backgroundColor: "white",
-              padding: "5px",
-              borderRadius: "10%",
-            }}
-          />
+
         <Link to="/dashboard/amenities" className="menu-item">
           <img
             src={amenities}
@@ -148,4 +107,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-

@@ -1,6 +1,6 @@
 // File: src/pages/CheckoutPage.jsx
 
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import {
   Form,
   Input,
@@ -17,6 +17,8 @@ import {
 import { useCheckout } from "../contexts/CheckoutContext";
 import { useReactToPrint } from "react-to-print";
 import dayjs from "dayjs";
+import { useSearchParams } from "react-router-dom";
+import apiClient from "../api/apiClient";
 
 const { Title, Text } = Typography;
 
@@ -108,6 +110,17 @@ const InvoiceComponent = React.forwardRef(({ invoiceData }, ref) => {
 });
 
 const CheckoutPage = () => {
+  const [searchParams] = useSearchParams();
+  const bookingId = searchParams.get("booking_id");
+  const [booking, setBooking] = useState(null);
+
+  useEffect(() => {
+    if (bookingId) {
+      apiClient
+        .get(`/bookings/${bookingId}/`)
+        .then((res) => setBooking(res.data));
+    }
+  }, [bookingId]);
   const {
     loading,
     bookingDetails,

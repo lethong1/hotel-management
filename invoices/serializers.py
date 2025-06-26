@@ -4,6 +4,12 @@ from bookings.serializers import BookingSerializer
 from users.serializers import UserSerializer
 from django.utils import timezone
 from bookings.models import Booking
+
+class InvoiceBasicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Invoice
+        fields = ['id', 'invoice_number', 'status']
+
 class InvoiceSerializer(serializers.ModelSerializer):
     booking = BookingSerializer(read_only=True)
     created_by = UserSerializer(read_only=True)
@@ -39,4 +45,3 @@ class InvoiceSerializer(serializers.ModelSerializer):
             if booking.total_price <= 0:
                 raise serializers.ValidationError("Tổng giá trị đơn đặt phòng phải lớn hơn 0.")
         return data
-    

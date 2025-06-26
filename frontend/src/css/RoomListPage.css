@@ -1,20 +1,47 @@
+.room-list-page {
+    background-color: var(--background-color);
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    padding: 40px 0 0 0;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    width: 120vh;
+    padding-right: 20px;
+}
+
+.form-container {
+    width: 120%;
+    border-radius: 12px;
+}
+
+.page-title {
+    text-align: center;
+    margin-bottom: 40px;
+    color: var(--text-color);
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
 .room-management-table .ant-table {
-    border: 1px solid #DFDDC5;
-    border-radius: 0;
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    background-color: var(--form-background);
+    box-shadow: 0 10px 30px -10px var(--border-color);
 }
 .room-management-table .ant-table-thead > tr > th {
     background-color: #E9E8DA !important;
     color: #333;
     font-weight: 600;
-    border-bottom: 1px solid #DFDDC5;
-    border-right: 1px solid #DFDDC5;
+    border-bottom: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
 }
 .room-management-table .ant-table-thead > tr > th:last-child {
     border-right: none;
 }
 .room-management-table .ant-table-tbody > tr > td {
-    border-bottom: 1px solid #DFDDC5;
-    border-right: 1px solid #DFDDC5;
+    border-bottom: 1px solid var(--border-color);
+    border-right: 1px solid var(--border-color);
 }
 .room-management-table .ant-table-tbody > tr > td:last-child {
     border-right: none;
@@ -26,14 +53,4 @@
 .action-link-edit {
     color: #333;
     font-weight: 500;
-} 
-.room-list-page {
-    background-color: var(--background-color);
-    font-family: 'Inter', sans-serif;
-    padding: 40px 20px 20px 20px;
-    height: 92%;
-    width: 130%;
-    box-sizing: border-box;
-    justify-content: center;
-    margin-left: 30px;
 }

@@ -13,7 +13,7 @@ import {
 import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useUserManagement } from "../contexts/UserManagementContext";
 import "../css/UserManagementPage.css";
-
+import { formatVNDateTime } from "../utils/Formatter";
 const { Option } = Select;
 
 const renderRoleTag = (role, record) => {
@@ -81,6 +81,7 @@ const UserManagementPage = () => {
       dataIndex: "dateJoined",
       key: "dateJoined",
       align: "center",
+      render: (iostring) => formatVNDateTime(iostring)
     },
     {
       title: "Sửa",

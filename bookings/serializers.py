@@ -7,12 +7,12 @@ from customers.models import Customer
 from rooms.models import Room
 from django.utils import timezone
 from datetime import date
-
 class BookingSerializer(serializers.ModelSerializer):
     customer = CustomerSerializer(read_only=True)
     room = RoomSerializer(read_only=True)
     created_by = UserSerializer(read_only=True)
 
+    invoice = serializers.SerializerMethodField()
     customer_id = serializers.PrimaryKeyRelatedField(queryset=Customer.objects.all(), source='customer', write_only=True)
     room_id = serializers.PrimaryKeyRelatedField(queryset=Room.objects.all(), source='room', write_only=True)
 
@@ -31,8 +31,9 @@ class BookingSerializer(serializers.ModelSerializer):
             'total_price',
             'notes',
             'created_at',
+            'invoice'
         ]
-        read_only_fields = ['created_at', 'total_price', 'created_by']
+        read_only_fields = ['created_at', 'total_price', 'created_by', 'invoice']
 
     def validate(self, data):
         check_in_date =data.get('check_in_date')
@@ -59,4 +60,12 @@ class BookingSerializer(serializers.ModelSerializer):
                     raise serializers.ValidationError("Phòng đã được đặt trong khoảng thời gian này.")
                 
         return data
+    
+    def get_invoice(self, obj):
+        from invoices.serializers import InvoiceBasicSerializer
+
+        if hasattr(obj, 'invoice'):
+            serializer = InvoiceBasicSerializer(obj.invoice)
+            return serializer.data
+        return None
     
