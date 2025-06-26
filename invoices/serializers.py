@@ -45,3 +45,8 @@ class InvoiceSerializer(serializers.ModelSerializer):
             if booking.total_price <= 0:
                 raise serializers.ValidationError("Tổng giá trị đơn đặt phòng phải lớn hơn 0.")
         return data
+    
+class InvoiceBasicSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Invoice
+        fields = ['id', 'invoice_number', 'status']
