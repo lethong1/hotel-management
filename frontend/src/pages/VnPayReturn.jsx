@@ -8,7 +8,6 @@ const VnpayReturn = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log("window.location.href:", window.location.href);
         const verify = async () => {
             const paramObj = Object.fromEntries(params.entries());
             console.log("Params gửi lên backend:", paramObj);

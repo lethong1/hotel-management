@@ -8,7 +8,10 @@ from .permissions import IsBookingOwnerOrManagerOrAdmin
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
-
+from utils.vnpay import Vnpay
+from django.conf import settings
+from datetime import datetime
+from rest_framework.decorators import action
 @api_view(['GET'])
 def vnpay_return_view(request):
     params = request.query_params
@@ -38,6 +41,42 @@ def vnpay_return_view(request):
         "booking_id": booking.id,
         "room_id": room.id
     })
+
+@action(detail=False, methods=["post"])
+def create_vnpay_url(self, request):
+    booking_id = request.data.get("booking_id")
+
+    if not booking_id:
+        return Response({"detail": "Thiếu booking_id"}, status=400)
+
+    try:
+        booking = Booking.objects.get(pk=booking_id)
+    except Booking.DoesNotExist:
+        return Response({"detail": "Không tìm thấy booking"}, status=404)
+
+    if booking.status != "pending":
+        return Response({"detail": "Booking không ở trạng thái chờ thanh toán"}, status=400)
+
+    vnp = Vnpay()
+    vnp.requestData = {
+        'vnp_Version': '2.1.0',
+        'vnp_Command': 'pay',
+        'vnp_TmnCode': settings.VNPAY_TMN_CODE,
+        'vnp_Amount': int(booking.total_price * 100),  # VNĐ x 100
+        'vnp_CurrCode': 'VND',
+        'vnp_TxnRef': str(booking.id),
+        'vnp_OrderInfo': f"Thanh toán booking #{booking.id}",
+        'vnp_OrderType': 'other',
+        'vnp_Locale': 'vn',
+        'vnp_ReturnUrl': settings.VNPAY_RETURN_URL,
+        'vnp_CreateDate': datetime.now().strftime('%Y%m%d%H%M%S'),
+        'vnp_IpAddr': request.META.get('REMOTE_ADDR', '127.0.0.1'),
+    }
+
+    payment_url = vnp.get_payment_url(settings.VNPAY_PAYMENT_URL, settings.VNPAY_HASH_SECRET_KEY)
+    return Response({'vnpay_url': payment_url})
+
+    
 class BookingViewSet(viewsets.ModelViewSet):
     queryset = Booking.objects.all().order_by('-created_at')
     serializer_class = BookingSerializer
@@ -92,4 +131,5 @@ class BookingViewSet(viewsets.ModelViewSet):
         elif instance.status in ['confirmed', 'checked_in']:
             new_room.status = 'occupied'
             new_room.save()
-        
+
+    

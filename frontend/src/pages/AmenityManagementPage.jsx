@@ -56,111 +56,110 @@ const AmenityManagementPage = () => {
 
   return (
     <div className="amenity-management-page">
-  
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginBottom: "24px",
-          }}
-        ></div>
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "24px",
+        }}
+      ></div>
 
-        <div className="amenity-grid">
-          {/* Header */}
-          <div className="amenity-row amenity-header">
-            <div className="amenity-cell amenity-cell-name">
-              <Text strong style={{ color: "#2c3e50" }}>
-                Tên Tiện Nghi
-              </Text>
-            </div>
-            <div className="amenity-cell amenity-cell-desc">
-              <Text strong style={{ color: "#2c3e50" }}>
-                Mô tả
-              </Text>
-            </div>
-            <div className="amenity-cell amenity-cell-actions">
-              <Text strong style={{ color: "#2c3e50" }}>
-                Hành động
-              </Text>
-            </div>
+      <div className="amenity-grid">
+        {/* Header */}
+        <div className="amenity-row amenity-header">
+          <div className="amenity-cell amenity-cell-name">
+            <Text strong style={{ color: "#2c3e50" }}>
+              Tên Tiện Nghi
+            </Text>
           </div>
-
-          {/* Body */}
-          {loading ? (
-            <div style={{ padding: "40px", textAlign: "center" }}>
-              <Spin size="large" />
-            </div>
-          ) : (
-            amenities.map((amenity) => (
-              <div className="amenity-row" key={amenity.key}>
-                <div className="amenity-cell amenity-cell-name">
-                  {amenity.name}
-                </div>
-                <div className="amenity-cell amenity-cell-desc">
-                  {amenity.description || (
-                    <span style={{ color: "#95a5a6", fontStyle: "italic" }}>
-                      Không có mô tả
-                    </span>
-                  )}
-                </div>
-                <div className="amenity-cell amenity-cell-actions">
-                  <Space>
-                    <Button
-                      type="text"
-                      icon={<EditOutlined />}
-                      onClick={() => showEditModal(amenity)}
-                      style={{ color: palette.info }}
-                    />
-                    <Button
-                      type="text"
-                      icon={<DeleteOutlined />}
-                      onClick={() => handleDelete(amenity)}
-                      style={{ color: palette.danger }}
-                    />
-                  </Space>
-                </div>
-              </div>
-            ))
-          )}
-
-          {/* Inline Add Row */}
-          <div className="amenity-row" style={{ background: "#f8f9fa" }}>
-            <div className="amenity-cell amenity-cell-name">
-              <Input
-                placeholder="Nhập tên tiện nghi"
-                value={newAmenity.name}
-                onChange={(e) =>
-                  setNewAmenity({ ...newAmenity, name: e.target.value })
-                }
-                className="inline-input"
-              />
-            </div>
-            <div className="amenity-cell amenity-cell-desc">
-              <Input
-                placeholder="Nhập mô tả"
-                value={newAmenity.description}
-                onChange={(e) =>
-                  setNewAmenity({ ...newAmenity, description: e.target.value })
-                }
-                className="inline-input"
-              />
-            </div>
-            <div className="amenity-cell amenity-cell-actions">
-              <Button
-                type="primary"
-                icon={<SaveOutlined />}
-                onClick={handleInlineAdd}
-                style={{
-                  backgroundColor: palette.success,
-                  borderColor: palette.success,
-                }}
-              >
-                Lưu
-              </Button>
-            </div>
-            </div>
+          <div className="amenity-cell amenity-cell-desc">
+            <Text strong style={{ color: "#2c3e50" }}>
+              Mô tả
+            </Text>
+          </div>
+          <div className="amenity-cell amenity-cell-actions">
+            <Text strong style={{ color: "#2c3e50" }}>
+              Hành động
+            </Text>
+          </div>
         </div>
+
+        {/* Body */}
+        {loading ? (
+          <div style={{ padding: "40px", textAlign: "center" }}>
+            <Spin size="large" />
+          </div>
+        ) : (
+          amenities.map((amenity) => (
+            <div className="amenity-row" key={amenity.key}>
+              <div className="amenity-cell amenity-cell-name">
+                {amenity.name}
+              </div>
+              <div className="amenity-cell amenity-cell-desc">
+                {amenity.description || (
+                  <span style={{ color: "#95a5a6", fontStyle: "italic" }}>
+                    Không có mô tả
+                  </span>
+                )}
+              </div>
+              <div className="amenity-cell amenity-cell-actions">
+                <Space>
+                  <Button
+                    type="text"
+                    icon={<EditOutlined />}
+                    onClick={() => showEditModal(amenity)}
+                    style={{ color: palette.info }}
+                  />
+                  <Button
+                    type="text"
+                    icon={<DeleteOutlined />}
+                    onClick={() => handleDelete(amenity)}
+                    style={{ color: palette.danger }}
+                  />
+                </Space>
+              </div>
+            </div>
+          ))
+        )}
+
+        {/* Inline Add Row */}
+        <div className="amenity-row" style={{ background: "#f8f9fa" }}>
+          <div className="amenity-cell amenity-cell-name">
+            <Input
+              placeholder="Nhập tên tiện nghi"
+              value={newAmenity.name}
+              onChange={(e) =>
+                setNewAmenity({ ...newAmenity, name: e.target.value })
+              }
+              className="inline-input"
+            />
+          </div>
+          <div className="amenity-cell amenity-cell-desc">
+            <Input
+              placeholder="Nhập mô tả"
+              value={newAmenity.description}
+              onChange={(e) =>
+                setNewAmenity({ ...newAmenity, description: e.target.value })
+              }
+              className="inline-input"
+            />
+          </div>
+          <div className="amenity-cell amenity-cell-actions">
+            <Button
+              type="primary"
+              icon={<SaveOutlined />}
+              onClick={handleInlineAdd}
+              style={{
+                backgroundColor: palette.success,
+                borderColor: palette.success,
+              }}
+            >
+              Lưu
+            </Button>
+          </div>
+        </div>
+      </div>
 
       <Modal
         title="Chỉnh sửa tiện nghi"

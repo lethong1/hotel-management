@@ -112,7 +112,7 @@ const AddRoomTypePage = () => {
           >
             <Checkbox.Group>
               <Row>
-                {amenities.map(a => (
+                {amenities.map((a) => (
                   <Col span={8} key={a.id}>
                     <Checkbox value={a.id}>{a.name}</Checkbox>
                   </Col>

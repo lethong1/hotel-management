@@ -1,29 +1,29 @@
-import React, { useContext, useEffect, useState } from 'react'; 
-import { Row, Col, Input, Button, Typography, Form } from 'antd';
-import { EyeOutlined, EyeInvisibleOutlined, UserOutlined, LoadingOutlined } from '@ant-design/icons';
-import logo from '../../assets/logo.png'
-import { LoginContext } from '../../contexts/LoginConText'
-import { useNavigate } from 'react-router-dom';
-import { message, Spin } from 'antd';
-import '../../css/LoginForm.css';
+import React, { useContext, useEffect, useState } from "react";
+import { Row, Col, Input, Button, Typography, Form } from "antd";
+import {
+  EyeOutlined,
+  EyeInvisibleOutlined,
+  UserOutlined,
+  LoadingOutlined,
+} from "@ant-design/icons";
+import logo from "../../assets/logo.png";
+import { LoginContext } from "../../contexts/LoginConText";
+import { useNavigate } from "react-router-dom";
+import { message, Spin } from "antd";
+import "../../css/LoginForm.css";
 const { Title } = Typography;
 
 const LoginForm = () => {
-  const { loginUser, authState } = useContext(LoginContext)
+  const { loginUser, authState } = useContext(LoginContext);
   const navigate = useNavigate();
 
-  const customIndicator = (
-    <LoadingOutlined
-      className="custom-spinner"
-      spin
-    />
-  );
-  
+  const customIndicator = <LoadingOutlined className="custom-spinner" spin />;
+
   useEffect(() => {
     // Nếu đã xác thực thành công, chuyển ngay đến dashboard
     if (authState.isAuthenticated) {
-      console.log('User is already authenticated. Redirecting to dashboard...');
-      navigate('/dashboard');
+      console.log("User is already authenticated. Redirecting to dashboard...");
+      navigate("/dashboard");
     }
   }, [authState.isAuthenticated, navigate]);
 
@@ -37,30 +37,30 @@ const LoginForm = () => {
 
   const onFinish = async (values) => {
     try {
-      await loginUser(values.username, values.password)
-      message.success('Đăng nhập thành công')
+      await loginUser(values.username, values.password);
+      message.success("Đăng nhập thành công");
     } catch (error) {
-      console.log('Login Failed:', error)
-      message.error('Đăng nhập thất bại')
+      console.log("Login Failed:", error);
+      message.error("Đăng nhập thất bại");
     }
   };
 
   const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-    console.log(errorInfo)
+    console.log("Failed:", errorInfo);
+    console.log(errorInfo);
   };
 
   return (
     <div className="login-container">
       <Row className="login-row">
         {/* Cột bên trái (Logo) */}
-        <Col span={10} 
+        <Col
+          span={10}
           className="login-logo-column"
           style={{
-            backgroundImage: `url(${logo})`
+            backgroundImage: `url(${logo})`,
           }}
-        >
-        </Col>
+        ></Col>
 
         {/* Cột bên phải (Form) */}
         <Col span={14} className="login-form-column">
@@ -76,10 +76,12 @@ const LoginForm = () => {
           >
             <Form.Item
               name="username"
-              rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập!' }]}
+              rules={[
+                { required: true, message: "Vui lòng nhập tên đăng nhập!" },
+              ]}
             >
               <Input
-                prefix={<UserOutlined style={{ color: 'rgba(0,0,0,.45)' }} />}
+                prefix={<UserOutlined style={{ color: "rgba(0,0,0,.45)" }} />}
                 placeholder="Tên đăng nhập"
                 size="large"
                 className="login-input"
@@ -88,18 +90,20 @@ const LoginForm = () => {
 
             <Form.Item
               name="password"
-              rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
+              rules={[{ required: true, message: "Vui lòng nhập mật khẩu!" }]}
             >
               <Input.Password
-                prefix={<EyeOutlined style={{ color: 'rgba(0,0,0,.45)' }} />}
+                prefix={<EyeOutlined style={{ color: "rgba(0,0,0,.45)" }} />}
                 placeholder="Mật khẩu"
                 size="large"
                 className="login-input"
-                iconRender={visible => (visible ? <EyeOutlined /> : <EyeInvisibleOutlined />)}
+                iconRender={(visible) =>
+                  visible ? <EyeOutlined /> : <EyeInvisibleOutlined />
+                }
               />
             </Form.Item>
 
-            <Form.Item style={{ marginTop: '20px' }}>
+            <Form.Item style={{ marginTop: "20px" }}>
               <Button
                 type="primary"
                 htmlType="submit"

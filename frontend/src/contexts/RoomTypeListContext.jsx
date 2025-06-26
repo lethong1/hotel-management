@@ -73,7 +73,7 @@ export const RoomTypeListProvider = ({ children }) => {
       capacity: record.capacity,
       description: record.description,
       price: record.price,
-      amenities: [record.raw.amenities?.map(a => a.id)],
+      amenities: [record.raw.amenities?.map((a) => a.id)],
     });
     setIsModalVisible(true);
   };

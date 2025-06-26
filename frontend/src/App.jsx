@@ -20,6 +20,8 @@ import BookingPage from "./pages/BookingPage";
 import UserManagementPage from "./pages/UserManagementPage";
 import { UserManagementProvider } from "./contexts/UserManagementContext";
 import VnpayReturn from './pages/VnPayReturn';
+import CheckoutPage from "./pages/CheckoutPage";
+import { CheckoutProvider } from "./contexts/CheckoutContext";
 const App = () => {
   return (
     <LoginProvider>
@@ -64,12 +66,12 @@ const App = () => {
             path="add-room-type"
             element={
               <RoomTypeListProvider>
-              <AddRoomTypeProvider>
-                <AmenityProvider>
-                  <AddRoomTypePage />
-                </AmenityProvider>
-              </AddRoomTypeProvider>
-            </RoomTypeListProvider>
+                <AddRoomTypeProvider>
+                  <AmenityProvider>
+                    <AddRoomTypePage />
+                  </AmenityProvider>
+                </AddRoomTypeProvider>
+              </RoomTypeListProvider>
             }
           />
           <Route
@@ -96,9 +98,9 @@ const App = () => {
               </UserManagementProvider>
             }
           />
-          
         </Route>
         <Route path="/vnpay-return" element={<VnpayReturn />} />
+        <Route path="/checkout" element= {<CheckoutProvider><CheckoutPage/></CheckoutProvider>}/>
       </Routes>
     </LoginProvider>
   );

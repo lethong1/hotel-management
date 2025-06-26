@@ -1,5 +1,3 @@
-// File: src/pages/UserManagementPage.jsx
-
 import React from "react";
 import {
   Table,
@@ -14,12 +12,11 @@ import {
 } from "antd";
 import { PlusOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useUserManagement } from "../contexts/UserManagementContext";
-
+import "../css/UserManagementPage.css";
+import { formatVNDateTime } from "../utils/Formatter";
 const { Option } = Select;
 
-// Hàm render tag màu cho vai trò và trạng thái
 const renderRoleTag = (role, record) => {
-  // Ưu tiên dùng roleName nếu có, nếu không thì dùng role
   const roleKey = record.role || "user";
   const roleName = record.roleName || roleKey;
   const roleMap = {
@@ -61,12 +58,6 @@ const UserManagementPage = () => {
     actionBlue: "#2563EB",
   };
 
-  const tableStyles = `
-        .custom-table .ant-table-thead > tr > th { background-color: ${palette.tableHeaderBg} !important; font-weight: 600; }
-        .action-link { color: #333; font-weight: 500; }
-        .delete-link { color: ${palette.actionBlue}; font-weight: 500; }
-    `;
-
   const columns = [
     { title: "Họ và Tên", dataIndex: "fullName", key: "fullName" },
     { title: "Tên đăng nhập", dataIndex: "username", key: "username" },
@@ -90,62 +81,47 @@ const UserManagementPage = () => {
       dataIndex: "dateJoined",
       key: "dateJoined",
       align: "center",
+      render: (iostring) => formatVNDateTime(iostring)
     },
     {
-      title: "Hành động",
-      key: "action",
+      title: "Sửa",
+      key: "edit",
       align: "center",
       render: (_, record) => (
-        <Space size="middle">
-          <Button
-            type="text"
-            icon={<EditOutlined />}
-            onClick={() => showModal(record)}
-          />
-          <Button
-            type="text"
-            danger
-            icon={<DeleteOutlined />}
-            onClick={() => handleDelete(record)}
-          />
-        </Space>
+        <Button
+          type="primary"
+          icon={<EditOutlined />}
+          onClick={() => showModal(record)}
+        />
+      ),
+    },
+    {
+      title: "Xóa",
+      key: "delete",
+      align: "center",
+      render: (_, record) => (
+        <Button
+          type="danger"
+          icon={<DeleteOutlined />}
+          onClick={() => handleDelete(record)}
+        />
       ),
     },
   ];
 
   return (
     <>
-      <style>{tableStyles}</style>
-      <div
-        style={{
-          backgroundColor: palette.pageBackground,
-          minHeight: "100vh",
-          padding: "20px 40px",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginBottom: "20px",
-          }}
-        >
+      <div className="user-management-container">
+        <div className="user-management-header">
           <Button
             icon={<PlusOutlined />}
             size="large"
-            style={{
-              backgroundColor: palette.primary,
-              borderColor: palette.primary,
-              color: "#fff",
-              borderRadius: "8px",
-              fontWeight: "600",
-            }}
+            className="add-user-btn"
             onClick={() => showModal()}
           >
             THÊM NGƯỜI DÙNG
           </Button>
         </div>
-
         <div className="custom-table">
           <Table
             columns={columns}

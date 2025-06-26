@@ -2,9 +2,9 @@
 .user-info-page {
   background-color: var(--background-color);
   font-family: 'Inter', sans-serif;
-  padding: 40px 20px 20px 20px;
+  padding: 40px 0px 20px 20px;
   height: 92%;
-  width: 130%;
+  width: 120%;
   box-sizing: border-box;
   justify-content: center;
 }
