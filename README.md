@@ -33,7 +33,7 @@ $ source venv/bin/activate
 $ pip install -r requirements.txt
 ```
 + **Lưu ý:** Nếu chưa có hoặc không tìm thấy file requirements.txt, hãy tạo file này với nội dung:
-+ ```
+``` bash
 + asgiref==3.8.1
 + certifi==2025.6.15
 + charset-normalizer==3.4.2
@@ -50,7 +50,7 @@ $ pip install -r requirements.txt
 + sqlparse==0.5.3
 + tzdata==2025.2
 + urllib3==2.5.0
-+ ```
+```
 
 ### Bước 4: Cấu hình database
 - Mặc định dùng SQLite, muốn dùng PostgreSQL thì sửa `hotel_management/settings.py`.
@@ -60,7 +60,7 @@ $ pip install -r requirements.txt
 + # Tạo file .env trong thư mục gốc(ngang hàng với`manage.py`)
 
 + # Chỉnh sửa các biến môi trường trong file .env (nếu không chỉnh sẽ không thể chạy vì file settings.py không đọc được)
-+ ```
+
 ### Bước 5: Khởi tạo database
 ```bash
 # Lệnh này để tạo các migrations( giống như tạo các tables trong các models)
@@ -97,7 +97,7 @@ $ python manage.py runserver
 
 ### Bước 1: Cài thư viện frontend
 ```bash
-# Chạy vào đúng thư mục chứ frontend
+# Chạy vào đúng thư mục của frontend
 $ cd frontend
 # Lệnh này để cài các thư viện
 $ npm install
@@ -133,29 +133,37 @@ $ npm run dev
 - **Tích hợp thanh toán bằng thẻ ATM qua MOMO (Đã test thành công)**
 - **Tài khoản test MOMO:**
   - *Trường hợp thành công:*
-    - SỐ THẺ: 9704 0000 0000 0018
-    - CHỦ TÀI KHOẢN: NGUYEN VAN A
-    - HẠN GHI TRÊN THẺ: 03/07
-    - SỐ ĐIỆN THOẠI: Để trống
-    - OTP: OTP
+    ```bash
+    + SỐ THẺ: 9704 0000 0000 0018
+    + CHỦ TÀI KHOẢN: NGUYEN VAN A
+    + HẠN GHI TRÊN THẺ: 03/07
+    + SỐ ĐIỆN THOẠI: Để trống
+    + OTP: OTP
+    ```
   - *Trường hợp thẻ bị khóa:*
-    - SỐ THẺ: 9704 0000 0000 0026
-    - CHỦ TÀI KHOẢN: NGUYEN VAN A
-    - HẠN GHI TRÊN THẺ: 03/07
-    - SỐ ĐIỆN THOẠI: Để trống
-    - OTP: OTP
+    ```bash
+    + SỐ THẺ: 9704 0000 0000 0026
+    + CHỦ TÀI KHOẢN: NGUYEN VAN A
+    + HẠN GHI TRÊN THẺ: 03/07
+    + SỐ ĐIỆN THOẠI: Để trống
+    + OTP: OTP
+    ```
   - *Trường hợp thẻ không đủ tiền:*
-    - SỐ THẺ: 9704 0000 0000 0034
-    - CHỦ TÀI KHOẢN: NGUYEN VAN A
-    - HẠN GHI TRÊN THẺ: 03/07
-    - SỐ ĐIỆN THOẠI: Để trống
-    - OTP: OTP
+    ```bash
+    + SỐ THẺ: 9704 0000 0000 0034
+    + CHỦ TÀI KHOẢN: NGUYEN VAN A
+    + HẠN GHI TRÊN THẺ: 03/07
+    + SỐ ĐIỆN THOẠI: Để trống
+    + OTP: OTP
+    ```
   - *Trường hợp hạn mức thẻ:*
-    - SỐ THẺ: 9704 0000 0000 0042
-    - CHỦ TÀI KHOẢN: NGUYEN VAN A
-    - HẠN GHI TRÊN THẺ: 03/07
-    - SỐ ĐIỆN THOẠI: Để trống
-    - OTP: OTP
+   ```bash
+    + SỐ THẺ: 9704 0000 0000 0042
+    + CHỦ TÀI KHOẢN: NGUYEN VAN A
+    + HẠN GHI TRÊN THẺ: 03/07
+    + SỐ ĐIỆN THOẠI: Để trống
+    + OTP: OTP
+    ```
 ### 6.2 Thanh toán tiền mặt
 - Click thanh toán bằng tiền mặt sẽ tự động mặc định là thanh toán thành công 
 
@@ -201,6 +209,6 @@ $ python manage.py dumpdata > backup.json
 
 ## 11. Đây là sản phẩm còn rất nhiều thiếu xót, mọi người có thể liên hệ góp ý để hoàn thiện hơn ạ
 - Gmail: lehuuthong2004@gmail.com
-- Gmail: ngthiminhduyen04@gmail.com
+- Gmail: ngthminhduyen04@gmail.com
 
 Chúng em xin chân thành cảm ơn mọi người góp ý và xem!
