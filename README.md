@@ -102,5 +102,11 @@ $ npm run dev
   - Đặt phòng, sửa trạng thái phòng, xem hóa đơn của mình.
   - Không truy cập được trang quản trị, doanh thu.
 
+## 6. Thanh toán
+### Thanh toán MOMO
+- Tích hợp thanh toán bằng MOMO QR (chỉ test vì không có tài khoản test UAT)
+- Tích hợp thanh toán bằng thẻ ATM qua MOMO (Đã test thành công)
+### Thanh toán bằng tiền mặt
+- Click thanh toán bằng tiền mặt sẽ tự động mặc định là thanh toán thành công 
 ## 6. Đổi mật khẩu cho user
 - Chỉ admin mới đổi được mật khẩu user khác qua trang quản lý user.
