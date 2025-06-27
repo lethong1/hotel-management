@@ -34,22 +34,22 @@ $ pip install -r requirements.txt
 ```
 + **Lưu ý:** Nếu chưa có hoặc không tìm thấy file requirements.txt, hãy tạo file này với nội dung:
 ``` bash
-+ asgiref==3.8.1
-+ certifi==2025.6.15
-+ charset-normalizer==3.4.2
-+ Django==5.2.2
-+ django-cors-headers==4.7.0
-+ djangorestframework==3.16.0
-+ djangorestframework_simplejwt==5.5.0
-+ idna==3.10
-+ psycopg2-binary==2.9.10
-+ PyJWT==2.9.0
-+ python-decouple==3.8
-+ python-dotenv==1.1.0
-+ requests==2.32.4
-+ sqlparse==0.5.3
-+ tzdata==2025.2
-+ urllib3==2.5.0
+asgiref==3.8.1
+certifi==2025.6.15
+charset-normalizer==3.4.2
+Django==5.2.2
+django-cors-headers==4.7.0
+djangorestframework==3.16.0
+djangorestframework_simplejwt==5.5.0
+idna==3.10
+psycopg2-binary==2.9.10
+PyJWT==2.9.0
+python-decouple==3.8
+python-dotenv==1.1.0
+requests==2.32.4
+sqlparse==0.5.3
+tzdata==2025.2
+urllib3==2.5.0
 ```
 
 ### Bước 4: Cấu hình database
