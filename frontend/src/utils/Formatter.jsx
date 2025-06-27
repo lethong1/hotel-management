@@ -31,6 +31,12 @@ export const formatVNDateTime = (isoString) => {
 
 // Bạn có thể thêm các hàm định dạng khác ở đây, ví dụ định dạng tiền tệ
 export const formatCurrency = (amount) => {
-    if (typeof amount !== 'number') return "";
-    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(amount);
+    if (amount === null || amount === undefined || amount === "") return "0 ₫";
+    
+    // Convert string to number if needed
+    const numAmount = typeof amount === 'string' ? parseFloat(amount) : amount;
+    
+    if (isNaN(numAmount)) return "0 ₫";
+    
+    return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(numAmount);
 };

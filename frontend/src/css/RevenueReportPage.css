@@ -13,20 +13,16 @@
   }
   
   .report-page-container {
-    padding: 24px;
-    background-color: var(--report-page-bg);
+    background-color: #f7f6e7;
     min-height: 100vh;
+    width: 110%;
   }
   
-  .report-page-title {
-    color: var(--primary-text-color);
-    margin-bottom: 24px !important;
-    font-weight: 600;
-  }
+ 
   
   /* Card chứa bộ lọc ngày tháng */
   .filter-card .ant-card-body {
-    padding: 16px 24px !important; /* Giảm padding cho gọn gàng */
+    padding: 16px 10px !important; /* Giảm padding cho gọn gàng */
   }
   
   /* Các thẻ thống kê chính */

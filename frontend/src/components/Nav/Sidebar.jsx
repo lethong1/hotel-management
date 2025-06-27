@@ -6,9 +6,10 @@ import room from "../../assets/room.png";
 import list_icon from "../../assets/list_icon.png";
 import amenities from "../../assets/amenities.png";
 import { useContext } from "react";
-import { LoginContext } from "../../contexts/LoginConText";
+import { LoginContext } from "../../contexts/LoginUser/LoginConText";
 import booking from "../../assets/booking.png";
-import employee from "../../assets/employee.png";
+import employee from "../../assets/employee.png"; 
+import revenue_report from "../../assets/revenue_report.png";
 const Sidebar = () => {
   const { authState } = useContext(LoginContext);
   const user = authState.user;
@@ -101,6 +102,23 @@ const Sidebar = () => {
           />
           <span>Đặt phòng</span>
         </Link>
+        {(user?.role.id === 1 || user?.role.id === 3) && (
+        <Link to="/dashboard/revenue-report" className="menu-item">
+          <img
+            src={revenue_report}
+            alt="revenue_icon"
+            style={{
+              width: "40px",
+              height: "40px",
+              marginRight: "10px",
+              backgroundColor: "white",
+              padding: "5px",
+              borderRadius: "10%",
+            }}
+          />
+            <span>Doanh Thu</span>
+          </Link>
+        )}
       </div>
     </nav>
   );

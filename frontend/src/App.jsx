@@ -2,28 +2,29 @@ import "./App.css";
 import LoginForm from "./components/Auth/LoginForm";
 import Dashboard from "./pages/Dashboard";
 import { Routes, Route } from "react-router-dom";
-import { LoginProvider } from "./contexts/LoginConText";
+import { LoginProvider } from "./contexts/LoginUser/LoginConText";
 import ProtectedRoute from "./components/Routing/ProtectedRoute";
-import AddRoomPage from "./pages/AddRoomPage";
-import { AddRoomProvider } from "./contexts/AddRoomContext";
-import { AddRoomTypeProvider } from "./contexts/AddRoomTypeContext";
-import AddRoomTypePage from "./pages/AddRoomTypePage";
-import RoomTypeListPage from "./pages/RoomTypeListPage";
-import { RoomTypeListProvider } from "./contexts/RoomTypeListContext";
-import RoomListPage from "./pages/RoomListPage";
-import { RoomListProvider } from "./contexts/RoomListContext";
-import UserInfoPage from "./pages/UserInfoPage";
-import AmenityManagementPage from "./pages/AmenityManagementPage";
-import { AmenityProvider } from "./contexts/AmenityContext";
-import { BookingProvider } from "./contexts/BookingContext";
-import BookingPage from "./pages/BookingPage";
-import UserManagementPage from "./pages/UserManagementPage";
-import { UserManagementProvider } from "./contexts/UserManagementContext";
-import VnpayReturn from "./pages/VnPayReturn";
-import CheckoutPage from "./pages/CheckoutPage";
-import { CheckoutProvider } from "./contexts/CheckoutContext";
-import InvoiceTemplate from "./pages/InvoiceTemplate";
-import InvoiceDetailPage from "./pages/InvoiceDetailPage";
+import AddRoomPage from "./pages/Room/AddRoomPage";
+import { AddRoomProvider } from "./contexts/Room/AddRoomContext";
+import { AddRoomTypeProvider } from "./contexts/RoomType/AddRoomTypeContext";
+import AddRoomTypePage from "./pages/RoomType/AddRoomTypePage";
+import RoomTypeListPage from "./pages/RoomType/RoomTypeListPage";
+import { RoomTypeListProvider } from "./contexts/RoomType/RoomTypeListContext";
+import RoomListPage from "./pages/Room/RoomListPage";
+import { RoomListProvider } from "./contexts/Room/RoomListContext";
+import UserInfoPage from "./pages/User/UserInfoPage";
+import AmenityManagementPage from "./pages/Amenity/AmenityManagementPage";
+import { AmenityProvider } from "./contexts/Amenity/AmenityContext";
+import { BookingProvider } from "./contexts/Booking/BookingContext";
+import BookingPage from "./pages/Booking/BookingPage";
+import UserManagementPage from "./pages/User/UserManagementPage";
+import { UserManagementProvider } from "./contexts/LoginUser/UserManagementContext";
+import CheckoutPage from "./pages/Booking/CheckoutPage";
+import { CheckoutProvider } from "./contexts/Booking/CheckoutContext";
+import InvoiceTemplate from "./pages/Invoices/InvoiceTemplate";
+import InvoiceDetailPage from "./pages/Invoices/InvoiceDetailPage";
+import MomoReturn from "./pages/MomoReturn";
+import RevenueReportPage  from "./pages/RevenueReportPage";
 
 const App = () => {
   return (
@@ -101,8 +102,9 @@ const App = () => {
               </UserManagementProvider>
             }
           />
+          <Route path = "revenue-report" element = {<RevenueReportPage />} />
         </Route>
-        <Route path="/vnpay-return" element={<VnpayReturn />} />
+        <Route path="/momo-return" element={<MomoReturn />} />
         <Route
           path="/checkout"
           element={

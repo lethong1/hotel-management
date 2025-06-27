@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config('DEBUG',default=True,cast=bool)
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
 
 # Application definition
@@ -101,10 +101,10 @@ DATABASES = {
     }
 }
 # VNPAY CONFIG
-VNPAY_TMN_CODE = config('VNPAY_TMN_CODE', default='')
-VNPAY_HASH_SECRET = config('VNPAY_HASH_SECRET', default='')
-VNPAY_API_URL = config('VNPAY_API_URL', default='')
-VNPAY_RETURN_URL = config('VNPAY_RETURN_URL', default='')
+VNPAY_TMN_CODE = 'CKVMQOZE'
+VNPAY_HASH_SECRET = 'EQMWK8Q523VH0HM0B3D6E4VQH8AH7RHG'
+VNPAY_API_URL = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html'
+VNPAY_RETURN_URL = 'http://localhost:5173/bookings/vnpay/return/'
 
 #REST Framework
 REST_FRAMEWORK = {
@@ -167,3 +167,15 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_TRUSTED_ORIGINS = [
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+]
+MOMO_RETURN_URL=config('MOMO_RETURN_URL')       
+MOMO_NOTIFY_URL=config('MOMO_NOTIFY_URL')
+MOMO_VERIFY_URL=config('MOMO_VERIFY_URL')
+MOMO_PARTNER_CODE=config('MOMO_PARTNER_CODE')    
+MOMO_ACCESS_KEY=config('MOMO_ACCESS_KEY')
+MOMO_SECRET_KEY=config('MOMO_SECRET_KEY')
+

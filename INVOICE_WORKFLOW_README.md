@@ -2,7 +2,7 @@
 
 ## Tổng Quan
 
-Hệ thống quản lý khách sạn đã được cập nhật với luồng thanh toán hóa đơn mới, tích hợp cổng thanh toán VNPAY. Luồng này cho phép nhân viên lễ tân xử lý thanh toán cho khách hàng đã nhận phòng một cách hiệu quả.
+Hệ thống quản lý khách sạn đã được cập nhật với luồng thanh toán hóa đơn mới, tích hợp cổng thanh toán MOMO. Luồng này cho phép nhân viên lễ tân xử lý thanh toán cho khách hàng đã nhận phòng một cách hiệu quả.
 
 ## Luồng Hoạt Động
 
@@ -29,23 +29,26 @@ Hệ thống quản lý khách sạn đã được cập nhật với luồng th
 - Thông tin khách hàng và phòng
 - Chi tiết thanh toán (tiền phòng, VAT, tổng cộng)
 - Các nút hành động:
-  - **"Thanh toán qua VNPAY"** (chỉ hiển thị khi booking đã nhận phòng và chưa thanh toán)
+  - **"Thanh toán"** (hiển thị modal với 3 lựa chọn: Tiền mặt, QR MOMO, Thẻ ATM)
   - **"In hóa đơn tạm tính"**
   - **"Thêm dịch vụ"** (tính năng sẽ phát triển sau)
 
-### Bước 3: Tích Hợp VNPAY
+### Bước 3: Tích Hợp MOMO
 
-**Khi nhấn "Thanh toán qua VNPAY":**
+**Khi nhấn "Thanh toán":**
 
-1. Hệ thống tạo giao dịch với VNPAY
-2. Chuyển hướng đến cổng thanh toán VNPAY
-3. Khách hàng thực hiện thanh toán trên VNPAY
+1. Hiển thị modal với 3 lựa chọn:
+   - **Tiền mặt**: Cập nhật trạng thái ngay lập tức
+   - **QR MOMO**: Tạo QR code thanh toán qua ví MOMO
+   - **Thẻ ATM**: Thanh toán qua thẻ ATM/Internet Banking
+2. Chuyển hướng đến cổng thanh toán MOMO (nếu chọn QR hoặc ATM)
+3. Khách hàng thực hiện thanh toán trên MOMO
 
 ### Bước 4: Xử Lý Kết Quả Thanh Toán
 
 **Trường hợp thành công:**
 
-- VNPAY trả về kết quả thành công
+- MOMO trả về kết quả thành công
 - Hệ thống tự động:
   - Cập nhật trạng thái hóa đơn thành **"ĐÃ THANH TOÁN"**
   - Cập nhật trạng thái booking thành **"ĐÃ TRẢ PHÒNG"**
@@ -82,24 +85,29 @@ Hệ thống quản lý khách sạn đã được cập nhật với luồng th
 2. **`frontend/src/pages/BookingPage.jsx`** - Cập nhật hiển thị nút thanh toán
 3. **`frontend/src/contexts/InvoiceDetailContext.jsx`** - Context quản lý dữ liệu hóa đơn
 4. **`frontend/src/pages/InvoiceTemplate.jsx`** - Template in hóa đơn
-5. **`frontend/src/pages/VnPayReturn.jsx`** - Xử lý callback từ VNPAY
-6. **`frontend/src/App.jsx`** - Thêm route cho trang hóa đơn
-7. **`frontend/src/css/InvoiceDetailPage.css`** - CSS cho trang hóa đơn
+5. **`frontend/src/pages/MomoReturn.jsx`** - Xử lý callback từ MOMO
+6. **`frontend/src/components/Modals/PaymentModal.jsx`** - Modal chọn phương thức thanh toán
+7. **`frontend/src/App.jsx`** - Thêm route cho trang hóa đơn
+8. **`frontend/src/css/InvoiceDetailPage.css`** - CSS cho trang hóa đơn
 
 ### Backend
 
-1. **`bookings/views.py`** - Cập nhật logic thanh toán VNPAY
+1. **`bookings/views.py`** - Cập nhật logic thanh toán MOMO
 2. **`invoices/serializers.py`** - Thêm InvoiceBasicSerializer
+3. **`utils/momo.py`** - Tích hợp MOMO payment
+4. **`hotel_management/settings.py`** - Cấu hình MOMO
 
-## Cấu Hình VNPAY
+## Cấu Hình MOMO
 
-Đảm bảo các biến môi trường sau đã được cấu hình trong `settings.py`:
+Đảm bảo các biến môi trường sau đã được cấu hình trong `.env`:
 
-```python
-VNPAY_TMN_CODE = 'your_tmn_code'
-VNPAY_HASH_SECRET_KEY = 'your_hash_secret_key'
-VNPAY_PAYMENT_URL = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html'
-VNPAY_RETURN_URL = 'http://your-domain/vnpay-return'
+```env
+MOMO_RETURN_URL=http://localhost:5173/momo-return
+MOMO_NOTIFY_URL=http://localhost:8000/bookings/momo/verify-return/
+MOMO_VERIFY_URL=https://test-payment.momo.vn/v2/gateway/api/queryStatus
+MOMO_PARTNER_CODE=MOMO
+MOMO_ACCESS_KEY=F8BBA842ECF85
+MOMO_SECRET_KEY=K951B6PE1waDMi640xX08PD3vg6EkVlz
 ```
 
 ## Hướng Dẫn Sử Dụng
@@ -117,8 +125,10 @@ VNPAY_RETURN_URL = 'http://your-domain/vnpay-return'
    - Tìm booking có trạng thái "ĐÃ NHẬN PHÒNG"
    - Nhấn nút "Thanh Toán"
    - Kiểm tra thông tin hóa đơn
-   - Nhấn "Thanh toán qua VNPAY"
-   - Hướng dẫn khách thanh toán
+   - Nhấn "Thanh toán" và chọn phương thức:
+     - **Tiền mặt**: Xác nhận ngay
+     - **QR MOMO**: Quét mã QR
+     - **Thẻ ATM**: Chuyển đến trang thanh toán
 
 3. **Sau khi thanh toán:**
    - Hệ thống tự động cập nhật trạng thái
@@ -138,7 +148,7 @@ VNPAY_RETURN_URL = 'http://your-domain/vnpay-return'
 
 ## Lưu Ý Kỹ Thuật
 
-1. **Bảo mật:** Tất cả giao dịch VNPAY đều được mã hóa và xác thực
+1. **Bảo mật:** Tất cả giao dịch MOMO đều được mã hóa và xác thực
 2. **Logging:** Hệ thống ghi log đầy đủ các giao dịch thanh toán
 3. **Error Handling:** Xử lý lỗi gracefully với thông báo rõ ràng
 4. **Responsive:** Giao diện tương thích với mobile và desktop
@@ -151,7 +161,7 @@ VNPAY_RETURN_URL = 'http://your-domain/vnpay-return'
 
    - Kiểm tra booking có đúng trạng thái "checked_in" không
    - Kiểm tra hóa đơn đã tồn tại chưa
-   - Kiểm tra cấu hình VNPAY
+   - Kiểm tra cấu hình MOMO
 
 2. **"Thanh toán thất bại"**
 

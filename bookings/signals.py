@@ -19,8 +19,9 @@ def create_invoice_for_booking(sender, instance, created, **kwargs):
 
             Invoice.objects.create(
                 booking=instance,
-                due_date=due_date
-                # Các trường khác như invoice_number, total_amount, created_by
+                due_date=due_date,
+                created_by=instance.created_by  # Set created_by từ booking
+                # Các trường khác như invoice_number, total_amount
                 # sẽ được tự động điền bởi hàm save() của model Invoice.
             )
             print(f"Signal đã tự động tạo Invoice cho Booking ID: {instance.id}")

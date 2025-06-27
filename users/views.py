@@ -6,23 +6,28 @@ from django.contrib.auth import get_user_model
 from .permissions import IsManagerOrAdmin, IsOwnerOrManagerOrAdmin
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_exempt
 
 User = get_user_model()
 
 
 # View liệt kê và tạo vai trò
+@method_decorator(csrf_exempt, name='dispatch')
 class RoleListCreateView(generics.ListCreateAPIView):
     queryset = Role.objects.all()
     serializer_class = RoleSerializer
     permission_classes = [IsAdminUser]  
 
 #View xem update xóa vai trò
+@method_decorator(csrf_exempt, name='dispatch')
 class RoleRetrieveUpdateDestroyView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Role.objects.all()
     serializer_class = RoleSerializer
     permission_classes = [IsAdminUser]
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()
     serializer_class = UserSerializer

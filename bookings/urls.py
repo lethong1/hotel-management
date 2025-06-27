@@ -1,13 +1,14 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from .views import BookingViewSet
-from .views import vnpay_return_view
-from .views import create_vnpay_url
+from .views import momo_verify_return
+
 router = DefaultRouter()
 router.register(r'bookings', BookingViewSet, basename='booking')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('bookings/vnpay/verify-return/', vnpay_return_view, name = 'vnpay-return'),
-    path('bookings/vnpay/create-payment/', create_vnpay_url)
+    path('bookings/<int:pk>/momo/create-payment/', BookingViewSet.as_view({'post': 'create_momo_url'}), name='create-momo-url'),
+    path('bookings/<int:pk>/cash/payment/', BookingViewSet.as_view({'post': 'create_cash_payment'}), name='create-cash-payment'),
+    path('bookings/momo/verify-return/', momo_verify_return, name='momo-verify-return'),
 ]

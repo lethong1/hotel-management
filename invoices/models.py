@@ -16,7 +16,7 @@ class Invoice(models.Model):
     due_date = models.DateTimeField()
     total_amount = models.DecimalField(max_digits=10, decimal_places=2, editable=False, default=0)
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='invoices')
     notes = models.TextField(blank=True)
 
     def __str__(self):

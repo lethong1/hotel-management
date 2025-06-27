@@ -80,26 +80,26 @@ def test_get_invoice(token, booking_id):
         print(f"❌ Get invoices failed: {response.status_code}")
         return None
 
-def test_create_vnpay_payment(token, booking_id):
-    """Test tạo URL thanh toán VNPAY"""
-    print(f"\n💳 Testing create VNPAY payment for booking {booking_id}...")
+def test_create_momo_payment(token, booking_id):
+    """Test tạo URL thanh toán MOMO"""
+    print(f"\n💳 Testing create MOMO payment for booking {booking_id}...")
     
     headers = {"Authorization": f"Bearer {token}"}
-    payment_data = {"booking_id": booking_id}
+    payment_data = {"payment_type": "qr"}
     
     response = requests.post(
-        f"{API_BASE}/bookings/create_vnpay_url/", 
+        f"{API_BASE}/bookings/{booking_id}/momo/create-payment/", 
         json=payment_data, 
         headers=headers
     )
     
     if response.status_code == 200:
         result = response.json()
-        vnpay_url = result.get('vnpay_url')
-        print(f"✅ VNPAY URL created: {vnpay_url[:100]}...")
-        return vnpay_url
+        momo_url = result.get('pay_url')
+        print(f"✅ MOMO URL created: {momo_url[:100]}...")
+        return momo_url
     else:
-        print(f"❌ Create VNPAY payment failed: {response.status_code}")
+        print(f"❌ Create MOMO payment failed: {response.status_code}")
         print(response.text)
         return None
 
@@ -153,10 +153,10 @@ def test_invoice_workflow():
     invoice_id = invoice['id']
     print(f"🧾 Using invoice ID: {invoice_id}")
     
-    # Bước 4: Test tạo URL thanh toán VNPAY
-    vnpay_url = test_create_vnpay_payment(token, booking_id)
-    if not vnpay_url:
-        print("❌ Cannot create VNPAY payment URL")
+    # Bước 4: Test tạo URL thanh toán MOMO
+    momo_url = test_create_momo_payment(token, booking_id)
+    if not momo_url:
+        print("❌ Cannot create MOMO payment URL")
         return
     
     # Bước 5: Test cập nhật trạng thái (giả lập thanh toán thành công)
@@ -209,7 +209,7 @@ def test_frontend_urls():
     urls_to_test = [
         "/dashboard/booking",
         "/invoices/1",  # Thay đổi ID theo thực tế
-        "/vnpay-return"
+        "/momo-return"
     ]
     
     for url in urls_to_test:
