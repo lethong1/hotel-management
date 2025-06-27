@@ -3,11 +3,10 @@ import { LoginContext } from '../../contexts/LoginUser/LoginConText';
 import manager_avt from '../../assets/manager_avt.png'; 
 import admin_avt from '../../assets/admin_avt.png';
 import user_avt from '../../assets/user_avt.png';
-import '../../css/Nav/Panel.css'; // File CSS đi kèm
+import '../../css/Nav/Panel.css'; 
 import { useNavigate } from 'react-router-dom';
 
 const Panel = () => {
-    // LẤY DỮ LIỆU TỪ CONTEXT MỘT CÁCH CHÍNH XÁC
     const { authState, logoutUser } = useContext(LoginContext);
 
     const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -18,38 +17,29 @@ const Panel = () => {
         setDropdownOpen(!isDropdownOpen);
     };
 
-    // Hàm xử lý đăng xuất  
     const handleLogout = () => {
         logoutUser();
-        // Việc chuyển hướng sẽ do ProtectedRoute xử lý
     };
     const navigate = useNavigate();
 
-    // Effect để xử lý việc bấm ra ngoài component
     useEffect(() => {
         const handleClickOutside = (event) => {
-            // Nếu dropdown đang mở và người dùng bấm ra ngoài khu vực của panelRef
             if (panelRef.current && !panelRef.current.contains(event.target)) {
-                setDropdownOpen(false); // Đóng dropdown
+                setDropdownOpen(false);
             }
         };
 
-        // Thêm event listener khi component được mount
         document.addEventListener('mousedown', handleClickOutside);
         
-        // Dọn dẹp event listener khi component bị unmount
         return () => {
             document.removeEventListener('mousedown', handleClickOutside);
         };
-    }, []); // Mảng rỗng đảm bảo effect này chỉ chạy một lần khi mount
+    }, []); 
 
     return (
-        // Gắn ref vào div cha của component
         <div className="user-panel-container" ref={panelRef}>
-            {/* Toàn bộ khu vực này có thể bấm để bật/tắt dropdown */}
             <div className="user-profile" onClick={toggleDropdown}>
-                {/* HIỂN THỊ TÊN NGƯỜI DÙNG TỪ AUTHSTATE */}
-                <span>{authState.isAuthenticated ? authState.user?.full_name : 'Loading...'}</span>
+                <span>Xin chào, {authState.isAuthenticated ? authState.user?.full_name : 'Loading...'}</span>
                 <img
                     src={authState.isAuthenticated ? authState.user?.role.id === 1 ? admin_avt : (authState.user?.role.id === 3 ? manager_avt: user_avt): user_avt}
                     alt="User Avatar"
@@ -57,7 +47,6 @@ const Panel = () => {
                 />
             </div>
 
-            {/* Chỉ hiện dropdown menu khi isDropdownOpen là true */}
             {isDropdownOpen && (
                 <div className="dropdown-menu">
                     <button onClick={() => navigate('/dashboard')} className="dropdown-item">Thông tin cá nhân</button>

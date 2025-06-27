@@ -18,14 +18,6 @@ import { useNavigate } from "react-router-dom";
 const { Title } = Typography;
 const { Option } = Select;
 
-// --- Các hàm tiện ích ---
-const formatCurrency = (amount) => {
-  if (typeof amount !== "number") return "0 đ";
-  return new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  }).format(amount);
-};
 const renderStatusTag = (status) => {
   const statusMap = {
     available: { color: "green", text: "PHÒNG TRỐNG" },
@@ -45,10 +37,10 @@ const RoomListContent = () => {
     rooms,
     loading,
     handleDelete,
-    showModal, // <-- Dùng hàm showModal chung
+    showModal, 
     isModalVisible,
     handleCancelModal,
-    handleFormSubmit, // <-- Dùng hàm submit chung
+    handleFormSubmit, 
     form,
     editingRoom,
     roomTypes = [],
@@ -118,7 +110,6 @@ const RoomListContent = () => {
           cancelText="Hủy"
         >
           <Form form={form} layout="vertical">
-            {/* Các trường trong form để thêm/sửa */}
             <Form.Item
               name="room_number"
               label="Số phòng"

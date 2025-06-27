@@ -1,4 +1,3 @@
-// AddRoomPage.js
 import React from "react";
 import {
   Form,
@@ -18,14 +17,13 @@ import {
   CheckOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import { useAddRoom } from "../../contexts/Room/AddRoomContext"; // Import hook
+import { useAddRoom } from "../../contexts/Room/AddRoomContext";
 import "../../css/Room/AddRoomPage.css";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
 const { TextArea } = Input;
 
-// Hàm định dạng tiền tệ cho đẹp
 const formatCurrency = (amount) => {
   return new Intl.NumberFormat("vi-VN", {
     style: "currency",
@@ -37,7 +35,6 @@ const AddRoomPageStyled = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
-  // Lấy state và functions từ Context
   const {
     roomTypeId,
     roomDetails,
@@ -46,8 +43,8 @@ const AddRoomPageStyled = () => {
     handleAmenitiesChange,
     addRoom,
     loading,
-    roomTypes, // Lấy danh sách loại phòng
-    loadingInitialData, // Lấy trạng thái loading ban đầu
+    roomTypes, 
+    loadingInitialData, 
   } = useAddRoom();
 
   // Lấy danh sách tiện nghi của loại phòng đã chọn
@@ -56,13 +53,13 @@ const AddRoomPageStyled = () => {
 
   const onFinish = async (values) => {
     try {
-      await addRoom(values); // `values` chứa dữ liệu từ Form Ant Design
+      await addRoom(values); 
       notification.success({
         message: "Thành công",
         description: "Đã thêm phòng mới thành công!",
         placement: "topRight",
       });
-      form.resetFields(); // Reset form sau khi thành công
+      form.resetFields(); 
     } catch (error) {
       notification.error({
         message: "Lỗi",
@@ -90,7 +87,6 @@ const AddRoomPageStyled = () => {
 
   return (
     <div className="add-room-page">
-      {/* Nút Tạo Phòng ở góc trên */}
       <div className="top-button-container">
         <Button
           icon={<PlusOutlined />}
@@ -101,7 +97,6 @@ const AddRoomPageStyled = () => {
         </Button>
       </div>
 
-      {/* Form Container */}
       <div className="form-container">
         <Title level={2} className="page-title">
           THÊM PHÒNG MỚI
@@ -129,7 +124,7 @@ const AddRoomPageStyled = () => {
                       placeholder="Chọn loại phòng"
                       className="custom-select"
                       onChange={handleRoomTypeChange}
-                      value={roomTypeId} // Giờ value là ID
+                      value={roomTypeId}
                     >
                       {roomTypes.map((option) => (
                         <Option key={option.id} value={option.id}>
@@ -183,7 +178,6 @@ const AddRoomPageStyled = () => {
                       <Text className="form-item-label">Giá cơ bản (VND):</Text>
                     }
                   >
-                    {/* HIỂN THỊ GIÁ TỪ CONTEXT */}
                     <Text className="price-display">
                       {formatCurrency(roomDetails.totalPrice)}
                     </Text>
@@ -196,7 +190,6 @@ const AddRoomPageStyled = () => {
             <Col xs={24} md={8}>
               <div className="capacity-container">
                 <Text className="form-item-label">Sức chứa tối đa:</Text>
-                {/* HIỂN THỊ SỨC CHỨA TỪ CONTEXT */}
                 <div className="capacity-details">
                   <Text>{roomDetails.capacity} người</Text>
                 </div>

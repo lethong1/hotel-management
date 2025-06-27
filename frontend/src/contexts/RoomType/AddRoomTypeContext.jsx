@@ -1,4 +1,4 @@
-// File path: src/contexts/AddRoomTypeContext.jsx
+
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { Form, message } from "antd";
 import apiClient from "../../api/apiClient";
@@ -10,13 +10,12 @@ export const AddRoomTypeProvider = ({ children }) => {
   const [amenities, setAmenities] = useState([]);
   const [loadingAmenities, setLoadingAmenities] = useState(true);
 
-  // Fetch amenities từ API khi mount
   useEffect(() => {
     const fetchAmenities = async () => {
       setLoadingAmenities(true);
       try {
         const res = await apiClient.get("/amenities/");
-        setAmenities(res.data); // [{id, name}, ...]
+        setAmenities(res.data);
       } catch (err) {
         setAmenities([]);
       }
@@ -27,7 +26,6 @@ export const AddRoomTypeProvider = ({ children }) => {
 
   const handleSubmit = async (values) => {
     try {
-      // Đảm bảo amenities là mảng, price là số
       const payload = {
         name: values.name,
         capacity: values.capacity,

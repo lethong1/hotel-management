@@ -19,8 +19,6 @@ import { BookingProvider } from "./contexts/Booking/BookingContext";
 import BookingPage from "./pages/Booking/BookingPage";
 import UserManagementPage from "./pages/User/UserManagementPage";
 import { UserManagementProvider } from "./contexts/LoginUser/UserManagementContext";
-import CheckoutPage from "./pages/Booking/CheckoutPage";
-import { CheckoutProvider } from "./contexts/Booking/CheckoutContext";
 import InvoiceTemplate from "./pages/Invoices/InvoiceTemplate";
 import InvoiceDetailPage from "./pages/Invoices/InvoiceDetailPage";
 import MomoReturn from "./pages/MomoReturn";
@@ -105,23 +103,9 @@ const App = () => {
           <Route path = "revenue-report" element = {<RevenueReportPage />} />
         </Route>
         <Route path="/momo-return" element={<MomoReturn />} />
-        <Route
-          path="/checkout"
-          element={
-            <CheckoutProvider>
-              <CheckoutPage />
-            </CheckoutProvider>
-          }
-        />
         <Route path="/invoice-template" element={<InvoiceTemplate />} />
-        <Route
-          path="/invoices/:invoiceId"
-          element={
-            <ProtectedRoute>
-              <InvoiceDetailPage />
-            </ProtectedRoute>
-          }
-        />
+        <Route path="/invoices/:invoiceId" element={<InvoiceDetailPage />} />
+        
       </Routes>
     </LoginProvider>
   );

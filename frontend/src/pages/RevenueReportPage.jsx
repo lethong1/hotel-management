@@ -1,4 +1,3 @@
-// File: RevenueReportPage.jsx
 
 import React, { useEffect, useState } from "react";
 import {
@@ -15,7 +14,7 @@ import {
   DollarCircleOutlined,
   FileDoneOutlined,
   SearchOutlined,
-} from "@ant-design/icons"; // Thêm các icon
+} from "@ant-design/icons";
 import apiClient from "../api/apiClient";
 import {
   BarChart,
@@ -28,29 +27,23 @@ import {
   Legend,
 } from "recharts";
 
-// Import file CSS mới
 import "../css/RevenueReportPage.css";
 
 const { Title } = Typography;
 const { RangePicker } = DatePicker;
 
-// Hàm tiện ích format tiền tệ
 const formatCurrency = (value) => `${value.toLocaleString()} VND`;
 
-// Hàm parse ngày từ định dạng dd/mm/yyyy
 const parseDate = (dateStr) => {
   if (!dateStr) return '';
   
-  // Nếu đã là định dạng dd/mm/yyyy từ backend
   if (dateStr.includes('/')) {
     const parts = dateStr.split('/');
     if (parts.length === 3) {
-      // Trả về định dạng dd/mm để hiển thị gọn hơn
       return `${parts[0]}/${parts[1]}`;
     }
   }
   
-  // Nếu là định dạng khác, thử parse
   try {
     const date = new Date(dateStr);
     if (!isNaN(date.getTime())) {
@@ -89,14 +82,12 @@ const RevenueReportPage = () => {
         params: { ...params, group_by: "day" },
       });
       
-      // Xử lý dữ liệu ngày tháng để hiển thị đẹp hơn trên trục X
       const formattedChartData = (chartRes.data.daily || []).map((item) => ({
         ...item,
-        date: parseDate(item.date), // Sử dụng hàm parse mới
+        date: parseDate(item.date),
       }));
       setChartData(formattedChartData);
-      
-      // Cập nhật thông tin khoảng thời gian
+
       if (startDate && endDate) {
         const start = new Date(startDate);
         const end = new Date(endDate);

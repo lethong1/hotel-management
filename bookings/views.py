@@ -70,14 +70,11 @@ def momo_verify_return(request):
         data = json.loads(request.body)
         order_id = data.get("orderId")
         result_code = str(data.get("resultCode"))
-        # MOMO trả về resultCode == "0" là thành công
         if result_code == "0":
-            # Nếu orderId là dạng bookingId-timestamp, tách bookingId
             booking_id = order_id.split("-")[0]
             try:
                 booking = Booking.objects.get(pk=booking_id)
                 invoice = Invoice.objects.get(booking=booking)
-                # Cập nhật trạng thái nếu chưa paid
                 if invoice.status != "paid":
                     invoice.status = "paid"
                     invoice.save()
@@ -85,7 +82,6 @@ def momo_verify_return(request):
                     booking.status = "checked_out"
                     booking.save()
                     
-                    # Cập nhật trạng thái phòng thành available
                     room = booking.room
                     room.status = 'available'
                     room.save()
@@ -204,26 +200,22 @@ class BookingViewSet(viewsets.ModelViewSet):
     def create_momo_url(self, request, pk=None):
         booking = get_object_or_404(Booking, pk=pk)
         
-        # Lấy loại thanh toán từ request (QR hoặc Bank)
-        payment_type = request.data.get('payment_type', 'qr')  # Mặc định là QR
+        payment_type = request.data.get('payment_type', 'qr') 
         
-        # kiểm tra trạng thái hợp lệ như bạn đã làm với VNPAY
         redirect_url = settings.MOMO_RETURN_URL
-        ipn_url = settings.MOMO_NOTIFY_URL  # có thể giống RETURN_URL nếu bạn chưa cần webhook riêng
+        ipn_url = settings.MOMO_NOTIFY_URL 
 
-        # In dữ liệu gửi lên MOMO
-        print("[MOMO] Request data:")
-        print(f"  booking_id: {booking.id}")
-        print(f"  total_price: {booking.total_price}")
-        print(f"  payment_type: {payment_type}")
-        print(f"  redirect_url: {redirect_url}")
-        print(f"  ipn_url: {ipn_url}")
+        # print("[MOMO] Request data:")
+        # print(f"  booking_id: {booking.id}")
+        # print(f"  total_price: {booking.total_price}")
+        # print(f"  payment_type: {payment_type}")
+        # print(f"  redirect_url: {redirect_url}")
+        # print(f"  ipn_url: {ipn_url}")
 
         momo_response = create_momo_payment(booking, redirect_url, ipn_url, payment_type)
 
-        # In response trả về từ MOMO
-        print("[MOMO] Response:")
-        print(momo_response)
+        # print("[MOMO] Response:")
+        # print(momo_response)
 
         if momo_response.get("payUrl"):
             return Response({"pay_url": momo_response["payUrl"]})
@@ -232,14 +224,12 @@ class BookingViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=["post"])
     def create_cash_payment(self, request, pk=None):
-        """Xử lý thanh toán tiền mặt - cập nhật trạng thái ngay lập tức"""
+
         booking = get_object_or_404(Booking, pk=pk)
         
-        # Kiểm tra booking phải ở trạng thái checked_in để thanh toán
         if booking.status != "checked_in":
             return Response({"detail": "Booking phải ở trạng thái đã nhận phòng để thanh toán"}, status=400)
 
-        # Kiểm tra hóa đơn chưa được thanh toán
         try:
             invoice = Invoice.objects.get(booking=booking)
             if invoice.status == 'paid':
@@ -248,15 +238,12 @@ class BookingViewSet(viewsets.ModelViewSet):
             return Response({"detail": "Không tìm thấy hóa đơn cho booking này"}, status=404)
 
         try:
-            # Cập nhật trạng thái hóa đơn thành đã thanh toán
             invoice.status = 'paid'
             invoice.save()
 
-            # Cập nhật trạng thái booking thành đã trả phòng
             booking.status = 'checked_out'
             booking.save()
 
-            # Cập nhật trạng thái phòng thành available
             room = booking.room
             room.status = 'available'
             room.save()

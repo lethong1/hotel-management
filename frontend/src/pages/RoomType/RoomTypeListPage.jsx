@@ -20,7 +20,6 @@ import { useRoomTypeList } from "../../contexts/RoomType/RoomTypeListContext";
 import "../../css/RoomType/RoomTypeListPage.css";
 const { Title, Text } = Typography;
 
-// Hàm định dạng tiền tệ
 const formatCurrency = (amount) => {
   if (typeof amount !== "number") return "";
   return new Intl.NumberFormat("vi-VN", {

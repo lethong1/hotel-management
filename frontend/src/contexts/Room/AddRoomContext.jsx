@@ -1,4 +1,3 @@
-// AddRoomContext.js
 import React, {
   createContext,
   useState,
@@ -9,7 +8,7 @@ import React, {
 import apiClient from "../../api/apiClient";
 
 const AMENITIES_DATA = {
-  wifi: 0, // Wifi thường miễn phí
+  wifi: 0, 
   ac: 50000,
   pool: 100000,
   tv: 20000,
@@ -18,19 +17,16 @@ const AMENITIES_DATA = {
   parking: 30000,
 };
 
-// 1. Tạo Context
 const AddRoomContext = createContext();
 
-// 2. Tạo Provider Component
 export const AddRoomProvider = ({ children }) => {
-  const [roomTypeId, setRoomTypeId] = useState(null); // Lưu ID của loại phòng
-  const [roomTypes, setRoomTypes] = useState([]); // Lưu danh sách loại phòng từ API
+  const [roomTypeId, setRoomTypeId] = useState(null); 
+  const [roomTypes, setRoomTypes] = useState([]); 
   const [selectedAmenities, setSelectedAmenities] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [loadingInitialData, setLoadingInitialData] = useState(true);
 
-  // Effect để lấy danh sách loại phòng từ API khi component mount
   useEffect(() => {
     const fetchRoomTypes = async () => {
       try {
@@ -71,8 +67,8 @@ export const AddRoomProvider = ({ children }) => {
     const selectedRoomType = roomTypes.find((rt) => rt.id === roomTypeId);
 
     if (selectedRoomType) {
-      details.capacity = selectedRoomType.capacity; // Dùng trường capacity
-      details.basePrice = parseFloat(selectedRoomType.price_per_night); // Dùng price_per_night
+      details.capacity = selectedRoomType.capacity; 
+      details.basePrice = parseFloat(selectedRoomType.price_per_night); 
     }
 
     // Tính toán giá tiện nghi
@@ -104,7 +100,6 @@ export const AddRoomProvider = ({ children }) => {
         room_type_id: roomTypeId,
       };
 
-      console.log("Submitting data:", payload);
 
       const response = await apiClient.post("/rooms/", payload);
 
@@ -129,8 +124,8 @@ export const AddRoomProvider = ({ children }) => {
     addRoom,
     loading,
     error,
-    roomTypes, // Truyền danh sách loại phòng xuống
-    loadingInitialData, // Truyền trạng thái loading ban đầu
+    roomTypes, 
+    loadingInitialData, 
   };
 
   return (
@@ -138,7 +133,7 @@ export const AddRoomProvider = ({ children }) => {
   );
 };
 
-// 3. Tạo custom hook để sử dụng Context dễ dàng hơn
+
 export const useAddRoom = () => {
   const context = useContext(AddRoomContext);
   if (context === undefined) {

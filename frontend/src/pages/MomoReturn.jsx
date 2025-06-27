@@ -11,10 +11,8 @@ const MomoReturn = () => {
     const verify = async () => {
       const paramObj = Object.fromEntries(params.entries());
       try {
-        // Gửi các tham số lên backend để xác nhận
         const res = await apiClient.post("/bookings/momo/verify-return/", paramObj);
         message.success("✅ Thanh toán thành công!");
-        // Chuyển về trang hóa đơn hoặc booking
         if (res.data.invoice_id) {
           navigate(`/invoices/${res.data.invoice_id}`);
         } else {
@@ -27,7 +25,6 @@ const MomoReturn = () => {
       }
     };
     verify();
-    // eslint-disable-next-line
   }, []);
 
   return <Spin tip="Đang xác minh thanh toán từ MOMO..." fullscreen />;

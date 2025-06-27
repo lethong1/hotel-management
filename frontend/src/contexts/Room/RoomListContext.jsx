@@ -17,7 +17,6 @@ export const RoomListProvider = ({ children }) => {
       const res = await apiClient.get("/room-types/");
       setRoomTypes(Array.isArray(res.data) ? res.data : []);
     } catch (err) {
-      console.error("Lỗi khi tải loại phòng:", err);
       message.error("Không thể tải danh sách loại phòng!");
     }
   };
@@ -47,7 +46,6 @@ export const RoomListProvider = ({ children }) => {
       });
       setRooms(data);
     } catch (err) {
-      console.error("Lỗi khi tải dữ liệu:", err);
       message.error("Không thể tải được dữ liệu!");
     } finally {
       setLoading(false);
@@ -77,17 +75,14 @@ export const RoomListProvider = ({ children }) => {
     });
   };
 
-  // Đổi tên isEditModalVisible thành isModalVisible cho chung
   const showModal = (room = null) => {
     setEditingRoom(room);
     if (room) {
-      // Nếu là sửa, điền thông tin phòng và ID của loại phòng
       form.setFieldsValue({
         ...room,
         room_type_id: room.room_type?.id,
       });
     } else {
-      // Nếu là thêm mới, reset form
       form.resetFields();
     }
     setIsModalVisible(true);
@@ -101,10 +96,9 @@ export const RoomListProvider = ({ children }) => {
   const handleFormSubmit = async () => {
     try {
       const values = await form.validateFields();
-      const payload = { ...values }; // Lấy tất cả giá trị từ form
+      const payload = { ...values }; 
 
       if (editingRoom) {
-        // SỬA: Dùng PATCH để linh hoạt
         await apiClient.patch(`/rooms/${editingRoom.key}/`, payload);
         message.success("Cập nhật phòng thành công!");
       } else {
@@ -115,7 +109,6 @@ export const RoomListProvider = ({ children }) => {
       handleCancelModal();
       fetchData();
     } catch (err) {
-      console.error("Lỗi submit form:", err.response);
       message.error("Thao tác thất bại!");
     }
   };
@@ -136,7 +129,6 @@ export const RoomListProvider = ({ children }) => {
     }
   };
 
-  // TẬP HỢP TẤT CẢ CÁC HÀM VÀ STATE CẦN THIẾT
   const value = {
     rooms,
     loading,

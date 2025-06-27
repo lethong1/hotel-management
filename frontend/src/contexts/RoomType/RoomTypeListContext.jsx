@@ -1,11 +1,9 @@
-// File: src/contexts/RoomTypeListContext.jsx
 
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { Form, Modal, message } from "antd";
 import apiClient from "../../api/apiClient";
 
-// Dữ liệu giả để mô phỏng dữ liệu lấy từ database
-// const initialData = [ ... ]; // XÓA HOẶC COMMENT DÒNG NÀY
+
 
 const RoomTypeListContext = createContext();
 
@@ -17,13 +15,13 @@ export const RoomTypeListProvider = ({ children }) => {
   const [editingRecord, setEditingRecord] = useState(null);
   const [form] = Form.useForm();
 
-  // Logic tải dữ liệu
+
   useEffect(() => {
     fetchRoomTypes();
     fetchAmenities();
   }, []);
 
-  // Tải danh sách amenities
+
   const fetchAmenities = async () => {
     try {
       const res = await apiClient.get("/amenities/");
@@ -45,7 +43,7 @@ export const RoomTypeListProvider = ({ children }) => {
     setLoading(true);
     try {
       const res = await apiClient.get("/room-types/");
-      // Chuyển đổi dữ liệu từ backend về đúng format frontend cần
+
       const data = Array.isArray(res.data)
         ? res.data.map((type) => ({
             key: type.id,
@@ -66,7 +64,7 @@ export const RoomTypeListProvider = ({ children }) => {
     setLoading(false);
   };
 
-  // Logic Xóa
+
   const handleDelete = (record) => {
     Modal.confirm({
       title: "Bạn có chắc muốn xóa?",
@@ -85,11 +83,10 @@ export const RoomTypeListProvider = ({ children }) => {
     });
   };
 
-  // Logic Sửa
+
   const showEditModal = (record) => {
     setEditingRecord(record);
 
-    // Xử lý amenities để hiển thị đúng trong form
     const selectedAmenityIds = record.raw.amenities
       ? record.raw.amenities.map((amenity) => amenity.id)
       : [];
@@ -120,14 +117,12 @@ export const RoomTypeListProvider = ({ children }) => {
         amenities_id: Array.isArray(values.amenities) ? values.amenities : [],
       };
 
-      console.log("Update payload:", payload);
       await apiClient.put(`/room-types/${editingRecord.key}/`, payload);
       message.success("Cập nhật thành công!");
       handleCancelModal();
       fetchRoomTypes();
     } catch (err) {
       message.error("Cập nhật thất bại!");
-      console.error(err.response?.data || err);
     }
   };
 
@@ -142,7 +137,6 @@ export const RoomTypeListProvider = ({ children }) => {
         amenities_id: Array.isArray(values.amenities) ? values.amenities : [],
       };
 
-      console.log("Add payload:", payload);
       await apiClient.post("/room-types/", payload);
       message.success("Thêm loại phòng thành công!");
       fetchRoomTypes();

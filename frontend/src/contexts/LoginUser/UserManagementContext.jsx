@@ -18,15 +18,13 @@ export const UserManagementProvider = ({ children }) => {
     apiClient
       .get("/users/")
       .then((res) => {
-        // Giả sử API trả về mảng user, ánh xạ lại cho đúng format frontend
         const data = Array.isArray(res.data)
           ? res.data.map((user) => ({
               key: user.id,
               fullName: user.full_name || user.fullName || "",
               username: user.username,
               email: user.email,
-              // Lấy role từ user.role.role (object)
-              role: user.role?.role || "user", // 'admin', 'manager', 'user'
+              role: user.role?.role || "user",
               roleName: user.role?.role
                 ? user.role.role === "admin"
                   ? "Admin"
@@ -34,7 +32,7 @@ export const UserManagementProvider = ({ children }) => {
                   ? "Quản lý"
                   : "Người dùng"
                 : "Người dùng",
-              isActive: user.is_active, // boolean
+              isActive: user.is_active, 
               dateJoined: user.date_joined || user.dateJoined || "",
               raw: user,
             }))
@@ -105,15 +103,14 @@ export const UserManagementProvider = ({ children }) => {
         });
       }
 
-      // Xử lý role - cần gửi ID của role thay vì string
+      // Xử lý role
       if (values.role) {
-        // Tìm role ID dựa trên role name - theo database thực tế
         const roleMap = {
           admin: 1,
           user: 2,
           manager: 3,
         };
-        backendData.role = roleMap[values.role] || 2; // Mặc định là user (ID: 2)
+        backendData.role = roleMap[values.role] || 2;
       }
 
       // Xử lý status -> is_active
@@ -138,7 +135,6 @@ export const UserManagementProvider = ({ children }) => {
           })
           .catch((err) => {
             message.error("Cập nhật người dùng thất bại!");
-            console.log(err.response.data);
           });
       } else {
         // Chế độ Thêm mới
@@ -171,7 +167,6 @@ export const UserManagementProvider = ({ children }) => {
           })
           .catch((err) => {
             message.error("Thêm người dùng mới thất bại!");
-            console.log("Error details:", err.response?.data);
           });
       }
     } catch (error) {

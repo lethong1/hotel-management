@@ -51,12 +51,6 @@ const UserManagementPage = () => {
     form,
   } = useUserManagement();
 
-  const palette = {
-    primary: "#BBD38B",
-    pageBackground: "#F7F6E7",
-    tableHeaderBg: "#E9E8DA",
-    actionBlue: "#2563EB",
-  };
 
   const columns = [
     { title: "Họ và Tên", dataIndex: "fullName", key: "fullName" },

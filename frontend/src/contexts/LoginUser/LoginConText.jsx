@@ -51,7 +51,7 @@ export const LoginProvider = ({ children }) => {
     } catch (error) {
       dispatch({type: 'AUTH_ERROR'})
       console.error('Login error:', error)
-      throw error // Re-throw để component có thể xử lý
+      throw error 
     }
   }
   const logoutUser = () => {

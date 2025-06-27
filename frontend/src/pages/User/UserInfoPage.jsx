@@ -39,7 +39,6 @@ const UserInfoPage = () => {
           <p className="user-info-role">{user.role?.role || "Chưa cập nhật"}</p>
           <p className="user-info-created">Thành viên từ: {createdAtStr}</p>
         </div>
-        {/* Info Section */}
         <div className="user-info-details">
           <div>
             <div className="user-info-label">Tên đăng nhập</div>

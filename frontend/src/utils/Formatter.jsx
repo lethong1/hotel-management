@@ -4,13 +4,12 @@ export const formatVNDateTime = (isoString) => {
 
     const date = new Date(isoString);
 
-    // Kiểm tra xem date có hợp lệ không
     if (isNaN(date.getTime())) {
         return "Ngày không hợp lệ";
     }
 
     const options = {
-        timeZone: 'Asia/Ho_Chi_Minh', // Luôn hiển thị theo giờ Việt Nam
+        timeZone: 'Asia/Ho_Chi_Minh', 
         weekday: 'long', 
         year: 'numeric',
         month: '2-digit',
@@ -25,15 +24,12 @@ export const formatVNDateTime = (isoString) => {
     const parts = formatter.formatToParts(date);
     const partValue = (type) => parts.find(part => part.type === type)?.value || '';
 
-    // Sắp xếp lại thành chuỗi "HH:mm, Thứ X, ngày dd/MM/yyyy"
     return `${partValue('day')}/${partValue('month')}/${partValue('year')}`;
 };
 
-// Bạn có thể thêm các hàm định dạng khác ở đây, ví dụ định dạng tiền tệ
 export const formatCurrency = (amount) => {
     if (amount === null || amount === undefined || amount === "") return "0 ₫";
     
-    // Convert string to number if needed
     const numAmount = typeof amount === 'string' ? parseFloat(amount) : amount;
     
     if (isNaN(numAmount)) return "0 ₫";

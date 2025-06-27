@@ -5,6 +5,8 @@
 - Node.js >= 16
 - PostgreSQL (hoặc SQLite cho phát triển)
 - pip, venv
++ Git (để clone project)
++ npm hoặc yarn (để cài frontend)
 
 ## 2. Cài đặt backend (Django)
 
@@ -30,12 +32,35 @@ $ source venv/bin/activate
 ```bash
 $ pip install -r requirements.txt
 ```
++ **Lưu ý:** Nếu chưa có hoặc không tìm thấy file requirements.txt, hãy tạo file này với nội dung:
++ ```
++ asgiref==3.8.1
++ certifi==2025.6.15
++ charset-normalizer==3.4.2
++ Django==5.2.2
++ django-cors-headers==4.7.0
++ djangorestframework==3.16.0
++ djangorestframework_simplejwt==5.5.0
++ idna==3.10
++ psycopg2-binary==2.9.10
++ PyJWT==2.9.0
++ python-decouple==3.8
++ python-dotenv==1.1.0
++ requests==2.32.4
++ sqlparse==0.5.3
++ tzdata==2025.2
++ urllib3==2.5.0
++ ```
 
 ### Bước 4: Cấu hình database
 - Mặc định dùng SQLite, muốn dùng PostgreSQL thì sửa `hotel_management/settings.py`.
 - Biến DATABASES và cấu hình thành PostgreSQL (tạo database trong PostgreSQL trước khi cấu hình)
 - Trong file đang có file .env nên hãy cấu hình lại theo cá nhân trước để tránh lỗi
++ **Cấu hình file .env:**
++ # Tạo file .env trong thư mục gốc(ngang hàng với`manage.py`)
 
++ # Chỉnh sửa các biến môi trường trong file .env (nếu không chỉnh sẽ không thể chạy vì file settings.py không đọc được)
++ ```
 ### Bước 5: Khởi tạo database
 ```bash
 # Lệnh này để tạo các migrations( giống như tạo các tables trong các models)
@@ -103,10 +128,79 @@ $ npm run dev
   - Không truy cập được trang quản trị, doanh thu.
 
 ## 6. Thanh toán
-### Thanh toán MOMO
-- Tích hợp thanh toán bằng MOMO QR (chỉ test vì không có tài khoản test UAT)
-- Tích hợp thanh toán bằng thẻ ATM qua MOMO (Đã test thành công)
-### Thanh toán bằng tiền mặt
+### 6.1 Thanh toán MOMO
+- **Tích hợp thanh toán bằng MOMO QR (chỉ test vì không có tài khoản test UAT)**
+- **Tích hợp thanh toán bằng thẻ ATM qua MOMO (Đã test thành công)**
+- **Tài khoản test MOMO:**
+  - *Trường hợp thành công:*
+    - SỐ THẺ: 9704 0000 0000 0018
+    - CHỦ TÀI KHOẢN: NGUYEN VAN A
+    - HẠN GHI TRÊN THẺ: 03/07
+    - SỐ ĐIỆN THOẠI: Để trống
+    - OTP: OTP
+  - *Trường hợp thẻ bị khóa:*
+    - SỐ THẺ: 9704 0000 0000 0026
+    - CHỦ TÀI KHOẢN: NGUYEN VAN A
+    - HẠN GHI TRÊN THẺ: 03/07
+    - SỐ ĐIỆN THOẠI: Để trống
+    - OTP: OTP
+  - *Trường hợp thẻ không đủ tiền:*
+    - SỐ THẺ: 9704 0000 0000 0034
+    - CHỦ TÀI KHOẢN: NGUYEN VAN A
+    - HẠN GHI TRÊN THẺ: 03/07
+    - SỐ ĐIỆN THOẠI: Để trống
+    - OTP: OTP
+  - *Trường hợp hạn mức thẻ:*
+    - SỐ THẺ: 9704 0000 0000 0042
+    - CHỦ TÀI KHOẢN: NGUYEN VAN A
+    - HẠN GHI TRÊN THẺ: 03/07
+    - SỐ ĐIỆN THOẠI: Để trống
+    - OTP: OTP
+### 6.2 Thanh toán tiền mặt
 - Click thanh toán bằng tiền mặt sẽ tự động mặc định là thanh toán thành công 
-## 6. Đổi mật khẩu cho user
+
+## 7. Đổi mật khẩu cho user
 - Chỉ admin mới đổi được mật khẩu user khác qua trang quản lý user.
+
+## 8. API Endpoints chính
+- **Authentication:** `/api/token/`, `/api/token/refresh/`, `/api/token/verify`
+- **Users:** `/api/users/` , `/api/users/${id}/set-password/`
+- **Rooms:** `/api/rooms/`, `/api/room-types/`
+- **Bookings:** `/api/bookings/`
+- **Invoices:** `/api/invoices/`
+- **Revenue Report:** `/api/invoices/revenue-report/`
+
+## 9. Xử lý lỗi thường gặp
+### Lỗi CORS
+- Kiểm tra cấu hình CORS trong settings.py
+- Đảm bảo frontend và backend chạy đúng port
+### Lỗi Database
+- Kiểm tra kết nối database
+- Chạy `python manage.py migrate` nếu có lỗi migration
+### Lỗi Frontend
+- Xóa node_modules và package-lock.json, chạy lại `npm install`
+- **Lưu ý:** trỏ vào đúng thư mục frontend, ví dụ
+``` bash
+DISK:\\hotel-management\\frontend>
+```
+## 10. Development
+### Chạy tests
+```bash
+$ python manage.py test
+```
+### Tạo migration mới
+```bash
+# Lệnh này chạy đơn lẻ app thay vì chạy toàn bộ tương tự với migrate
+$ python manage.py makemigrations <app_name>
+$ python manage.py migrate <app_name>
+```
+### Backup database
+```bash
+$ python manage.py dumpdata > backup.json
+```
+
+## 11. Đây là sản phẩm còn rất nhiều thiếu xót, mọi người có thể liên hệ góp ý để hoàn thiện hơn ạ
+- Gmail: lehuuthong2004@gmail.com
+- Gmail: ngthiminhduyen04@gmail.com
+
+Chúng em xin chân thành cảm ơn mọi người góp ý và xem!

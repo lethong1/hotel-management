@@ -54,19 +54,6 @@ const InvoiceDetailView = () => {
   const isBookingCreator = invoiceData?.booking?.created_by?.id === userId;
   const hasPermission = isManagerOrAdmin || isBookingCreator;
 
-  // Debug dữ liệu
-  useEffect(() => {
-    if (invoiceData) {
-      console.log("🔍 Invoice Data in Component:", invoiceData);
-      console.log("🔍 Created By:", invoiceData.created_by);
-      console.log("🔍 Room Type:", invoiceData.booking?.room?.room_type);
-      console.log("🔍 Price per night:", invoiceData.booking?.room?.room_type?.price_per_night);
-      console.log("🔍 User Info from Context:", userInfo);
-      console.log("🔍 User Role:", userRole);
-      console.log("🔍 User ID:", userId);
-      console.log("🔍 Has Permission:", hasPermission);
-    }
-  }, [invoiceData, userInfo, userRole, userId, hasPermission]);
 
   const handlePrint = useReactToPrint({ content: () => invoiceRef.current });
 
@@ -76,7 +63,6 @@ const InvoiceDetailView = () => {
 
   const handlePaymentSuccess = () => {
     setPaymentModalVisible(false);
-    // Refresh lại dữ liệu hóa đơn
     window.location.reload();
   };
 
@@ -85,7 +71,6 @@ const InvoiceDetailView = () => {
   };
 
   const handleViewDetails = () => {
-    // Chuyển về trang danh sách booking
     navigate("/dashboard/booking");
   };
 
@@ -109,7 +94,6 @@ const InvoiceDetailView = () => {
     );
   }
 
-  // Kiểm tra quyền truy cập
   if (!hasPermission) {
     return (
       <div style={{ textAlign: "center", padding: "50px" }}>
@@ -123,7 +107,6 @@ const InvoiceDetailView = () => {
     );
   }
 
-  // Tính toán chi phí
   const numberOfNights =
     dayjs(invoiceData.booking?.check_out_date).diff(
       dayjs(invoiceData.booking?.check_in_date),
@@ -133,14 +116,12 @@ const InvoiceDetailView = () => {
   const vat = roomCost * 0.08;
   const total = roomCost + vat;
 
-  // Xác định trạng thái booking để hiển thị nút phù hợp
   const isCheckedIn = invoiceData.booking?.status === "checked_in";
   const isPaid = invoiceData.status === "paid";
   const isCheckedOut = invoiceData.booking?.status === "checked_out";
 
   return (
     <div className="invoice-detail-page">
-      {/* Header */}
       <div className="invoice-header">
         <Row justify="space-between" align="middle">
           <Col>
@@ -185,7 +166,6 @@ const InvoiceDetailView = () => {
       </div>
 
       <div className="invoice-content">
-        {/* Thông tin chính */}
         <div className="invoice-main">
           <Card title="Thông tin hóa đơn" className="invoice-card">
             <Descriptions bordered column={2}>
@@ -281,7 +261,6 @@ const InvoiceDetailView = () => {
           </Card>
         </div>
 
-        {/* Sidebar - Các hành động */}
         <div className="invoice-sidebar">
           <Card
             title="Hành động"
@@ -359,7 +338,6 @@ const InvoiceDetailView = () => {
         </div>
       </div>
 
-      {/* Modal in hóa đơn */}
       <Modal
         open={false}
         onCancel={() => {}}
@@ -390,7 +368,6 @@ const InvoiceDetailView = () => {
   );
 };
 
-// Component wrapper với Provider
 const InvoiceDetailPage = () => {
   return (
     <InvoiceDetailProvider>

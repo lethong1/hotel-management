@@ -19,9 +19,7 @@ const AddRoomTypePage = () => {
   const navigate = useNavigate();
   const { form, handleSubmit, amenities, loadingAmenities } = useAddRoomType();
 
-  const handleReset = () => {
-    form.resetFields();
-  };
+
 
   return (
     <div className="add-room-type-page">

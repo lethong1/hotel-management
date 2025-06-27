@@ -1,4 +1,4 @@
-// File: src/components/InvoiceTemplate.jsx
+ 
 
 import React from "react";
 import { Typography, Row, Col, Descriptions, Table, Tag } from "antd";
@@ -7,7 +7,7 @@ import { formatCurrency, formatVNDateTime } from "../../utils/Formatter";
 
 const { Title, Text } = Typography;
 
-// Hàm render tag màu cho trạng thái hóa đơn
+
 const renderInvoiceStatusTag = (status) => {
   switch (status) {
     case "paid":
@@ -24,7 +24,7 @@ const renderInvoiceStatusTag = (status) => {
 const InvoiceTemplate = React.forwardRef(({ invoiceData }, ref) => {
   if (!invoiceData) return null;
 
-  // Tính toán chi phí từ dữ liệu thực tế
+
   const numberOfNights =
     dayjs(invoiceData.booking?.check_out_date).diff(
       dayjs(invoiceData.booking?.check_in_date),
@@ -39,7 +39,7 @@ const InvoiceTemplate = React.forwardRef(({ invoiceData }, ref) => {
       ref={ref}
       style={{ padding: "30px", color: "#000", background: "#fff" }}
     >
-      {/* --- Header --- */}
+
       <Row justify="space-between" align="middle">
         <Col>
           <Title level={3} style={{ color: "#333", marginBottom: 0 }}>
@@ -61,7 +61,7 @@ const InvoiceTemplate = React.forwardRef(({ invoiceData }, ref) => {
         }}
       />
 
-      {/* --- Thông tin chung --- */}
+
       <Descriptions
         bordered
         column={2}
@@ -82,7 +82,7 @@ const InvoiceTemplate = React.forwardRef(({ invoiceData }, ref) => {
         </Descriptions.Item>
       </Descriptions>
 
-      {/* --- Thông tin khách hàng & phòng --- */}
+
       <Row gutter={32}>
         <Col span={12}>
           <Title level={5}>Thông tin khách hàng:</Title>
@@ -137,7 +137,7 @@ const InvoiceTemplate = React.forwardRef(({ invoiceData }, ref) => {
         </Col>
       </Row>
 
-      {/* --- Chi tiết thanh toán --- */}
+
       <Title level={5} style={{ marginTop: 20 }}>
         Chi tiết thanh toán:
       </Title>
@@ -175,7 +175,7 @@ const InvoiceTemplate = React.forwardRef(({ invoiceData }, ref) => {
         )}
       />
 
-      {/* --- Ghi chú & Footer --- */}
+
       {invoiceData.notes && (
         <div style={{ marginTop: 20 }}>
           <Text strong>Ghi chú:</Text>

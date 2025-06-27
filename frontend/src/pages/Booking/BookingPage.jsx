@@ -10,29 +10,23 @@ import {
   DeleteOutlined,
 } from "@ant-design/icons";
 
-// Import hàm định dạng từ file tiện ích
 import { formatVNDateTime, formatCurrency } from "../../utils/Formatter";
 
 const { Title } = Typography;
 
-// Component con để hiển thị nội dung chính
 const BookingView = () => {
   const navigate = useNavigate();
-  // Lấy dữ liệu và các hàm từ context
   const { bookings, loading, showBookingModal, handleDelete } = useBooking();
 
-  // Hàm xử lý chuyển đến trang thanh toán
   const handlePayment = (booking) => {
-    // Chuyển đến trang chi tiết hóa đơn của booking này
     navigate(`/invoices/${booking.invoice?.id}`);
   };
 
-  // Hàm xử lý xem chi tiết hóa đơn
   const handleViewInvoice = (booking) => {
     navigate(`/invoices/${booking.invoice?.id}`);
   };
 
-  // Định nghĩa các cột cho bảng
+  // Định nghĩa các cột cho bảng    
   const columns = [
     { title: "ID", dataIndex: "id", key: "id", fixed: "left", width: 30 },
     {
@@ -170,15 +164,13 @@ const BookingView = () => {
         dataSource={bookings}
         loading={loading}
         bordered
-        scroll={{ x: 1300 }} // Thêm thanh cuộn ngang nếu bảng quá rộng
+        scroll={{ x: 1300 }} 
       />
-      {/* Modal để thêm/sửa sẽ được quản lý bởi context */}
       <BookingModal />
     </div>
   );
 };
 
-// Component cha của trang, bọc mọi thứ trong Provider
 const BookingPage = () => {
   return (
     <BookingProvider>

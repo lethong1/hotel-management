@@ -123,7 +123,6 @@ export const BookingProvider = ({ children }) => {
       handleCancelModal();
       fetchData();
     } catch (error) {
-      console.error("❌ Lỗi tạo khách hàng:", error.response?.data);
       message.error("Bạn không có quyền chỉnh sửa đơn đặt phòng này!");
       return;
     }
