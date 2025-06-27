@@ -39,3 +39,20 @@ class UserCreateSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+class SetPasswordSerializer(serializers.ModelSerializer):
+    new_password = serializers.CharField(write_only=True)
+
+    def validate_new_password(self, value):
+        if len(value) < 6:
+            return serializers.ValidationError("Mật khẩu phải có ít nhất 6 ký tự")
+        return value
+    
+    def save(self, user):
+        user.set_password(self.validated_data['new_password'])
+        user.save()
+        return user
+    class Meta:
+        model = User
+        fields = ['new_password']
+    
+

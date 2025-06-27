@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config('DEBUG',default=True,cast=bool)
+DEBUG = config('DEBUG')
 
 ALLOWED_HOSTS = ["localhost", "127.0.0.1"]
 
@@ -101,10 +101,10 @@ DATABASES = {
     }
 }
 # VNPAY CONFIG
-VNPAY_TMN_CODE = 'CKVMQOZE'
-VNPAY_HASH_SECRET = 'EQMWK8Q523VH0HM0B3D6E4VQH8AH7RHG'
-VNPAY_API_URL = 'https://sandbox.vnpayment.vn/paymentv2/vpcpay.html'
-VNPAY_RETURN_URL = 'http://localhost:5173/bookings/vnpay/return/'
+VNPAY_TMN_CODE = config('VNPAY_TMN_CODE')
+VNPAY_HASH_SECRET = config('VNPAY_HASH_SECRET')
+VNPAY_API_URL = config('VNPAY_API_URL')
+VNPAY_RETURN_URL = config('VNPAY_RETURN_URL')
 
 #REST Framework
 REST_FRAMEWORK = {

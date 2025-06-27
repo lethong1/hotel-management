@@ -100,7 +100,9 @@ export const UserManagementProvider = ({ children }) => {
 
       // Xử lý password
       if (values.password) {
-        backendData.password = values.password;
+        await apiClient.post(`/users/${editingUser.key}/set-password/`, {
+          new_password: values.password,
+        });
       }
 
       // Xử lý role - cần gửi ID của role thay vì string

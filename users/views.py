@@ -1,5 +1,5 @@
 from .models import User, Role
-from .serializers import UserSerializer, RoleSerializer, UserCreateSerializer
+from .serializers import UserSerializer, RoleSerializer, UserCreateSerializer, SetPasswordSerializer
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework import generics, viewsets
 from django.contrib.auth import get_user_model
@@ -60,4 +60,11 @@ class UserViewSet(viewsets.ModelViewSet):
             print(f"Error creating user: {e}")
             raise
 
-         
+    @action(detail=True, methods=['post'], permission_classes=[IsAuthenticated, IsAdminUser])
+    def set_password(self, request, pk=None):
+        user  = self.get_object()
+        serializer = SetPasswordSerializer(user, data= request.data)
+        if serializer.is_valid():
+            serializer.save(user)
+            return Response({"message": "Mật khẩu đã được thay đổi thành công"})
+        return Response(serializer.errors)
